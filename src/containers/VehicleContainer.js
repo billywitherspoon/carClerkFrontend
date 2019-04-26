@@ -17,10 +17,13 @@ export default class VehicleContainer extends Component {
 			let lastVehicle = vehicles[vehicles.length - 1];
 			return (
 				<FlatList
-					style={styles.flatList}
 					data={Object.keys(lastVehicle)}
 					renderItem={({ item }) => {
-						<Text style={styles.specItem}>{item}</Text>;
+						return (
+							<View>
+								<Text>{item}</Text>
+							</View>
+						);
 					}}
 					keyExtractor={(index) => {
 						return index;
