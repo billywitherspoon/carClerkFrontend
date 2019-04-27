@@ -35,9 +35,10 @@ class MainContainer extends Component {
 	};
 
 	updateVehiclesState = (json) => {
-		let vehicle = delete json.user;
+		delete json.user;
+		console.log('updating vehicle state with new vehicle:', json);
 		this.setState((prevState) => {
-			return { vehicles: prevState.vehicles.concat(vehicle) };
+			return { vehicles: [ ...prevState.vehicles, json ] };
 		});
 	};
 

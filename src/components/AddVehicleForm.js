@@ -40,6 +40,7 @@ export default class AddVehicleForm extends Component {
 		})
 			.then((response) => response.json())
 			.then((json) => {
+				console.log('initial respons to new vin post:', json);
 				if (json.errors === 'NO MATCH') {
 					console.log('return no match');
 					alert('Matching Vin Not Found');

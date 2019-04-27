@@ -4,12 +4,18 @@ import { StyleSheet, Text, View, FlatList, ListItem } from 'react-native';
 export default class VehicleContainer extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {};
+		this.state = { columns: 1, vehicles: '' };
 	}
 
+	// componentWillReceiveProps = (props) => {
+	// 	this.setState({
+	// 		vehicles: props.vehicles
+	// 	});
+	// };
+
 	renderVehicleList = () => {
-		if (this.props.vehicles) {
-			let vehicles = this.props.vehicles.map((v) => {
+		if (this.state.vehicles) {
+			let vehicles = this.state.vehicles.map((v) => {
 				delete v.logs;
 				delete v.notes;
 				return v;
@@ -17,11 +23,14 @@ export default class VehicleContainer extends Component {
 			let lastVehicle = vehicles[vehicles.length - 1];
 			return (
 				<FlatList
+					style={styles.listContainer}
+					numColumns={this.state.columns}
 					data={Object.keys(lastVehicle)}
 					renderItem={({ item }) => {
 						return (
-							<View>
+							<View style={styles.specItem}>
 								<Text>{item}</Text>
+								<Text>{lastVehicle[item]}</Text>
 							</View>
 						);
 					}}
@@ -52,13 +61,16 @@ const styles = StyleSheet.create({
 		justifyContent: 'flex-start',
 		alignItems: 'center'
 	},
-	flatList: {
-		flex: 1
+	listContainer: {
+		flex: 1,
+		width: 300
 	},
 	specItem: {
 		borderColor: 'red',
 		borderWidth: 1,
-		width: 10,
-		height: 10
+		width: 100,
+		height: 100,
+		flex: 1,
+		flexWrap: 'wrap'
 	}
 });
