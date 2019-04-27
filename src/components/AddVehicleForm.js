@@ -27,7 +27,7 @@ export default class AddVehicleForm extends Component {
 	};
 
 	fetchVin = (vin) => {
-		fetch('http://10.137.4.75:5555/api/v1/vehicles', {
+		fetch('http://192.168.1.14:5555/api/v1/vehicles', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',

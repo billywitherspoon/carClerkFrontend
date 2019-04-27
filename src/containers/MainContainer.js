@@ -15,7 +15,7 @@ class MainContainer extends Component {
 	}
 
 	componentDidMount = () => {
-		fetch(`http://10.137.4.75:5555/api/v1/users/${this.state.userId}`)
+		fetch(`http://192.168.1.14:5555/api/v1/users/${this.state.userId}`)
 			.then((response) => response.json())
 			.then((json) => {
 				console.log('fetch successful');
