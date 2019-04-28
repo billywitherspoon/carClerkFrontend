@@ -2,8 +2,10 @@ import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import AppNavigator from './src/navigation/AppNavigator';
+import { Provider } from 'react-redux';
+import configureStore from './src/store/configureStore';
 
-export default class App extends React.Component {
+class App extends React.Component {
 	state = {
 		isLoadingComplete: false
 	};
@@ -57,3 +59,11 @@ const styles = StyleSheet.create({
 		backgroundColor: '#fff'
 	}
 });
+
+const ReduxApp = () => (
+	<Provider store={store}>
+		<App />
+	</Provider>
+);
+
+export default ReduxApp;

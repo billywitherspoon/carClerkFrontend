@@ -20,7 +20,9 @@ class MainContainer extends Component {
 			.then((json) => {
 				console.log('fetch successful');
 				console.log(json);
-				this.initializeVehiclesState(json.vehicles);
+				let vehicles = this.removeUserFromVehicleJson(json.vehicles);
+				// add code to use redux to set state and add all new vehicles here (pass in vehicles)
+				// this.initializeVehiclesState(json.vehicles);
 			})
 			.catch((error) => {
 				console.log(error);
@@ -42,12 +44,12 @@ class MainContainer extends Component {
 		});
 	};
 
-	initializeVehiclesState = (json) => {
-		let vehicles = this.removeUserFromVehicleJson(json);
-		this.setState({
-			vehicles: vehicles
-		});
-	};
+	// initializeVehiclesState = (json) => {
+	// 	let vehicles = this.removeUserFromVehicleJson(json);
+	// 	this.setState({
+	// 		vehicles: vehicles
+	// 	});
+	// };
 
 	// removeLogsAndNotes = () => {
 	// 	return this.state.vehicles.map((v) => {

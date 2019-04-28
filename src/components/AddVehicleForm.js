@@ -48,9 +48,18 @@ export default class AddVehicleForm extends Component {
 				} else {
 					console.log('returned good json');
 					this.props.toggleFormModal();
-					this.props.updateVehiclesState(json);
+					let vehicle = this.removeUserFromVehicleJson(json);
+					// call redux to append this vehicle to vehicles state (pass through vehicle)
+					// this.props.updateVehiclesState(json);
 				}
 			});
+	};
+
+	removeUserFromVehicleJson = (json) => {
+		return json.map((v) => {
+			delete v.user;
+			return v;
+		});
 	};
 
 	renderContent = () => {
