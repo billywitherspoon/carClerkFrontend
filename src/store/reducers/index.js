@@ -26,11 +26,4 @@ const reducer = (state = initialState, action) => {
 	}
 };
 
-// initializeVehiclesState = (json) => {
-// 	let vehicles = this.removeUserFromVehicleJson(json);
-// 	this.setState({
-// 		vehicles: vehicles
-// 	});
-// };
-
 export default reducer;

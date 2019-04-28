@@ -2,10 +2,10 @@ import React from 'react';
 import { Modal, View, Image, Text, StyleSheet, Button } from 'react-native';
 import AddVehicleForm from '../components/AddVehicleForm';
 
-const FormModal = (props) => (
+const addVehicleModal = (props) => (
 	<Modal visible={props.display} animationType="slide" onRequestClose={() => console.log('closed')}>
 		<View>
-			<AddVehicleForm updateVehiclesState={props.updateVehiclesState} toggleFormModal={props.toggleFormModal} />
+			<AddVehicleForm toggleAddVehicleModal={props.toggleAddVehicleModal} />
 		</View>
 	</Modal>
 );
@@ -23,4 +23,4 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default FormModal;
+export default addVehicleModal;

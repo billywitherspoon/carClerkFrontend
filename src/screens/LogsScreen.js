@@ -1,12 +1,13 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import MainContainer from '../containers/MainContainer';
+import { connect } from 'react-redux';
+import { setUserInfo, setVehicles, addNewVehicle } from '../store/actions/index.js';
 
-export default class LogsScreen extends React.Component {
+class LogsScreen extends React.Component {
 	render() {
 		return (
 			<View style={styles.flexCenter}>
-				<MainContainer activeContainer={'Logs'} />
+				<Text>Logs Screen</Text>
 			</View>
 		);
 	}
@@ -21,17 +22,17 @@ const styles = StyleSheet.create({
 	}
 });
 
-// import React from 'react';
-// import { ExpoConfigView } from '@expo/samples';
+const mapStateToProps = (state) => {
+	return {
+		vehicles: state.index.vehicles,
+		userInfo: state.index.userInfo
+	};
+};
 
-// export default class LogsScreen extends React.Component {
-// 	static navigationOptions = {
-// 		title: 'app.json'
-// 	};
+const mapDispatchToProps = (dispatch) => {
+	return {
+		reduxSetVehicles: (vehicle) => dispatch(setVehicles(vehicles))
+	};
+};
 
-// 	render() {
-// 		/* Go ahead and delete ExpoConfigView and replace it with your
-//      * content, we just wanted to give you a quick view of your config */
-// 		return <ExpoConfigView />;
-// 	}
-// }
+export default connect(mapStateToProps, mapDispatchToProps)(LogsScreen);

@@ -1,6 +1,6 @@
 import { createStore, combineReducers } from 'redux';
 
-import indexReducer from './reducers/places';
+import indexReducer from './reducers/index';
 
 const rootReducer = combineReducers({
 	index: indexReducer

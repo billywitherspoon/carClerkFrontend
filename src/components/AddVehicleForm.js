@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TextInput, View, Button, FormLabel, FormInput, FormValidationMessage } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
+import { connect } from 'react-redux';
+import { addNewVehicle } from '../store/actions/index.js';
 
-export default class AddVehicleForm extends Component {
+class AddVehicleForm extends Component {
 	constructor(props) {
 		super(props);
 		this.state = { vinText: '', showContent: true };
@@ -35,7 +37,7 @@ export default class AddVehicleForm extends Component {
 			},
 			body: JSON.stringify({
 				vin: `${vin}`,
-				user_id: 1
+				user_id: `${this.props.userInfo.id}`
 			})
 		})
 			.then((response) => response.json())
@@ -47,8 +49,9 @@ export default class AddVehicleForm extends Component {
 					this.toggleContent();
 				} else {
 					console.log('returned good json');
-					this.props.toggleFormModal();
+					this.props.toggleAddVehicleModal();
 					let vehicle = this.removeUserFromVehicleJson(json);
+					this.props.reduxAddNewVehicle(vehicle);
 					// call redux to append this vehicle to vehicles state (pass through vehicle)
 					// this.props.updateVehiclesState(json);
 				}
@@ -68,7 +71,7 @@ export default class AddVehicleForm extends Component {
 				<View>
 					<Button onPress={() => this.handleVinSubmit(this.state)} title="Submit" color="blue" />
 					<TextInput placeholder="Enter VIN" onChangeText={(vinText) => this.setState({ vinText })} />
-					<Button onPress={() => this.props.toggleFormModal()} title="Cancel" color="red" />
+					<Button onPress={() => this.props.toggleAddVehicleModal()} title="Cancel" color="red" />
 				</View>
 			);
 		} else {
@@ -92,3 +95,18 @@ const styles = StyleSheet.create({
 		alignItems: 'center'
 	}
 });
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		reduxAddNewVehicle: (vehicle) => dispatch(addNewVehicle(vehicle))
+	};
+};
+
+const mapStateToProps = (state) => {
+	return {
+		vehicles: state.index.vehicles,
+		userInfo: state.index.userInfo
+	};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddVehicleForm);

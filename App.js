@@ -60,6 +60,8 @@ const styles = StyleSheet.create({
 	}
 });
 
+const store = configureStore();
+
 const ReduxApp = () => (
 	<Provider store={store}>
 		<App />
