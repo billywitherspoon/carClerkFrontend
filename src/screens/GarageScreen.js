@@ -11,7 +11,7 @@ class GarageScreen extends React.Component {
 	}
 
 	componentDidMount = () => {
-		fetch(`http://192.168.1.14:5555/api/v1/users/1`)
+		fetch(`http://10.137.5.73:0430/api/v1/users/1`)
 			.then((response) => response.json())
 			.then((json) => {
 				console.log('initial fetch successful, json');
