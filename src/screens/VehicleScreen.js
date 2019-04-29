@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import { setUserInfo, setVehicles, addNewVehicle } from '../store/actions/index.js';
 
@@ -12,7 +12,7 @@ class VehicleScreen extends React.Component {
 	renderVehicleList = () => {
 		if (this.props.vehicles.length) {
 			let vehicles = this.props.vehicles;
-			vehicles = props.vehicles.map((v) => {
+			vehicles = this.props.vehicles.map((v) => {
 				delete v.logs;
 				delete v.notes;
 				return v;

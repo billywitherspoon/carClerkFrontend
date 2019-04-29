@@ -11,13 +11,15 @@ class GarageScreen extends React.Component {
 	}
 
 	componentDidMount = () => {
-		fetch(`http://10.137.5.73:0430/api/v1/users/1`)
+		fetch(`http://10.137.5.73:5513/api/v1/users/1`)
 			.then((response) => response.json())
 			.then((json) => {
 				console.log('initial fetch successful, json');
+
+				//remove user info (replace function below with set user info)
+				delete json.user;
+
 				let vehicles = this.removeUserFromVehicleJson(json.vehicles);
-				//set user info here
-				delete vehicles.user;
 				console.log('about to call reduxSetVehicles, current vehicles:', vehicles);
 				this.props.reduxSetVehicles(vehicles);
 			})

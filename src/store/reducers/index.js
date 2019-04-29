@@ -18,8 +18,8 @@ const reducer = (state = initialState, action) => {
 			};
 		case ADD_NEW_VEHICLE:
 			return {
-				...vehicles,
-				vehicle: action.vehicle
+				...state,
+				vehicles: [ ...state.vehicles, action.vehicle ]
 			};
 		default:
 			return state;

@@ -29,7 +29,7 @@ class AddVehicleForm extends Component {
 	};
 
 	fetchVin = (vin) => {
-		fetch('http://192.168.1.14:5555/api/v1/vehicles', {
+		fetch('http://10.137.5.73:5513/api/v1/vehicles', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -49,20 +49,16 @@ class AddVehicleForm extends Component {
 					this.toggleContent();
 				} else {
 					console.log('returned good json');
+					delete json.user;
+					this.props.reduxAddNewVehicle(json);
 					this.props.toggleAddVehicleModal();
-					let vehicle = this.removeUserFromVehicleJson(json);
-					this.props.reduxAddNewVehicle(vehicle);
 					// call redux to append this vehicle to vehicles state (pass through vehicle)
 					// this.props.updateVehiclesState(json);
 				}
+			})
+			.catch((error) => {
+				console.log(error);
 			});
-	};
-
-	removeUserFromVehicleJson = (json) => {
-		return json.map((v) => {
-			delete v.user;
-			return v;
-		});
 	};
 
 	renderContent = () => {
