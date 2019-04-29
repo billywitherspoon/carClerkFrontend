@@ -47,17 +47,19 @@ class GarageScreen extends React.Component {
 	};
 
 	renderVehicleCards = () => {
-		return this.props.vehicles.map((v) => {
+		console.log('about to render vehicles');
+		let vehicles = this.props.vehicles.slice().reverse();
+		return vehicles.map((v) => {
 			return <VehicleCard vehicle={v} key={Math.random()} />;
 		});
 	};
 
 	render() {
 		return (
-			<View>
+			<View style={styles.flexCenter}>
 				<Text>GarageContainer</Text>
 				<Button onPress={() => this.toggleAddVehicleModal()} title="Add a New Vehicle" color="green" />
-				<ScrollView>{this.renderVehicleCards()}</ScrollView>
+				<ScrollView style={styles.vehiclesContainer}>{this.renderVehicleCards()}</ScrollView>
 				<AddVehicleModal
 					display={this.state.displayAddVehicleModal}
 					toggleAddVehicleModal={this.toggleAddVehicleModal}
@@ -71,17 +73,19 @@ class GarageScreen extends React.Component {
 
 const styles = StyleSheet.create({
 	flexCenter: {
-		flex: 1,
-		flexDirection: 'column',
-		justifyContent: 'center',
-		alignItems: 'center'
-	}
+		flex: 1
+	},
+	vehiclesContainer: {}
 });
 
+// vehiclesContainer: {
+// 	paddingBottom: '5'
+// }
 const mapStateToProps = (state) => {
 	return {
 		vehicles: state.index.vehicles,
-		userInfo: state.index.userInfo
+		userInfo: state.index.userInfo,
+		selectedVehicle: state.index.selectedVehicle
 	};
 };
 

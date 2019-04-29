@@ -1,4 +1,4 @@
-import { SET_USER_INFO, SET_VEHICLES, ADD_NEW_VEHICLE } from './actionTypes';
+import { SET_USER_INFO, SET_VEHICLES, ADD_NEW_VEHICLE, SELECT_VEHICLE } from './actionTypes';
 
 export const setUserInfo = (userInfo) => {
 	return {
@@ -18,5 +18,12 @@ export const addNewVehicle = (vehicle) => {
 	return {
 		type: ADD_NEW_VEHICLE,
 		vehicle: vehicle
+	};
+};
+
+export const selectVehicle = (selectedVehicle) => {
+	return {
+		type: SELECT_VEHICLE,
+		selectedVehicle: selectedVehicle
 	};
 };

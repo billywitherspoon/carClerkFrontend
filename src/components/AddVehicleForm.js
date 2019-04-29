@@ -98,11 +98,11 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-const mapStateToProps = (state) => {
-	return {
-		vehicles: state.index.vehicles,
-		userInfo: state.index.userInfo
-	};
-};
+// const mapStateToProps = (state) => {
+// 	return {
+// 		vehicles: state.index.vehicles,
+// 		userInfo: state.index.userInfo
+// 	};
+// };
 
-export default connect(mapStateToProps)(AddVehicleForm);
+export default connect(null, mapDispatchToProps)(AddVehicleForm);

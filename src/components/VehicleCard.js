@@ -1,16 +1,59 @@
 import React from 'react';
 import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
+import { connect } from 'react-redux';
+import { selectVehicle } from '../store/actions/index.js';
 
-const VehicleCard = (props) => {
-	return (
-		<View style={styles.vehicleCard}>
-			<Text>{props.vehicle.year}</Text>
-			<Text>{props.vehicle.make}</Text>
-			<Text>{props.vehicle.model}</Text>
-			<Text>{props.vehicle.trim}</Text>
-		</View>
-	);
-};
+class VehicleCard extends React.Component {
+	constructor(props) {
+		super(props);
+	}
+
+	handleVehiclePress = () => {
+		console.log('vehicle pressed, id:', this.props.vehicle);
+		let selectedVehicle = { ...this.props.vehicle };
+		this.props.reduxSelectVehicle(selectedVehicle);
+		console.log('selected vehicle probably set');
+	};
+
+	renderVehicleCard = () => {
+		if (this.props.selectedVehicle && this.props.vehicle.id === this.props.selectedVehicle.id) {
+			console.log('vehicle card matches selected vehicle');
+			return (
+				<View>
+					<Text style={styles.isSelectedVehicle} onPress={this.handleVehiclePress}>
+						{this.props.vehicle.model_year}
+					</Text>
+					<Text style={styles.isSelectedVehicle} onPress={this.handleVehiclePress}>
+						{this.props.vehicle.make}
+					</Text>
+					<Text style={styles.isSelectedVehicle} onPress={this.handleVehiclePress}>
+						{this.props.vehicle.model}
+					</Text>
+					<Text style={styles.isSelectedVehicle} onPress={this.handleVehiclePress}>
+						{this.props.vehicle.trim}
+					</Text>
+				</View>
+			);
+		} else {
+			return (
+				<View>
+					<Text onPress={this.handleVehiclePress}>{this.props.vehicle.model_year}</Text>
+					<Text onPress={this.handleVehiclePress}>{this.props.vehicle.make}</Text>
+					<Text onPress={this.handleVehiclePress}>{this.props.vehicle.model}</Text>
+					<Text onPress={this.handleVehiclePress}>{this.props.vehicle.trim}</Text>
+				</View>
+			);
+		}
+	};
+
+	render() {
+		return (
+			<View style={styles.vehicleCard} onPress={this.handleVehiclePress}>
+				{this.renderVehicleCard()}
+			</View>
+		);
+	}
+}
 
 const styles = StyleSheet.create({
 	vehicleCard: {
@@ -20,7 +63,24 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		borderColor: '#D3D3D3',
 		borderWidth: 1
+	},
+	isSelectedVehicle: {
+		color: 'blue'
 	}
 });
 
-export default VehicleCard;
+const mapStateToProps = (state) => {
+	return {
+		vehicles: state.index.vehicles,
+		userInfo: state.index.userInfo,
+		selectedVehicle: state.index.selectedVehicle
+	};
+};
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		reduxSelectVehicle: (selectedVehicle) => dispatch(selectVehicle(selectedVehicle))
+	};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(VehicleCard);

@@ -25,7 +25,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
 	return {
 		vehicles: state.index.vehicles,
-		userInfo: state.index.userInfo
+		userInfo: state.index.userInfo,
+		selectedVehicle: state.index.selectedVehicle
 	};
 };
 

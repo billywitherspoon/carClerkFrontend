@@ -9,26 +9,23 @@ class VehicleScreen extends React.Component {
 		this.state = { columns: 3 };
 	}
 
-	renderVehicleList = () => {
-		if (this.props.vehicles.length) {
-			let vehicles = this.props.vehicles;
-			vehicles = this.props.vehicles.map((v) => {
-				delete v.logs;
-				delete v.notes;
-				return v;
-			});
-			let lastVehicle = vehicles[vehicles.length - 1];
-			lastVehicle = this.removeNulls(lastVehicle);
+	renderVehicleInfo = () => {
+		if (this.props.selectedVehicle) {
+			let vehicle = { ...this.props.selectedVehicle };
+			delete vehicle.logs;
+			delete vehicle.notes;
+			delete vehicle.id;
+			let displayVehicle = this.removeNulls(vehicle);
 			return (
 				<FlatList
 					style={styles.listContainer}
 					numColumns={this.state.columns}
-					data={Object.keys(lastVehicle)}
+					data={Object.keys(displayVehicle)}
 					renderItem={({ item }) => {
 						return (
 							<View style={styles.specItem}>
 								<Text>{this.titleize(item)}:</Text>
-								<Text>{this.titleize(lastVehicle[item])}</Text>
+								<Text>{this.titleize(displayVehicle[item])}</Text>
 							</View>
 						);
 					}}
@@ -38,7 +35,7 @@ class VehicleScreen extends React.Component {
 				/>
 			);
 		} else {
-			return <Text>No vehicles added yet</Text>;
+			return <Text>Select a vehicle</Text>;
 		}
 	};
 
@@ -67,7 +64,7 @@ class VehicleScreen extends React.Component {
 		return (
 			<View style={styles.flexCenter}>
 				<Text>Vehicle Container Page</Text>
-				{this.renderVehicleList()}
+				{this.renderVehicleInfo()}
 			</View>
 		);
 	}
@@ -90,14 +87,17 @@ const styles = StyleSheet.create({
 		width: 100,
 		height: 100,
 		flex: 1,
-		flexWrap: 'wrap'
+		flexWrap: 'wrap',
+		flexDirection: 'column',
+		justifyContent: 'space-around'
 	}
 });
 
 const mapStateToProps = (state) => {
 	return {
 		vehicles: state.index.vehicles,
-		userInfo: state.index.userInfo
+		userInfo: state.index.userInfo,
+		selectedVehicle: state.index.selectedVehicle
 	};
 };
 
