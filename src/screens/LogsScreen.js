@@ -31,7 +31,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		reduxSetVehicles: (vehicle) => dispatch(setVehicles(vehicles))
+		reduxSetVehicles: (vehicles) => dispatch(setVehicles(vehicles))
 	};
 };
 

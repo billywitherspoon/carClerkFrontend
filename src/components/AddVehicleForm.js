@@ -37,7 +37,7 @@ class AddVehicleForm extends Component {
 			},
 			body: JSON.stringify({
 				vin: `${vin}`,
-				user_id: `${this.props.userInfo.id}`
+				user_id: 1
 			})
 		})
 			.then((response) => response.json())

@@ -11,10 +11,10 @@ class GarageScreen extends React.Component {
 	}
 
 	componentDidMount = () => {
-		fetch(`http://192.168.1.14:5555/api/v1/users/${this.props.userInfo.id}`)
+		fetch(`http://192.168.1.14:5555/api/v1/users/1`)
 			.then((response) => response.json())
 			.then((json) => {
-				console.log('fetch successful');
+				console.log('initial fetch successful, json');
 				let vehicles = this.removeUserFromVehicleJson(json.vehicles);
 				//set user info here
 				delete vehicles.user;
@@ -76,7 +76,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		reduxSetVehicles: (vehicle) => dispatch(setVehicles(vehicles))
+		reduxSetVehicles: (vehicles) => dispatch(setVehicles(vehicles))
 	};
 };
 
