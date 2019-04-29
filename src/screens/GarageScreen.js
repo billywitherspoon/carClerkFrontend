@@ -1,8 +1,10 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, ScrollView } from 'react-native';
 import AddVehicleModal from '../modals/AddVehicleModal';
 import { connect } from 'react-redux';
-import { setUserInfo, setVehicles, addNewVehicle } from '../store/actions/index.js';
+import { setVehicles } from '../store/actions/index.js';
+import VehicleCard from '../components/VehicleCard';
+// import { ScrollView } from 'react-native-gesture-handler';
 
 class GarageScreen extends React.Component {
 	constructor(props) {
@@ -44,11 +46,18 @@ class GarageScreen extends React.Component {
 		console.log('Add Vehicle Modal Toggled');
 	};
 
+	renderVehicleCards = () => {
+		return this.props.vehicles.map((v) => {
+			return <VehicleCard vehicle={v} key={Math.random()} />;
+		});
+	};
+
 	render() {
 		return (
 			<View>
 				<Text>GarageContainer</Text>
 				<Button onPress={() => this.toggleAddVehicleModal()} title="Add a New Vehicle" color="green" />
+				<ScrollView>{this.renderVehicleCards()}</ScrollView>
 				<AddVehicleModal
 					display={this.state.displayAddVehicleModal}
 					toggleAddVehicleModal={this.toggleAddVehicleModal}

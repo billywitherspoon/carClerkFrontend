@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 import { connect } from 'react-redux';
-import { setUserInfo, setVehicles, addNewVehicle } from '../store/actions/index.js';
+// import { setUserInfo, setVehicles, addNewVehicle } from '../store/actions/index.js';
 
 class VehicleScreen extends React.Component {
 	constructor(props) {
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
 		width: 300
 	},
 	specItem: {
-		borderColor: 'red',
+		borderColor: '#D3D3D3',
 		borderWidth: 1,
 		width: 100,
 		height: 100,
@@ -101,10 +101,10 @@ const mapStateToProps = (state) => {
 	};
 };
 
-const mapDispatchToProps = (dispatch) => {
-	return {
-		reduxSetVehicles: (vehicles) => dispatch(setVehicles(vehicles))
-	};
-};
+// const mapDispatchToProps = (dispatch) => {
+// 	return {
+// 		reduxSetVehicles: (vehicles) => dispatch(setVehicles(vehicles))
+// 	};
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(VehicleScreen);
+export default connect(mapStateToProps)(VehicleScreen);

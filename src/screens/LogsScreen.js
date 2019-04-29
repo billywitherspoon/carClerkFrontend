@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { connect } from 'react-redux';
-import { setUserInfo, setVehicles, addNewVehicle } from '../store/actions/index.js';
+// import { setUserInfo, setVehicles, addNewVehicle } from '../store/actions/index.js';
 
 class LogsScreen extends React.Component {
 	render() {
@@ -29,10 +29,10 @@ const mapStateToProps = (state) => {
 	};
 };
 
-const mapDispatchToProps = (dispatch) => {
-	return {
-		reduxSetVehicles: (vehicles) => dispatch(setVehicles(vehicles))
-	};
-};
+// const mapDispatchToProps = (dispatch) => {
+// 	return {
+// 		reduxSetVehicles: (vehicles) => dispatch(setVehicles(vehicles))
+// 	};
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LogsScreen);
+export default connect(mapStateToProps)(LogsScreen);

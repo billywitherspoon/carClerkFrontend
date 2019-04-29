@@ -105,4 +105,4 @@ const mapStateToProps = (state) => {
 	};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddVehicleForm);
+export default connect(mapStateToProps)(AddVehicleForm);
