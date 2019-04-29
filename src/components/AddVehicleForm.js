@@ -6,7 +6,7 @@ import { addNewVehicle } from '../store/actions/index.js';
 class AddVehicleForm extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { vinText: '', showContent: true };
+		this.state = { vinText: '', carName: '', showContent: true };
 	}
 
 	toggleContent = () => {
@@ -37,7 +37,8 @@ class AddVehicleForm extends Component {
 			},
 			body: JSON.stringify({
 				vin: `${vin}`,
-				user_id: 1
+				user_id: 1,
+				name: `${this.state.carName}`
 			})
 		})
 			.then((response) => response.json())
@@ -67,6 +68,10 @@ class AddVehicleForm extends Component {
 				<View>
 					<Button onPress={() => this.handleVinSubmit(this.state)} title="Submit" color="blue" />
 					<TextInput placeholder="Enter VIN" onChangeText={(vinText) => this.setState({ vinText })} />
+					<TextInput
+						placeholder="Enter a nickname for this vehicle"
+						onChangeText={(vehicleName) => this.setState({ vehicleName })}
+					/>
 					<Button onPress={() => this.props.toggleAddVehicleModal()} title="Cancel" color="red" />
 				</View>
 			);

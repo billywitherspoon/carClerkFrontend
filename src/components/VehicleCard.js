@@ -19,7 +19,7 @@ class VehicleCard extends React.Component {
 		if (this.props.selectedVehicle && this.props.vehicle.id === this.props.selectedVehicle.id) {
 			console.log('vehicle card matches selected vehicle');
 			return (
-				<View>
+				<View style={styles.flexCenter}>
 					<Text style={styles.isSelectedVehicle} onPress={this.handleVehiclePress}>
 						{this.props.vehicle.model_year}
 					</Text>
@@ -36,7 +36,7 @@ class VehicleCard extends React.Component {
 			);
 		} else {
 			return (
-				<View>
+				<View style={styles.flexCenter}>
 					<Text onPress={this.handleVehiclePress}>{this.props.vehicle.model_year}</Text>
 					<Text onPress={this.handleVehiclePress}>{this.props.vehicle.make}</Text>
 					<Text onPress={this.handleVehiclePress}>{this.props.vehicle.model}</Text>
@@ -66,6 +66,12 @@ const styles = StyleSheet.create({
 	},
 	isSelectedVehicle: {
 		color: 'blue'
+	},
+	flexCenter: {
+		flex: 1,
+		flexDirection: 'column',
+		justifyContent: 'center',
+		alignItems: 'center'
 	}
 });
 
