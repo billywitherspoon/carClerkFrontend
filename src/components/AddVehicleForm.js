@@ -6,7 +6,7 @@ import { addNewVehicle } from '../store/actions/index.js';
 class AddVehicleForm extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { vinText: '', carName: '', showContent: true };
+		this.state = { vinText: '', vehicleName: '', showContent: true };
 	}
 
 	toggleContent = () => {
@@ -38,7 +38,7 @@ class AddVehicleForm extends Component {
 			body: JSON.stringify({
 				vin: `${vin}`,
 				user_id: 1,
-				name: `${this.state.carName}`
+				name: `${this.state.vehicleName}`
 			})
 		})
 			.then((response) => response.json())

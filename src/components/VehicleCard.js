@@ -21,6 +21,9 @@ class VehicleCard extends React.Component {
 			return (
 				<View style={styles.flexCenter}>
 					<Text style={styles.isSelectedVehicle} onPress={this.handleVehiclePress}>
+						{this.props.vehicle.name}
+					</Text>
+					<Text style={styles.isSelectedVehicle} onPress={this.handleVehiclePress}>
 						{this.props.vehicle.model_year}
 					</Text>
 					<Text style={styles.isSelectedVehicle} onPress={this.handleVehiclePress}>
@@ -32,15 +35,20 @@ class VehicleCard extends React.Component {
 					<Text style={styles.isSelectedVehicle} onPress={this.handleVehiclePress}>
 						{this.props.vehicle.trim}
 					</Text>
+					<Text style={styles.isSelectedVehicle} onPress={this.handleVehiclePress}>
+						{this.props.vehicle.mileage}
+					</Text>
 				</View>
 			);
 		} else {
 			return (
 				<View style={styles.flexCenter}>
+					<Text onPress={this.handleVehiclePress}>{this.props.vehicle.name}</Text>
 					<Text onPress={this.handleVehiclePress}>{this.props.vehicle.model_year}</Text>
 					<Text onPress={this.handleVehiclePress}>{this.props.vehicle.make}</Text>
 					<Text onPress={this.handleVehiclePress}>{this.props.vehicle.model}</Text>
 					<Text onPress={this.handleVehiclePress}>{this.props.vehicle.trim}</Text>
+					<Text onPress={this.handleVehiclePress}>{this.props.vehicle.mileage}</Text>
 				</View>
 			);
 		}
