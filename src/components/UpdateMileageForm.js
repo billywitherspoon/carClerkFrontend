@@ -13,7 +13,7 @@ class UpdateMileageForm extends React.Component {
 
 	handleMileageUpdate = () => {
 		if (parseInt(this.state.mileageInput) > 0) {
-			fetch(`http://10.137.3.208:5513/api/v1/vehicles/${this.props.selectedVehicle.id}`, {
+			fetch(`http://10.137.2.158:5513/api/v1/vehicles/${this.props.selectedVehicle.id}`, {
 				method: 'PATCH',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
@@ -30,7 +30,8 @@ class UpdateMileageForm extends React.Component {
 	};
 
 	updateVehicleStates = (vehicle) => {
-		delete vehicle.user;
+		// delete vehicle.user;
+		console.log('updating vehicle states');
 		this.props.reduxSelectVehicle(vehicle);
 		let vehicles = this.props.vehicles.slice();
 		updatedVehicles = vehicles.map((v) => {
@@ -46,7 +47,7 @@ class UpdateMileageForm extends React.Component {
 
 	render() {
 		return (
-			<View style={styles.flexCenter}>
+			<View>
 				<TextInput
 					placeholder="Update Vehicle's Mileage"
 					onChangeText={(mileageInput) => this.setState({ mileageInput })}

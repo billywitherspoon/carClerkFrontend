@@ -7,35 +7,51 @@ import VehicleCard from '../components/VehicleCard';
 // import { ScrollView } from 'react-native-gesture-handler';
 
 class GarageScreen extends React.Component {
+	static navigationOptions = {
+		title: 'Car Clerk',
+		headerStyle: {
+			backgroundColor: '#2d3142'
+		},
+		headerTintColor: '#bfc0c0',
+		headerTitleStyle: {
+			fontWeight: 'bold',
+			flex: 1,
+			alignSelf: 'center',
+			justifyContent: 'center',
+			textAlign: 'center',
+			textAlignVertical: 'center'
+		}
+	};
+
 	constructor(props) {
 		super(props);
 		this.state = { displayAddVehicleModal: false };
 	}
 
 	componentDidMount = () => {
-		fetch(`http://10.137.3.208:5513/api/v1/users/1`)
+		fetch(`http://10.137.2.158:5513/api/v1/users/1`)
 			.then((response) => response.json())
 			.then((json) => {
-				console.log('initial fetch successful, json');
+				console.log('initial fetch successful');
 
 				//remove user info (replace function below with set user info)
 				delete json.user;
 
-				let vehicles = this.removeUserFromVehicleJson(json.vehicles);
-				console.log('about to call reduxSetVehicles, current vehicles:', vehicles);
-				this.props.reduxSetVehicles(vehicles);
+				// let vehicles = this.removeUserFromVehicleJson(json.vehicles);
+				console.log('about to call reduxSetVehicles');
+				this.props.reduxSetVehicles(json.vehicles);
 			})
 			.catch((error) => {
 				console.log(error);
 			});
 	};
 
-	removeUserFromVehicleJson = (json) => {
-		return json.map((v) => {
-			delete v.user;
-			return v;
-		});
-	};
+	// removeUserFromVehicleJson = (json) => {
+	// 	return json.map((v) => {
+	// 		delete v.user;
+	// 		return v;
+	// 	});
+	// };
 
 	toggleAddVehicleModal = () => {
 		this.setState((prevState) => {

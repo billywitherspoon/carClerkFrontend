@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 // import { setVehicles, selectVehicle } from '../store/actions/index.js';
 import UpdateMileageForm from '../components/UpdateMileageForm';
@@ -8,6 +8,22 @@ import LogModal from '../modals/LogModal';
 //update
 
 class LogsScreen extends React.Component {
+	static navigationOptions = {
+		title: 'Car Clerk',
+		headerStyle: {
+			backgroundColor: '#2d3142'
+		},
+		headerTintColor: '#bfc0c0',
+		headerTitleStyle: {
+			fontWeight: 'bold',
+			flex: 1,
+			alignSelf: 'center',
+			justifyContent: 'center',
+			textAlign: 'center',
+			textAlignVertical: 'center'
+		}
+	};
+
 	constructor(props) {
 		super(props);
 		this.state = { displayLogModal: false };
@@ -41,8 +57,7 @@ class LogsScreen extends React.Component {
 				<View>
 					<Button onPress={() => this.toggleLogModal()} title="Add a New Log" color="green" />
 					<UpdateMileageForm />
-					<Text>This is below the update mileage form</Text>
-					{this.renderLogs()}
+					<ScrollView>{this.renderLogs()}</ScrollView>
 					<LogModal display={this.state.displayLogModal} toggleLogModal={this.toggleLogModal} />
 				</View>
 			);

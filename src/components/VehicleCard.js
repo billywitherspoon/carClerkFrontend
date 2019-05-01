@@ -9,7 +9,7 @@ class VehicleCard extends React.Component {
 	}
 
 	handleVehiclePress = () => {
-		console.log('vehicle pressed, id:', this.props.vehicle);
+		console.log('vehicle pressed', this.props.vehicle);
 		let selectedVehicle = { ...this.props.vehicle };
 		this.props.reduxSelectVehicle(selectedVehicle);
 		console.log('selected vehicle probably set');
@@ -17,7 +17,6 @@ class VehicleCard extends React.Component {
 
 	renderVehicleCard = () => {
 		if (this.props.selectedVehicle && this.props.vehicle.id === this.props.selectedVehicle.id) {
-			console.log('vehicle card matches selected vehicle');
 			return (
 				<View style={styles.flexCenter}>
 					<Text style={styles.isSelectedVehicle} onPress={this.handleVehiclePress}>

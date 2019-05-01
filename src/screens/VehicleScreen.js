@@ -4,6 +4,22 @@ import { connect } from 'react-redux';
 // import { setUserInfo, setVehicles, addNewVehicle } from '../store/actions/index.js';
 
 class VehicleScreen extends React.Component {
+	static navigationOptions = {
+		title: 'Car Clerk',
+		headerStyle: {
+			backgroundColor: '#2d3142'
+		},
+		headerTintColor: '#bfc0c0',
+		headerTitleStyle: {
+			fontWeight: 'bold',
+			flex: 1,
+			alignSelf: 'center',
+			justifyContent: 'center',
+			textAlign: 'center',
+			textAlignVertical: 'center'
+		}
+	};
+
 	constructor(props) {
 		super(props);
 		this.state = { columns: 3 };
@@ -15,24 +31,29 @@ class VehicleScreen extends React.Component {
 			delete vehicle.logs;
 			delete vehicle.notes;
 			delete vehicle.id;
+			let vehicleName = vehicle.name;
+			delete vehicle.name;
 			let displayVehicle = this.removeNulls(vehicle);
 			return (
-				<FlatList
-					style={styles.listContainer}
-					numColumns={this.state.columns}
-					data={Object.keys(displayVehicle)}
-					renderItem={({ item }) => {
-						return (
-							<View style={styles.specItem}>
-								<Text>{this.titleize(item)}:</Text>
-								<Text>{this.titleize(displayVehicle[item])}</Text>
-							</View>
-						);
-					}}
-					keyExtractor={(index) => {
-						return index;
-					}}
-				/>
+				<React.Fragment>
+					<Text>{vehicleName}</Text>
+					<FlatList
+						style={styles.listContainer}
+						numColumns={this.state.columns}
+						data={Object.keys(displayVehicle)}
+						renderItem={({ item }) => {
+							return (
+								<View style={styles.specItem}>
+									<Text>{this.titleize(item)}:</Text>
+									<Text>{this.titleize(displayVehicle[item])}</Text>
+								</View>
+							);
+						}}
+						keyExtractor={(index) => {
+							return index;
+						}}
+					/>
+				</React.Fragment>
 			);
 		} else {
 			return <Text>Select a vehicle</Text>;
@@ -65,12 +86,7 @@ class VehicleScreen extends React.Component {
 	};
 
 	render() {
-		return (
-			<View style={styles.flexCenter}>
-				<Text>Vehicle Container Page</Text>
-				{this.renderVehicleInfo()}
-			</View>
-		);
+		return <View style={styles.flexCenter}>{this.renderVehicleInfo()}</View>;
 	}
 }
 

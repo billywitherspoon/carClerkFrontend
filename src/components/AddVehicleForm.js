@@ -29,7 +29,7 @@ class AddVehicleForm extends Component {
 	};
 
 	fetchVin = (vin) => {
-		fetch('http://10.137.3.208:5513/api/v1/vehicles', {
+		fetch('http://10.137.2.158:5513/api/v1/vehicles', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -43,14 +43,14 @@ class AddVehicleForm extends Component {
 		})
 			.then((response) => response.json())
 			.then((json) => {
-				console.log('initial respons to new vin post:', json);
+				console.log('received response to new vin post');
 				if (json.errors === 'NO MATCH') {
 					console.log('return no match');
 					alert('Matching Vin Not Found');
 					this.toggleContent();
 				} else {
 					console.log('returned good json');
-					delete json.user;
+					// delete json.user;
 					this.props.reduxAddNewVehicle(json);
 					this.props.toggleAddVehicleModal();
 					// call redux to append this vehicle to vehicles state (pass through vehicle)

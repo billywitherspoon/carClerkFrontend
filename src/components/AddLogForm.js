@@ -33,7 +33,7 @@ class AddLogForm extends React.Component {
 	};
 
 	postNewLog = () => {
-		fetch('http://10.137.3.208:5513/api/v1/logs', {
+		fetch('http://10.137.2.158:5513/api/v1/logs', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -49,8 +49,10 @@ class AddLogForm extends React.Component {
 		})
 			.then((response) => response.json())
 			.then((json) => {
-				console.log('response of new log:', json);
+				console.log('new vehicle received with new log');
 				this.updateVehicleStates(json);
+				this.props.toggleLogModal;
+				console.log('after toggle Log modal');
 			})
 			.catch((error) => {
 				console.log(error);
@@ -60,7 +62,8 @@ class AddLogForm extends React.Component {
 	//update
 
 	updateVehicleStates = (vehicle) => {
-		delete vehicle.user;
+		// delete vehicle.user;
+		console.log('updating vehicle states');
 		this.props.reduxSelectVehicle(vehicle);
 		let vehicles = this.props.vehicles.slice();
 		updatedVehicles = vehicles.map((v) => {
@@ -71,7 +74,6 @@ class AddLogForm extends React.Component {
 			}
 		});
 		this.props.reduxSetVehicles(updatedVehicles);
-		this.props.toggleLogModal;
 	};
 
 	render() {
