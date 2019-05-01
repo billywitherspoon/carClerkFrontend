@@ -12,17 +12,21 @@ class UpdateMileageForm extends React.Component {
 	}
 
 	handleMileageUpdate = () => {
-		fetch(`http://10.137.5.73:5513/api/v1/vehicles/${this.props.selectedVehicle.id}`, {
-			method: 'PATCH',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({
-				mileage: this.state.mileageInput
+		if (parseInt(this.state.mileageInput) > 0) {
+			fetch(`http://10.137.3.208:5513/api/v1/vehicles/${this.props.selectedVehicle.id}`, {
+				method: 'PATCH',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					mileage: this.state.mileageInput
+				})
 			})
-		})
-			.then((response) => response.json())
-			.then((json) => {
-				this.updateVehicleStates(json);
-			});
+				.then((response) => response.json())
+				.then((json) => {
+					this.updateVehicleStates(json);
+				});
+		} else {
+			alert('Please Enter A Valid Mileage');
+		}
 	};
 
 	updateVehicleStates = (vehicle) => {
@@ -37,6 +41,7 @@ class UpdateMileageForm extends React.Component {
 			}
 		});
 		this.props.reduxSetVehicles(updatedVehicles);
+		alert('Mileage Updated');
 	};
 
 	render() {
@@ -57,7 +62,8 @@ const styles = StyleSheet.create({
 		flex: 1,
 		flexDirection: 'column',
 		justifyContent: 'flex-start',
-		alignItems: 'center'
+		alignItems: 'center',
+		borderColor: 'black'
 	}
 });
 

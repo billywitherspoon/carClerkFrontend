@@ -1,22 +1,54 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Button } from 'react-native';
 import { connect } from 'react-redux';
 // import { setVehicles, selectVehicle } from '../store/actions/index.js';
 import UpdateMileageForm from '../components/UpdateMileageForm';
+import LogModal from '../modals/LogModal';
+
+//update
 
 class LogsScreen extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {};
+		this.state = { displayLogModal: false };
 	}
 
+	toggleLogModal = () => {
+		this.setState((prevState) => {
+			return {
+				displayLogModal: !prevState.displayLogModal
+			};
+		});
+		console.log('Log Modal Toggled');
+	};
+
+	renderLogs = () => {
+		return this.props.selectedVehicle.logs.map((log) => {
+			return (
+				<View style={styles.logItem} key={Math.random()}>
+					<Text>Title: {log.title}</Text>
+					<Text>Description: {log.description}</Text>
+					<Text>Mileage: {log.mileage}</Text>
+					<Text>Completed?: {log.complete}</Text>
+				</View>
+			);
+		});
+	};
+
 	render() {
-		return (
-			<View style={styles.flexCenter}>
-				<Text>Logs Screen</Text>
-				{this.props.selectedVehicle ? <UpdateMileageForm /> : null}
-			</View>
-		);
+		if (this.props.selectedVehicle) {
+			return (
+				<View>
+					<Button onPress={() => this.toggleLogModal()} title="Add a New Log" color="green" />
+					<UpdateMileageForm />
+					<Text>This is below the update mileage form</Text>
+					{this.renderLogs()}
+					<LogModal display={this.state.displayLogModal} toggleLogModal={this.toggleLogModal} />
+				</View>
+			);
+		} else {
+			return <Text>Select a vehicle</Text>;
+		}
 	}
 }
 
@@ -26,8 +58,15 @@ const styles = StyleSheet.create({
 		flexDirection: 'column',
 		justifyContent: 'flex-start',
 		alignItems: 'center'
+	},
+	logItem: {
+		borderColor: 'black',
+		borderWidth: 0.5,
+		borderRadius: 0.5
 	}
 });
+
+//update
 
 const mapStateToProps = (state) => {
 	return {

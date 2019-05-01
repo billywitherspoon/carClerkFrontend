@@ -29,7 +29,7 @@ class AddVehicleForm extends Component {
 	};
 
 	fetchVin = (vin) => {
-		fetch('http://10.137.5.73:5513/api/v1/vehicles', {
+		fetch('http://10.137.3.208:5513/api/v1/vehicles', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -62,17 +62,17 @@ class AddVehicleForm extends Component {
 			});
 	};
 
-	renderContent = () => {
+	render() {
 		if (this.state.showContent) {
 			return (
 				<View>
-					<Button onPress={() => this.handleVinSubmit(this.state)} title="Submit" color="blue" />
+					<Button onPress={this.handleVinSubmit} title="Submit" color="blue" />
 					<TextInput placeholder="Enter VIN" onChangeText={(vinText) => this.setState({ vinText })} />
 					<TextInput
 						placeholder="Enter a nickname for this vehicle"
 						onChangeText={(vehicleName) => this.setState({ vehicleName })}
 					/>
-					<Button onPress={() => this.props.toggleAddVehicleModal()} title="Cancel" color="red" />
+					<Button onPress={this.props.toggleAddVehicleModal} title="Cancel" color="red" />
 				</View>
 			);
 		} else {
@@ -82,10 +82,6 @@ class AddVehicleForm extends Component {
 				</View>
 			);
 		}
-	};
-
-	render() {
-		return <View>{this.renderContent()}</View>;
 	}
 }
 

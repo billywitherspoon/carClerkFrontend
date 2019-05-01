@@ -1,10 +1,10 @@
 import React from 'react';
 import { Modal, View, Image, Text, StyleSheet, Button } from 'react-native';
-import AddVehicleForm from '../components/AddVehicleForm';
+import AddLogForm from '../components/AddLogForm';
 
-const addVehicleModal = (props) => (
+const logModal = (props) => (
 	<Modal visible={props.display} animationType="slide" onRequestClose={() => console.log('closed')}>
-		<AddVehicleForm toggleAddVehicleModal={props.toggleAddVehicleModal} />
+		<AddLogForm toggleLogModal={props.toggleLogModal} />
 	</Modal>
 );
 
@@ -21,4 +21,4 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default addVehicleModal;
+export default logModal;

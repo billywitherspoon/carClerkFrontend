@@ -40,15 +40,19 @@ class VehicleScreen extends React.Component {
 	};
 
 	titleize = (sentence) => {
-		let titleizeWord = (string) => {
-			return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-		};
-		if (!sentence.split(/[ _]/g)) return titleizeWord(sentence);
-		let splitSentence = sentence.split(/[ _]/g);
-		let mappedSplit = splitSentence.map((word) => {
-			return titleizeWord(word);
-		});
-		return mappedSplit.join(' ');
+		if (!Number.isInteger(sentence)) {
+			let titleizeWord = (string) => {
+				return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+			};
+			if (!sentence.split(/[ _]/g)) return titleizeWord(sentence);
+			let splitSentence = sentence.split(/[ _]/g);
+			let mappedSplit = splitSentence.map((word) => {
+				return titleizeWord(word);
+			});
+			return mappedSplit.join(' ');
+		} else {
+			return sentence;
+		}
 	};
 
 	removeNulls = (vehicle) => {
