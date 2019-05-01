@@ -12,7 +12,7 @@ class GarageScreen extends React.Component {
 		headerStyle: {
 			backgroundColor: '#2d3142'
 		},
-		headerTintColor: '#bfc0c0',
+		headerTintColor: '#C9CACA',
 		headerTitleStyle: {
 			fontWeight: 'bold',
 			flex: 1,
@@ -73,9 +73,12 @@ class GarageScreen extends React.Component {
 	render() {
 		return (
 			<View style={styles.flexCenter}>
-				<Text>GarageContainer</Text>
-				<Button onPress={() => this.toggleAddVehicleModal()} title="Add a New Vehicle" color="green" />
-				<ScrollView style={styles.vehiclesContainer}>{this.renderVehicleCards()}</ScrollView>
+				<ScrollView style={styles.vehiclesContainer}>
+					{this.renderVehicleCards()}
+					<View style={styles.addVehicleButton}>
+						<Button onPress={() => this.toggleAddVehicleModal()} title="Add Vehicle" color="#d46262" />
+					</View>
+				</ScrollView>
 				<AddVehicleModal
 					display={this.state.displayAddVehicleModal}
 					toggleAddVehicleModal={this.toggleAddVehicleModal}
@@ -91,7 +94,14 @@ const styles = StyleSheet.create({
 	flexCenter: {
 		flex: 1
 	},
-	vehiclesContainer: {}
+	vehiclesContainer: {
+		flex: 1
+	},
+	addVehicleButton: {
+		paddingTop: 10,
+		width: '50%',
+		alignSelf: 'center'
+	}
 });
 
 // vehiclesContainer: {

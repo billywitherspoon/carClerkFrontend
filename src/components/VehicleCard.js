@@ -1,7 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Button, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { selectVehicle } from '../store/actions/index.js';
+import { vw, vh, vmin, vmax } from 'react-native-expo-viewport-units';
 
 class VehicleCard extends React.Component {
 	constructor(props) {
@@ -15,50 +16,47 @@ class VehicleCard extends React.Component {
 		console.log('selected vehicle probably set');
 	};
 
-	renderVehicleCard = () => {
+	render() {
 		if (this.props.selectedVehicle && this.props.vehicle.id === this.props.selectedVehicle.id) {
 			return (
-				<View style={styles.flexCenter}>
-					<Text style={styles.isSelectedVehicle} onPress={this.handleVehiclePress}>
-						{this.props.vehicle.name}
+				<TouchableOpacity style={[ styles.selectedVehicleCard, styles.vehicleCard ]}>
+					<Text style={[ styles.title, styles.selectedVehicleContent ]}>{this.props.vehicle.name}</Text>
+					<Text style={[ styles.body, styles.selectedVehicleContent ]}>{this.props.vehicle.model_year}</Text>
+					<Text style={[ styles.body, styles.selectedVehicleContent ]}>{this.props.vehicle.make}</Text>
+					<Text style={[ styles.body, styles.selectedVehicleContent ]}>{this.props.vehicle.model}</Text>
+					<Text style={[ styles.body, styles.selectedVehicleContent ]}>{this.props.vehicle.trim}</Text>
+					<Text style={[ styles.body, styles.selectedVehicleContent ]}>
+						Mileage: {this.props.vehicle.mileage}
 					</Text>
-					<Text style={styles.isSelectedVehicle} onPress={this.handleVehiclePress}>
-						{this.props.vehicle.model_year}
-					</Text>
-					<Text style={styles.isSelectedVehicle} onPress={this.handleVehiclePress}>
-						{this.props.vehicle.make}
-					</Text>
-					<Text style={styles.isSelectedVehicle} onPress={this.handleVehiclePress}>
-						{this.props.vehicle.model}
-					</Text>
-					<Text style={styles.isSelectedVehicle} onPress={this.handleVehiclePress}>
-						{this.props.vehicle.trim}
-					</Text>
-					<Text style={styles.isSelectedVehicle} onPress={this.handleVehiclePress}>
-						{this.props.vehicle.mileage}
-					</Text>
-				</View>
+				</TouchableOpacity>
 			);
 		} else {
 			return (
-				<View style={styles.flexCenter}>
-					<Text onPress={this.handleVehiclePress}>{this.props.vehicle.name}</Text>
-					<Text onPress={this.handleVehiclePress}>{this.props.vehicle.model_year}</Text>
-					<Text onPress={this.handleVehiclePress}>{this.props.vehicle.make}</Text>
-					<Text onPress={this.handleVehiclePress}>{this.props.vehicle.model}</Text>
-					<Text onPress={this.handleVehiclePress}>{this.props.vehicle.trim}</Text>
-					<Text onPress={this.handleVehiclePress}>{this.props.vehicle.mileage}</Text>
-				</View>
+				<TouchableOpacity
+					style={[ styles.nonSelectedVehicleCard, styles.vehicleCard ]}
+					onPress={this.handleVehiclePress}
+				>
+					<Text style={[ styles.title, styles.nonSelectedVehicleContent ]} onPress={this.handleVehiclePress}>
+						{this.props.vehicle.name}
+					</Text>
+					<Text style={[ styles.body, styles.nonSelectedVehicleContent ]} onPress={this.handleVehiclePress}>
+						{this.props.vehicle.model_year}
+					</Text>
+					<Text style={[ styles.body, styles.nonSelectedVehicleContent ]} onPress={this.handleVehiclePress}>
+						{this.props.vehicle.make}
+					</Text>
+					<Text style={[ styles.body, styles.nonSelectedVehicleContent ]} onPress={this.handleVehiclePress}>
+						{this.props.vehicle.model}
+					</Text>
+					<Text style={[ styles.body, styles.nonSelectedVehicleContent ]} onPress={this.handleVehiclePress}>
+						{this.props.vehicle.trim}
+					</Text>
+					<Text style={[ styles.body, styles.nonSelectedVehicleContent ]} onPress={this.handleVehiclePress}>
+						Mileage: {this.props.vehicle.mileage}
+					</Text>
+				</TouchableOpacity>
 			);
 		}
-	};
-
-	render() {
-		return (
-			<View style={styles.vehicleCard} onPress={this.handleVehiclePress}>
-				{this.renderVehicleCard()}
-			</View>
-		);
 	}
 }
 
@@ -68,19 +66,31 @@ const styles = StyleSheet.create({
 		flexDirection: 'column',
 		justifyContent: 'center',
 		alignItems: 'center',
-		borderColor: '#D3D3D3',
+		borderColor: '#C9CACA',
 		borderWidth: 1
 	},
-	isSelectedVehicle: {
-		color: 'blue'
+	selectedVehicleCard: {
+		backgroundColor: '#c9caca'
 	},
-	flexCenter: {
-		flex: 1,
-		flexDirection: 'column',
-		justifyContent: 'center',
-		alignItems: 'center'
+	nonSelectedVehicleCard: {
+		backgroundColor: '#FFFFFF'
+	},
+	selectedVehicleContent: {
+		color: '#2d3142'
+	},
+	nonSelectedVehicleContent: {
+		color: '#2d3142'
+	},
+	title: {
+		fontSize: vh(3),
+		fontWeight: 'bold'
+	},
+	body: {
+		fontSize: vh(2.5)
 	}
 });
+
+//update
 
 const mapStateToProps = (state) => {
 	return {

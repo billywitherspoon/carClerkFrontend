@@ -66,13 +66,13 @@ class AddVehicleForm extends Component {
 		if (this.state.showContent) {
 			return (
 				<View>
-					<Button onPress={this.handleVinSubmit} title="Submit" color="blue" />
+					<Button onPress={this.handleVinSubmit} title="Submit" color="#D46262" />
 					<TextInput placeholder="Enter VIN" onChangeText={(vinText) => this.setState({ vinText })} />
 					<TextInput
 						placeholder="Enter a nickname for this vehicle"
 						onChangeText={(vehicleName) => this.setState({ vehicleName })}
 					/>
-					<Button onPress={this.props.toggleAddVehicleModal} title="Cancel" color="red" />
+					<Button onPress={this.props.toggleAddVehicleModal} title="Cancel" color="#E6C79C" />
 				</View>
 			);
 		} else {

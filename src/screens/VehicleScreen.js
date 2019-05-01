@@ -9,7 +9,7 @@ class VehicleScreen extends React.Component {
 		headerStyle: {
 			backgroundColor: '#2d3142'
 		},
-		headerTintColor: '#bfc0c0',
+		headerTintColor: '#C9CACA',
 		headerTitleStyle: {
 			fontWeight: 'bold',
 			flex: 1,

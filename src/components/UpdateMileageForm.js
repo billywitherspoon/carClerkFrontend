@@ -52,7 +52,7 @@ class UpdateMileageForm extends React.Component {
 					placeholder="Update Vehicle's Mileage"
 					onChangeText={(mileageInput) => this.setState({ mileageInput })}
 				/>
-				<Button onPress={this.handleMileageUpdate} title="Update" color="blue" />
+				<Button onPress={this.handleMileageUpdate} title="Update" color="#D46262" />
 			</View>
 		);
 	}

@@ -81,8 +81,8 @@ class AddLogForm extends React.Component {
 			return (
 				<View>
 					<Text>Enter Log Information</Text>
-					<Button onPress={this.handleLogSubmit} title="Submit Log" color="blue" />
-					<Button onPress={this.props.toggleLogModal} title="Cancel" color="red" />
+					<Button onPress={this.handleLogSubmit} title="Submit Log" color="#D46262" />
+					<Button onPress={this.props.toggleLogModal} title="Cancel" color="#E6C79C" />
 					<TextInput
 						style={styles.logInputBox}
 						placeholder="Title"
