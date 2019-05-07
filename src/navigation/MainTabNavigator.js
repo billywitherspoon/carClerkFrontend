@@ -12,8 +12,14 @@ const GarageStack = createStackNavigator({
 });
 
 GarageStack.navigationOptions = {
+	tabBarOptions: {
+		activeTintColor: '#6e7e81',
+		style: {
+			backgroundColor: '#bdc1c5'
+		}
+	},
 	tabBarLabel: 'Garage',
-	tabBarIcon: ({ focused }) => <MaterialCommunityIcons name="garage" size={32} color="grey" />
+	tabBarIcon: <MaterialCommunityIcons name="garage" size={32} color="#4c5760" />
 };
 
 const LogsStack = createStackNavigator({
@@ -21,17 +27,31 @@ const LogsStack = createStackNavigator({
 });
 
 LogsStack.navigationOptions = {
+	tabBarOptions: {
+		activeTintColor: '#6e7e81',
+		style: {
+			backgroundColor: '#bdc1c5'
+		}
+	},
 	tabBarLabel: 'Logs',
-	tabBarIcon: ({ focused }) => <MaterialCommunityIcons name="notebook" size={28} color="grey" />
+	tabBarIcon: <MaterialCommunityIcons name="notebook" size={28} color="#4c5760" />
 };
+
+//{ focused }
 
 const VehicleStack = createStackNavigator({
 	Vehicle: VehicleScreen
 });
 
 VehicleStack.navigationOptions = {
+	tabBarOptions: {
+		activeTintColor: '#6e7e81',
+		style: {
+			backgroundColor: '#bdc1c5'
+		}
+	},
 	tabBarLabel: 'Vehicle',
-	tabBarIcon: ({ focused }) => <MaterialCommunityIcons name="car-sports" size={34} color="grey" />
+	tabBarIcon: <MaterialCommunityIcons name="car-sports" size={34} color="#4c5760" />
 };
 
 export default createBottomTabNavigator({
@@ -39,3 +59,10 @@ export default createBottomTabNavigator({
 	LogsStack,
 	VehicleStack
 });
+
+// const TabNavigator = createBottomTabNavigator({
+// 	Home: HomeScreen,
+// 	Settings: SettingsScreen,
+//  });
+
+//  export default createAppContainer(TabNavigator);

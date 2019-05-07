@@ -25,8 +25,8 @@ class VehicleCard extends React.Component {
 					<Text style={[ styles.body, styles.selectedVehicleContent ]}>{this.props.vehicle.make}</Text>
 					<Text style={[ styles.body, styles.selectedVehicleContent ]}>{this.props.vehicle.model}</Text>
 					<Text style={[ styles.body, styles.selectedVehicleContent ]}>{this.props.vehicle.trim}</Text>
-					<Text style={[ styles.body, styles.selectedVehicleContent ]}>
-						{this.props.vehicle.mileage ? `this.props.vehicle.mileage miles` : null}
+					<Text style={[ styles.body, styles.selectedVehicleContent ]} onPress={this.handleVehiclePress}>
+						{this.props.vehicle.mileage ? this.props.vehicle.mileage + ' miles' : null}
 					</Text>
 				</TouchableOpacity>
 			);
@@ -51,7 +51,7 @@ class VehicleCard extends React.Component {
 					<Text style={[ styles.body, styles.nonSelectedVehicleContent ]} onPress={this.handleVehiclePress}>
 						{this.props.vehicle.trim}
 					</Text>
-					<Text style={[ styles.body, styles.nonSelectedVehicleConcd tent ]} onPress={this.handleVehiclePress}>
+					<Text style={[ styles.body, styles.nonSelectedVehicleContent ]} onPress={this.handleVehiclePress}>
 						{this.props.vehicle.mileage ? this.props.vehicle.mileage + ' miles' : null}
 					</Text>
 				</TouchableOpacity>
@@ -69,9 +69,10 @@ const styles = StyleSheet.create({
 		borderColor: '#C9CACA',
 		borderWidth: 1,
 		padding: 5,
-		borderRadius: 20,
 		margin: 10,
-		width: vw(50)
+		width: vw(60),
+		height: vw(60),
+		borderRadius: vw(30)
 	},
 	selectedVehicleCard: {
 		backgroundColor: '#6e7e81'

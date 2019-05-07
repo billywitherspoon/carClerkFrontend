@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Button, ScrollView, TouchableOpacity } from 'react-native';
 import AddVehicleModal from '../modals/AddVehicleModal';
 import { connect } from 'react-redux';
 import { setVehicles, selectVehicle } from '../store/actions/index.js';
@@ -26,7 +26,7 @@ class GarageScreen extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.state = { displayAddVehicleModal: false };
+		this.state = { displayAddVehicleModal: false, displayContent: false };
 	}
 
 	componentDidMount = () => {
@@ -43,8 +43,14 @@ class GarageScreen extends React.Component {
 
 				this.props.reduxSetVehicles(json.vehicles);
 				this.props.reduxSelectVehicle(json.vehicles[json.vehicles.length - 1]);
+				this.setState({
+					displayContent: true
+				});
 			})
 			.catch((error) => {
+				this.setState({
+					displayContent: true
+				});
 				console.log(error);
 			});
 	};
@@ -74,26 +80,33 @@ class GarageScreen extends React.Component {
 	};
 
 	render() {
-		return (
-			<View style={styles.screenContainer}>
-				<ScrollView
-					contentContainerStyle={{
-						flexGrow: 1,
-						alignItems: 'center',
-						width: vw(100)
-					}}
-				>
-					{this.renderVehicleCards()}
-					<View style={styles.addVehicleButton}>
-						<Button onPress={() => this.toggleAddVehicleModal()} title="Add Vehicle" color="#3e885b" />
-					</View>
-				</ScrollView>
-				<AddVehicleModal
-					display={this.state.displayAddVehicleModal}
-					toggleAddVehicleModal={this.toggleAddVehicleModal}
-				/>
-			</View>
-		);
+		if (this.state.displayContent) {
+			return (
+				<View style={styles.screenContainer}>
+					<ScrollView
+						contentContainerStyle={{
+							flexGrow: 1,
+							alignItems: 'center',
+							width: vw(100)
+						}}
+					>
+						{this.renderVehicleCards()}
+						<TouchableOpacity
+							style={styles.addVehicleTouchable}
+							onPress={() => this.toggleAddVehicleModal()}
+						>
+							<Text style={styles.addVehicleText}>Add A Vehicle to Your Garage</Text>
+						</TouchableOpacity>
+					</ScrollView>
+					<AddVehicleModal
+						display={this.state.displayAddVehicleModal}
+						toggleAddVehicleModal={this.toggleAddVehicleModal}
+					/>
+				</View>
+			);
+		} else {
+			return null;
+		}
 	}
 }
 
@@ -105,10 +118,25 @@ const styles = StyleSheet.create({
 		backgroundColor: '#eae6e5',
 		alignItems: 'center'
 	},
-	addVehicleButton: {
-		paddingTop: 10,
-		width: '50%',
-		alignSelf: 'center'
+	addVehicleTouchable: {
+		flex: 1,
+		flexDirection: 'column',
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderColor: '#C9CACA',
+		borderWidth: 1,
+		padding: 5,
+		margin: 10,
+		width: vw(60),
+		height: vw(60),
+		borderRadius: vw(30),
+		backgroundColor: '#93a8ac',
+		alignContent: 'center'
+	},
+	addVehicleText: {
+		fontSize: vh(2.5),
+		color: '#4c5760',
+		textAlign: 'center'
 	}
 });
 
