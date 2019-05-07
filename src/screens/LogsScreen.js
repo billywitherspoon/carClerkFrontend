@@ -5,6 +5,7 @@ import UpdateMileageForm from '../components/UpdateMileageForm';
 import LogModal from '../modals/LogModal';
 import Swipeout from 'react-native-swipeout';
 import { setActiveLog, setVehicles, selectVehicle } from '../store/actions/index.js';
+import { vw, vh, vmin, vmax } from 'react-native-expo-viewport-units';
 
 //buttons for swipe
 
@@ -67,7 +68,7 @@ class LogsScreen extends React.Component {
 	};
 
 	deleteLogFetch = (log) => {
-		fetch(`http://10.137.1.125:5513/api/v1/logs/${log.id}`, {
+		fetch(`http://10.137.1.80:5513/api/v1/logs/${log.id}`, {
 			method: 'DELETE'
 		});
 	};

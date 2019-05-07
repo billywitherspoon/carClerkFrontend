@@ -26,7 +26,7 @@ class VehicleCard extends React.Component {
 					<Text style={[ styles.body, styles.selectedVehicleContent ]}>{this.props.vehicle.model}</Text>
 					<Text style={[ styles.body, styles.selectedVehicleContent ]}>{this.props.vehicle.trim}</Text>
 					<Text style={[ styles.body, styles.selectedVehicleContent ]}>
-						Mileage: {this.props.vehicle.mileage}
+						{this.props.vehicle.mileage ? `this.props.vehicle.mileage miles` : null}
 					</Text>
 				</TouchableOpacity>
 			);
@@ -51,8 +51,8 @@ class VehicleCard extends React.Component {
 					<Text style={[ styles.body, styles.nonSelectedVehicleContent ]} onPress={this.handleVehiclePress}>
 						{this.props.vehicle.trim}
 					</Text>
-					<Text style={[ styles.body, styles.nonSelectedVehicleContent ]} onPress={this.handleVehiclePress}>
-						Mileage: {this.props.vehicle.mileage}
+					<Text style={[ styles.body, styles.nonSelectedVehicleConcd tent ]} onPress={this.handleVehiclePress}>
+						{this.props.vehicle.mileage ? this.props.vehicle.mileage + ' miles' : null}
 					</Text>
 				</TouchableOpacity>
 			);
@@ -67,19 +67,23 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 		borderColor: '#C9CACA',
-		borderWidth: 1
+		borderWidth: 1,
+		padding: 5,
+		borderRadius: 20,
+		margin: 10,
+		width: vw(50)
 	},
 	selectedVehicleCard: {
-		backgroundColor: '#c9caca'
+		backgroundColor: '#6e7e81'
 	},
 	nonSelectedVehicleCard: {
-		backgroundColor: '#FFFFFF'
+		backgroundColor: '#93a8ac'
 	},
 	selectedVehicleContent: {
-		color: '#2d3142'
+		color: '#bdc1c5'
 	},
 	nonSelectedVehicleContent: {
-		color: '#2d3142'
+		color: '#4c5760'
 	},
 	title: {
 		fontSize: vh(3),

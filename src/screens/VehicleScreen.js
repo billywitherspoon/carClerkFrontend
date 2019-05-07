@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 import { connect } from 'react-redux';
+import { vw, vh, vmin, vmax } from 'react-native-expo-viewport-units';
 // import { setUserInfo, setVehicles, addNewVehicle } from '../store/actions/index.js';
 
 class VehicleScreen extends React.Component {
@@ -22,7 +23,7 @@ class VehicleScreen extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.state = { columns: 3 };
+		this.state = { columns: 2 };
 	}
 
 	renderVehicleInfo = () => {
@@ -36,7 +37,6 @@ class VehicleScreen extends React.Component {
 			let displayVehicle = this.removeNulls(vehicle);
 			return (
 				<React.Fragment>
-					<Text>{vehicleName}</Text>
 					<FlatList
 						style={styles.listContainer}
 						numColumns={this.state.columns}
@@ -44,8 +44,9 @@ class VehicleScreen extends React.Component {
 						renderItem={({ item }) => {
 							return (
 								<View style={styles.specItem}>
-									<Text>{this.titleize(item)}:</Text>
-									<Text>{this.titleize(displayVehicle[item])}</Text>
+									<Text style={styles.specHeading}>{this.titleize(item)}</Text>
+									<Text style={styles.specBody}>{this.titleize(displayVehicle[item])}</Text>
+									<Text />
 								</View>
 							);
 						}}
@@ -99,19 +100,37 @@ const styles = StyleSheet.create({
 	},
 	listContainer: {
 		flex: 1,
-		width: 300
+		width: vw(90)
 	},
 	specItem: {
-		borderColor: '#D3D3D3',
+		borderColor: '#2d3142',
+		backgroundColor: '#f0f0f0',
 		borderWidth: 1,
 		width: 100,
 		height: 100,
 		flex: 1,
 		flexWrap: 'wrap',
 		flexDirection: 'column',
-		justifyContent: 'space-around'
+		justifyContent: 'space-around',
+		alignItems: 'center',
+		alignContent: 'center',
+		padding: 3,
+		margin: 5,
+		borderRadius: 30,
+		shadowColor: '#000000'
+	},
+	specHeading: {
+		fontSize: 15,
+		fontWeight: 'bold',
+		textAlign: 'center'
+	},
+	specBody: {
+		fontSize: 13,
+		textAlign: 'center'
 	}
 });
+
+//update
 
 const mapStateToProps = (state) => {
 	return {

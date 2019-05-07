@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, TextInput, Button, CheckBox } from 'react-native';
 import { connect } from 'react-redux';
 import { setVehicles, selectVehicle, updateActiveLog } from '../store/actions/index.js';
+import { vw, vh, vmin, vmax } from 'react-native-expo-viewport-units';
 
 class AddLogForm extends React.Component {
 	constructor(props) {
@@ -36,7 +37,7 @@ class AddLogForm extends React.Component {
 	};
 
 	updateLog = () => {
-		fetch(`http://10.137.1.125:5513/api/v1/logs/${this.props.activeLog.id}`, {
+		fetch(`http://10.137.1.80:5513/api/v1/logs/${this.props.activeLog.id}`, {
 			method: 'PATCH',
 			headers: {
 				'Content-Type': 'application/json',
@@ -62,7 +63,7 @@ class AddLogForm extends React.Component {
 	};
 
 	postNewLog = () => {
-		fetch('http://10.137.1.125:5513/api/v1/logs', {
+		fetch('http://10.137.1.80:5513/api/v1/logs', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',

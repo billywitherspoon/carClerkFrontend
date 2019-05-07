@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
 import { connect } from 'react-redux';
 import { addNewVehicle } from '../store/actions/index.js';
+import { vw, vh, vmin, vmax } from 'react-native-expo-viewport-units';
 
 class AddVehicleForm extends Component {
 	constructor(props) {
@@ -43,7 +44,7 @@ class AddVehicleForm extends Component {
 	};
 
 	fetchPlateState(plate, stateAbb) {
-		fetch('http://10.137.1.125:5513/api/v1/vehicles', {
+		fetch('http://10.137.1.80:5513/api/v1/vehicles', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -78,7 +79,7 @@ class AddVehicleForm extends Component {
 	}
 
 	fetchVin = (vin) => {
-		fetch('http://10.137.1.125:5513/api/v1/vehicles', {
+		fetch('http://10.137.1.80:5513/api/v1/vehicles', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',

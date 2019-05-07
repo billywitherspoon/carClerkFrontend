@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 import { connect } from 'react-redux';
 import { setVehicles, selectVehicle } from '../store/actions/index.js';
+import { vw, vh, vmin, vmax } from 'react-native-expo-viewport-units';
 
 class UpdateMileageForm extends React.Component {
 	constructor(props) {
@@ -15,7 +16,7 @@ class UpdateMileageForm extends React.Component {
 	handleMileageUpdate = () => {
 		if (parseInt(this.state.mileageInput) > 0) {
 			this.toggleUpdateMileageButton();
-			fetch(`http://10.137.1.125:5513/api/v1/vehicles/${this.props.selectedVehicle.id}`, {
+			fetch(`http://10.137.1.80:5513/api/v1/vehicles/${this.props.selectedVehicle.id}`, {
 				method: 'PATCH',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({

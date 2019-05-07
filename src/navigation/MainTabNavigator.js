@@ -5,6 +5,7 @@ import GarageScreen from '../screens/GarageScreen';
 import VehicleScreen from '../screens/VehicleScreen';
 import LogsScreen from '../screens/LogsScreen';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { vw, vh, vmin, vmax } from 'react-native-expo-viewport-units';
 
 const GarageStack = createStackNavigator({
 	Garage: GarageScreen

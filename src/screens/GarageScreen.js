@@ -4,15 +4,16 @@ import AddVehicleModal from '../modals/AddVehicleModal';
 import { connect } from 'react-redux';
 import { setVehicles, selectVehicle } from '../store/actions/index.js';
 import VehicleCard from '../components/VehicleCard';
+import { vw, vh, vmin, vmax } from 'react-native-expo-viewport-units';
 // import { ScrollView } from 'react-native-gesture-handler';
 
 class GarageScreen extends React.Component {
 	static navigationOptions = {
 		title: 'Car Clerk',
 		headerStyle: {
-			backgroundColor: '#2d3142'
+			backgroundColor: '#bdc1c5'
 		},
-		headerTintColor: '#C9CACA',
+		headerTintColor: '#4c5760',
 		headerTitleStyle: {
 			fontWeight: 'bold',
 			flex: 1,
@@ -29,7 +30,7 @@ class GarageScreen extends React.Component {
 	}
 
 	componentDidMount = () => {
-		fetch(`http://10.137.1.125:5513/api/v1/users/1`)
+		fetch(`http://10.137.1.80:5513/api/v1/users/1`)
 			.then((response) => response.json())
 			.then((json) => {
 				console.log('initial fetch successful');
@@ -74,8 +75,14 @@ class GarageScreen extends React.Component {
 
 	render() {
 		return (
-			<View style={styles.flexCenter}>
-				<ScrollView style={styles.vehiclesContainer}>
+			<View style={styles.screenContainer}>
+				<ScrollView
+					contentContainerStyle={{
+						flexGrow: 1,
+						alignItems: 'center',
+						width: vw(100)
+					}}
+				>
 					{this.renderVehicleCards()}
 					<View style={styles.addVehicleButton}>
 						<Button onPress={() => this.toggleAddVehicleModal()} title="Add Vehicle" color="#3e885b" />
@@ -93,11 +100,10 @@ class GarageScreen extends React.Component {
 //update
 
 const styles = StyleSheet.create({
-	flexCenter: {
-		flex: 1
-	},
-	vehiclesContainer: {
-		flex: 1
+	screenContainer: {
+		flex: 1,
+		backgroundColor: '#eae6e5',
+		alignItems: 'center'
 	},
 	addVehicleButton: {
 		paddingTop: 10,
