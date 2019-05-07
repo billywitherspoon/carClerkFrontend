@@ -1,16 +1,15 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, Button, CheckBox } from 'react-native';
 import { connect } from 'react-redux';
-import { setVehicles, selectVehicle } from '../store/actions/index.js';
+import { setVehicles, selectVehicle, updateActiveLog } from '../store/actions/index.js';
 
 class AddLogForm extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			titleInput: '',
-			descriptionInput: '',
-			complete: true,
-			mileageInput: null,
+			// titleInput: null,
+			// descriptionInput: null,
+			// mileageInput: null,
 			showContent: true
 		};
 	}
@@ -24,49 +23,76 @@ class AddLogForm extends React.Component {
 	};
 
 	handleLogSubmit = () => {
-		if (parseInt(this.state.mileageInput) > 0 && this.state.descriptionInput && this.state.titleInput) {
+		if (parseInt(this.props.activeLog.mileage) > 0 && this.props.activeLog.title) {
+			if (this.props.activeLog.id) {
+				this.updateLog();
+			} else {
+				this.postNewLog();
+			}
 			this.toggleContent();
-			this.postNewLog();
 		} else {
 			alert('Please fill in all fields.  Mileage must be greater than 0.');
 		}
 	};
 
-	postNewLog = () => {
-		fetch('http://10.137.2.158:5513/api/v1/logs', {
-			method: 'POST',
+	updateLog = () => {
+		fetch(`http://10.137.1.125:5513/api/v1/logs/${this.props.activeLog.id}`, {
+			method: 'PATCH',
 			headers: {
 				'Content-Type': 'application/json',
 				Accept: 'application/json'
 			},
 			body: JSON.stringify({
-				title: this.state.titleInput,
-				description: this.state.description,
-				complete: this.state.complete,
-				mileage: this.state.mileageInput,
+				title: this.props.activeLog.title,
+				description: this.props.activeLog.description,
+				mileage: this.props.activeLog.mileage,
 				vehicle_id: this.props.selectedVehicle.id
 			})
 		})
 			.then((response) => response.json())
 			.then((json) => {
 				console.log('new vehicle received with new log');
+				this.props.toggleLogModal();
+				console.log('right after toggle Log modal call');
 				this.updateVehicleStates(json);
-				this.props.toggleLogModal;
-				console.log('after toggle Log modal');
 			})
 			.catch((error) => {
 				console.log(error);
 			});
 	};
 
-	//update
+	postNewLog = () => {
+		fetch('http://10.137.1.125:5513/api/v1/logs', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Accept: 'application/json'
+			},
+			body: JSON.stringify({
+				title: this.props.activeLog.title,
+				description: this.props.activeLog.description,
+				mileage: this.props.activeLog.mileage,
+				vehicle_id: this.props.selectedVehicle.id
+				// complete: this.state.complete
+			})
+		})
+			.then((response) => response.json())
+			.then((json) => {
+				console.log('new vehicle received with new log');
+				this.props.toggleLogModal();
+				console.log('right after toggle Log modal call');
+				this.updateVehicleStates(json);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
 
 	updateVehicleStates = (vehicle) => {
-		// delete vehicle.user;
 		console.log('updating vehicle states');
 		this.props.reduxSelectVehicle(vehicle);
-		let vehicles = this.props.vehicles.slice();
-		updatedVehicles = vehicles.map((v) => {
+		// let vehicles = this.props.vehicles.slice();
+		let updatedVehicles = this.props.vehicles.map((v) => {
 			if (v.id === vehicle.id) {
 				return vehicle;
 			} else {
@@ -76,30 +102,40 @@ class AddLogForm extends React.Component {
 		this.props.reduxSetVehicles(updatedVehicles);
 	};
 
+	mileageValue = () => {
+		if (this.props.activeLog.mileage) {
+			return this.props.activeLog.mileage.toString();
+		} else {
+			return null;
+		}
+	};
+
 	render() {
 		if (this.state.showContent) {
 			return (
 				<View>
 					<Text>Enter Log Information</Text>
-					<Button onPress={this.handleLogSubmit} title="Submit Log" color="#D46262" />
-					<Button onPress={this.props.toggleLogModal} title="Cancel" color="#E6C79C" />
+					<Button onPress={this.handleLogSubmit} title="Submit Log" color="#3f7cac" />
+					<Button onPress={this.props.toggleLogModal} title="Cancel" color="#c33149" />
 					<TextInput
 						style={styles.logInputBox}
 						placeholder="Title"
-						onChangeText={(titleInput) => this.setState({ titleInput })}
+						value={this.props.activeLog.title}
+						onChangeText={(title) => this.props.reduxUpdateActiveLog({ title: title })}
 					/>
 					<TextInput
 						style={styles.logInputBox}
 						placeholder="Description"
-						onChangeText={(descriptionInput) => this.setState({ descriptionInput })}
+						value={this.props.activeLog.description}
+						onChangeText={(description) => this.props.reduxUpdateActiveLog({ description: description })}
 					/>
 					<TextInput
+						keyboardType="number-pad"
 						style={styles.logInputBox}
 						placeholder="Mileage"
-						onChangeText={(mileageInput) => this.setState({ mileageInput })}
+						value={this.mileageValue()}
+						onChangeText={(mileage) => this.props.reduxUpdateActiveLog({ mileage: mileage })}
 					/>
-					<Text>This maintenance has been performed</Text>
-					<CheckBox value={this.state.complete} onValueChange={(complete) => this.setState({ complete })} />
 				</View>
 			);
 		} else {
@@ -131,14 +167,16 @@ const mapStateToProps = (state) => {
 	return {
 		vehicles: state.index.vehicles,
 		userInfo: state.index.userInfo,
-		selectedVehicle: state.index.selectedVehicle
+		selectedVehicle: state.index.selectedVehicle,
+		activeLog: state.index.activeLog
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return {
 		reduxSetVehicles: (vehicles) => dispatch(setVehicles(vehicles)),
-		reduxSelectVehicle: (selectedVehicle) => dispatch(selectVehicle(selectedVehicle))
+		reduxSelectVehicle: (selectedVehicle) => dispatch(selectVehicle(selectedVehicle)),
+		reduxUpdateActiveLog: (logAttribute) => dispatch(updateActiveLog(logAttribute))
 	};
 };
 

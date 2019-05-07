@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Button, ScrollView } from 'react-native';
 import AddVehicleModal from '../modals/AddVehicleModal';
 import { connect } from 'react-redux';
-import { setVehicles } from '../store/actions/index.js';
+import { setVehicles, selectVehicle } from '../store/actions/index.js';
 import VehicleCard from '../components/VehicleCard';
 // import { ScrollView } from 'react-native-gesture-handler';
 
@@ -29,7 +29,7 @@ class GarageScreen extends React.Component {
 	}
 
 	componentDidMount = () => {
-		fetch(`http://10.137.2.158:5513/api/v1/users/1`)
+		fetch(`http://10.137.1.125:5513/api/v1/users/1`)
 			.then((response) => response.json())
 			.then((json) => {
 				console.log('initial fetch successful');
@@ -39,7 +39,9 @@ class GarageScreen extends React.Component {
 
 				// let vehicles = this.removeUserFromVehicleJson(json.vehicles);
 				console.log('about to call reduxSetVehicles');
+
 				this.props.reduxSetVehicles(json.vehicles);
+				this.props.reduxSelectVehicle(json.vehicles[json.vehicles.length - 1]);
 			})
 			.catch((error) => {
 				console.log(error);
@@ -76,7 +78,7 @@ class GarageScreen extends React.Component {
 				<ScrollView style={styles.vehiclesContainer}>
 					{this.renderVehicleCards()}
 					<View style={styles.addVehicleButton}>
-						<Button onPress={() => this.toggleAddVehicleModal()} title="Add Vehicle" color="#d46262" />
+						<Button onPress={() => this.toggleAddVehicleModal()} title="Add Vehicle" color="#3e885b" />
 					</View>
 				</ScrollView>
 				<AddVehicleModal
@@ -117,7 +119,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		reduxSetVehicles: (vehicles) => dispatch(setVehicles(vehicles))
+		reduxSetVehicles: (vehicles) => dispatch(setVehicles(vehicles)),
+		reduxSelectVehicle: (vehicle) => dispatch(selectVehicle(vehicle))
 	};
 };
 

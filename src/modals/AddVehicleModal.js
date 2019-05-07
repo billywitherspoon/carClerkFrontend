@@ -18,6 +18,11 @@ const styles = StyleSheet.create({
 	text: {
 		fontSize: 20,
 		marginLeft: 150
+	},
+	flexCenter: {
+		flex: 1,
+		justifyContent: 'space-around',
+		alignItems: 'center'
 	}
 });
 

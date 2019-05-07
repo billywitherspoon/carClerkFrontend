@@ -1,9 +1,17 @@
-import { ADD_NEW_VEHICLE, SET_USER_INFO, SET_VEHICLES, SELECT_VEHICLE } from '../actions/actionTypes';
+import {
+	ADD_NEW_VEHICLE,
+	SET_USER_INFO,
+	SET_VEHICLES,
+	SELECT_VEHICLE,
+	SET_ACTIVE_LOG,
+	UPDATE_ACTIVE_LOG
+} from '../actions/actionTypes';
 
 const initialState = {
 	userInfo: { id: 1 },
 	vehicles: [],
-	selectedVehicle: null
+	selectedVehicle: null,
+	activeLog: { title: null, description: null, mileage: null }
 };
 
 const reducer = (state = initialState, action) => {
@@ -28,6 +36,20 @@ const reducer = (state = initialState, action) => {
 				...state,
 				selectedVehicle: action.selectedVehicle
 			};
+		case SET_ACTIVE_LOG:
+			return {
+				...state,
+				activeLog: action.activeLog
+			};
+		case UPDATE_ACTIVE_LOG:
+			return {
+				...state,
+				activeLog: {
+					...state.activeLog,
+					...action.activeLogAttribute
+				}
+			};
+
 		default:
 			return state;
 	}

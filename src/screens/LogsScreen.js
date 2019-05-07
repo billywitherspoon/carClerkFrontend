@@ -1,11 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
-// import { setVehicles, selectVehicle } from '../store/actions/index.js';
 import UpdateMileageForm from '../components/UpdateMileageForm';
 import LogModal from '../modals/LogModal';
+import Swipeout from 'react-native-swipeout';
+import { setActiveLog, setVehicles, selectVehicle } from '../store/actions/index.js';
 
-//update
+//buttons for swipe
 
 class LogsScreen extends React.Component {
 	static navigationOptions = {
@@ -26,7 +27,9 @@ class LogsScreen extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.state = { displayLogModal: false };
+		this.state = {
+			displayLogModal: false
+		};
 	}
 
 	toggleLogModal = () => {
@@ -38,15 +41,92 @@ class LogsScreen extends React.Component {
 		console.log('Log Modal Toggled');
 	};
 
+	updateLogAsCompleted = (log) => {
+		let logCopy = { ...log };
+		logCopy.complete = !logCopy.complete;
+		console.log('updating log as complete');
+		let updatedVehicle = { ...this.props.selectedVehicle };
+		updatedVehicle.logs = this.props.selectedVehicle.logs.map((l) => {
+			if (l.id === logCopy.id) {
+				return logCopy;
+			} else {
+				return l;
+			}
+		});
+		this.updateVehicleStates(updatedVehicle);
+	};
+
+	deleteLog = (log) => {
+		console.log('deleting log:', log);
+		let updatedVehicle = { ...this.props.selectedVehicle };
+		updatedVehicle.logs = updatedVehicle.logs.filter((l) => {
+			return l != log;
+		});
+		this.updateVehicleStates(updatedVehicle);
+		this.deleteLogFetch(log);
+	};
+
+	deleteLogFetch = (log) => {
+		fetch(`http://10.137.1.125:5513/api/v1/logs/${log.id}`, {
+			method: 'DELETE'
+		});
+	};
+
+	updateVehicleStates = (updatedVehicle) => {
+		this.props.reduxSelectVehicle(updatedVehicle);
+		let updatedVehicles = this.props.vehicles.map((v) => {
+			if (v.id === updatedVehicle.id) {
+				return updatedVehicle;
+			} else {
+				return v;
+			}
+		});
+		this.props.reduxSetVehicles(updatedVehicles);
+	};
+
 	renderLogs = () => {
 		return this.props.selectedVehicle.logs.map((log) => {
 			return (
-				<View style={styles.logItem} key={Math.random()}>
-					<Text>Title: {log.title}</Text>
-					<Text>Description: {log.description}</Text>
-					<Text>Mileage: {log.mileage}</Text>
-					<Text>Completed?: {log.complete}</Text>
-				</View>
+				<Swipeout
+					autoClose={true}
+					backgroundColor={log.complete ? '#3e885b' : '#ffffff'}
+					left={[
+						{
+							text: 'Completed',
+							backgroundColor: '#3e885b',
+							onPress: () => {
+								console.log('completed button pressed log:', log);
+								this.updateLogAsCompleted(log);
+							}
+						}
+					]}
+					right={[
+						{
+							text: 'Edit',
+							backgroundColor: '#3f7cac',
+							onPress: () => {
+								console.log('edit button pressed log:', log);
+								this.props.reduxSetActiveLog(log);
+								this.toggleLogModal();
+							}
+						},
+						{
+							text: 'Delete',
+							backgroundColor: '#c33149',
+							onPress: () => {
+								console.log('delete button pressed log:', log);
+								this.deleteLog(log);
+							}
+						}
+					]}
+					key={Math.random()}
+				>
+					<View style={styles.logItem}>
+						<Text>Title: {log.title}</Text>
+						<Text>Description: {log.description}</Text>
+						<Text>Mileage: {log.mileage}</Text>
+					</View>
+				</Swipeout>
 			);
 		});
 	};
@@ -54,10 +134,10 @@ class LogsScreen extends React.Component {
 	render() {
 		if (this.props.selectedVehicle) {
 			return (
-				<View>
-					<Button onPress={() => this.toggleLogModal()} title="Add a New Log" color="green" />
+				<View style={styles.logScreenContainer}>
+					<Button onPress={() => this.toggleLogModal()} title="Add a New Log" color="#3e885b" />
 					<UpdateMileageForm />
-					<ScrollView>{this.renderLogs()}</ScrollView>
+					<ScrollView style={styles.logContainer}>{this.renderLogs()}</ScrollView>
 					<LogModal display={this.state.displayLogModal} toggleLogModal={this.toggleLogModal} />
 				</View>
 			);
@@ -78,6 +158,12 @@ const styles = StyleSheet.create({
 		borderColor: 'black',
 		borderWidth: 0.5,
 		borderRadius: 0.5
+	},
+	logContainer: {
+		flex: 1
+	},
+	logScreenContainer: {
+		flex: 1
 	}
 });
 
@@ -87,15 +173,17 @@ const mapStateToProps = (state) => {
 	return {
 		vehicles: state.index.vehicles,
 		userInfo: state.index.userInfo,
-		selectedVehicle: state.index.selectedVehicle
+		selectedVehicle: state.index.selectedVehicle,
+		activeLog: state.index.activeLog
 	};
 };
 
-// const mapDispatchToProps = (dispatch) => {
-// 	return {
-// 		reduxSetVehicles: (vehicles) => dispatch(setVehicles(vehicles)),
-// 		reduxSelectVehicle: (selectedVehicle) => dispatch(selectVehicle(selectedVehicle))
-// 	};
-// };
+const mapDispatchToProps = (dispatch) => {
+	return {
+		reduxSetActiveLog: (activeLog) => dispatch(setActiveLog(activeLog)),
+		reduxSelectVehicle: (vehicle) => dispatch(selectVehicle(vehicle)),
+		reduxSetVehicles: (vehicles) => dispatch(setVehicles(vehicles))
+	};
+};
 
-export default connect(mapStateToProps)(LogsScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(LogsScreen);

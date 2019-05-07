@@ -1,4 +1,11 @@
-import { SET_USER_INFO, SET_VEHICLES, ADD_NEW_VEHICLE, SELECT_VEHICLE } from './actionTypes';
+import {
+	SET_USER_INFO,
+	SET_VEHICLES,
+	ADD_NEW_VEHICLE,
+	SELECT_VEHICLE,
+	SET_ACTIVE_LOG,
+	UPDATE_ACTIVE_LOG
+} from './actionTypes';
 
 export const setUserInfo = (userInfo) => {
 	return {
@@ -25,5 +32,19 @@ export const selectVehicle = (selectedVehicle) => {
 	return {
 		type: SELECT_VEHICLE,
 		selectedVehicle: selectedVehicle
+	};
+};
+
+export const setActiveLog = (activeLog) => {
+	return {
+		type: SET_ACTIVE_LOG,
+		activeLog: activeLog
+	};
+};
+
+export const updateActiveLog = (activeLogAttribute) => {
+	return {
+		type: UPDATE_ACTIVE_LOG,
+		activeLogAttribute: activeLogAttribute
 	};
 };

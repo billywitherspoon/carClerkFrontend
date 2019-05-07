@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform } from 'react-native';
+// import { Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 import GarageScreen from '../screens/GarageScreen';
 import VehicleScreen from '../screens/VehicleScreen';

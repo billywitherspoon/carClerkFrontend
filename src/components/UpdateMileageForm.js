@@ -7,13 +7,15 @@ class UpdateMileageForm extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			mileageInput: ''
+			mileageInput: '',
+			showUpdateMileageButton: true
 		};
 	}
 
 	handleMileageUpdate = () => {
 		if (parseInt(this.state.mileageInput) > 0) {
-			fetch(`http://10.137.2.158:5513/api/v1/vehicles/${this.props.selectedVehicle.id}`, {
+			this.toggleUpdateMileageButton();
+			fetch(`http://10.137.1.125:5513/api/v1/vehicles/${this.props.selectedVehicle.id}`, {
 				method: 'PATCH',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
@@ -42,7 +44,24 @@ class UpdateMileageForm extends React.Component {
 			}
 		});
 		this.props.reduxSetVehicles(updatedVehicles);
-		alert('Mileage Updated');
+		alert('Mileage Updated ✓');
+		this.toggleUpdateMileageButton();
+	};
+
+	toggleUpdateMileageButton = () => {
+		this.setState((prevState) => {
+			return {
+				showUpdateMileageButton: !prevState.showUpdateMileageButton
+			};
+		});
+	};
+
+	renderUpdateMileageButton = () => {
+		if (this.state.showUpdateMileageButton) {
+			return <Button onPress={this.handleMileageUpdate} title="Update" color="#3f7cac" />;
+		} else {
+			return null;
+		}
 	};
 
 	render() {
@@ -51,12 +70,14 @@ class UpdateMileageForm extends React.Component {
 				<TextInput
 					placeholder="Update Vehicle's Mileage"
 					onChangeText={(mileageInput) => this.setState({ mileageInput })}
+					keyboardType="number-pad"
 				/>
-				<Button onPress={this.handleMileageUpdate} title="Update" color="#D46262" />
+				{this.renderUpdateMileageButton()}
 			</View>
 		);
 	}
 }
+//update
 
 const styles = StyleSheet.create({
 	flexCenter: {

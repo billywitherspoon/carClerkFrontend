@@ -2,3 +2,5 @@ export const SET_USER_INFO = 'SET_USER_INFO ';
 export const SET_VEHICLES = 'SET_VEHICLES';
 export const ADD_NEW_VEHICLE = 'ADD_NEW_VEHICLE';
 export const SELECT_VEHICLE = 'SELECT_VEHICLE';
+export const SET_ACTIVE_LOG = 'SET_ACTIVE_LOG';
+export const UPDATE_ACTIVE_LOG = 'UPDATE_ACTIVE_LOG';
