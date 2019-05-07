@@ -143,25 +143,10 @@ class AddVehicleForm extends Component {
 	}
 }
 
-// const styles = StyleSheet.create({
-// 	formContainer: {
-// 		flex: 1,
-// 		justifyContent: 'spaceAround',
-// 		alignItems: 'center'
-// 	}
-// });
-
 const mapDispatchToProps = (dispatch) => {
 	return {
 		reduxAddNewVehicle: (vehicle) => dispatch(addNewVehicle(vehicle))
 	};
 };
-
-// const mapStateToProps = (state) => {
-// 	return {
-// 		vehicles: state.index.vehicles,
-// 		userInfo: state.index.userInfo
-// 	};
-// };
 
 export default connect(null, mapDispatchToProps)(AddVehicleForm);
