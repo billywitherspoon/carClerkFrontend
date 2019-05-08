@@ -16,7 +16,7 @@ class UpdateMileageForm extends React.Component {
 	handleMileageUpdate = () => {
 		if (parseInt(this.state.mileageInput) > 0) {
 			this.toggleUpdateMileageButton();
-			fetch(`http://10.137.1.80:5513/api/v1/vehicles/${this.props.selectedVehicle.id}`, {
+			fetch(`http://10.137.7.171:5513/api/v1/vehicles/${this.props.selectedVehicle.id}`, {
 				method: 'PATCH',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({

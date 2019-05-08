@@ -34,6 +34,7 @@ class VehicleScreen extends React.Component {
 			delete vehicle.id;
 			let vehicleName = vehicle.name;
 			delete vehicle.name;
+			delete vehicle.auto_image;
 			let displayVehicle = this.removeNulls(vehicle);
 			return (
 				<React.Fragment>

@@ -37,7 +37,7 @@ class AddLogForm extends React.Component {
 	};
 
 	updateLog = () => {
-		fetch(`http://10.137.1.80:5513/api/v1/logs/${this.props.activeLog.id}`, {
+		fetch(`http://10.137.7.171:5513/api/v1/logs/${this.props.activeLog.id}`, {
 			method: 'PATCH',
 			headers: {
 				'Content-Type': 'application/json',
@@ -63,7 +63,7 @@ class AddLogForm extends React.Component {
 	};
 
 	postNewLog = () => {
-		fetch('http://10.137.1.80:5513/api/v1/logs', {
+		fetch('http://10.137.7.171:5513/api/v1/logs', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Button, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import { addNewVehicle } from '../store/actions/index.js';
+import { addNewVehicle, selectVehicle } from '../store/actions/index.js';
 import { vw, vh, vmin, vmax } from 'react-native-expo-viewport-units';
 
 class AddVehicleForm extends Component {
@@ -56,7 +56,7 @@ class AddVehicleForm extends Component {
 	};
 
 	fetchPlateState(plate, stateAbb) {
-		fetch('http://10.137.1.80:5513/api/v1/vehicles', {
+		fetch('http://10.137.7.171:5513/api/v1/vehicles', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -81,6 +81,7 @@ class AddVehicleForm extends Component {
 					console.log('returned good json');
 					// delete json.user;
 					this.props.reduxAddNewVehicle(json);
+					this.props.reduxSelectVehicle(json);
 					this.props.toggleAddVehicleModal();
 					// call redux to append this vehicle to vehicles state (pass through vehicle)
 					// this.props.updateVehiclesState(json);
@@ -92,7 +93,7 @@ class AddVehicleForm extends Component {
 	}
 
 	fetchVin = (vin) => {
-		fetch('http://10.137.1.80:5513/api/v1/vehicles', {
+		fetch('http://10.137.7.171:5513/api/v1/vehicles', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -116,6 +117,7 @@ class AddVehicleForm extends Component {
 					console.log('returned good json');
 					// delete json.user;
 					this.props.reduxAddNewVehicle(json);
+					this.props.reduxSelectVehicle(json);
 					this.props.toggleAddVehicleModal();
 					// call redux to append this vehicle to vehicles state (pass through vehicle)
 					// this.props.updateVehiclesState(json);
@@ -129,28 +131,43 @@ class AddVehicleForm extends Component {
 	render() {
 		if (this.state.showContent) {
 			return (
-				<View>
-					<Button onPress={this.handleVinSubmit} title="Submit" color="#3f7cac" />
+				<View style={styles.formContainer}>
 					<TextInput
 						placeholder="Enter a nickname for this vehicle"
 						onChangeText={(vehicleName) => this.setState({ vehicleName })}
-					/>
-					<TextInput placeholder="Enter VIN" onChangeText={(vinText) => this.setState({ vinText })} />
-					<Text>OR ENTER LICENSE PLATE AND STATE </Text>
-					<TextInput
-						placeholder="Enter License Plate"
-						onChangeText={(licensePlate) => this.setState({ licensePlate })}
-					/>
-					<TextInput
-						placeholder="Enter State Abbreviation"
-						onChangeText={(stateAbb) => this.setState({ stateAbb })}
+						style={styles.inputBox}
 					/>
 					<TextInput
 						placeholder="Enter Vehicle Mileage"
 						onChangeText={(mileage) => this.setState({ mileage })}
 						keyboardType="number-pad"
+						style={styles.inputBox}
 					/>
-					<Button onPress={this.props.toggleAddVehicleModal} title="Cancel" color="#c33149" />
+					<Text style={styles.body}>Enter VIN (preferred)</Text>
+					<TextInput
+						placeholder="Enter VIN"
+						onChangeText={(vinText) => this.setState({ vinText })}
+						style={styles.inputBox}
+					/>
+					<Text style={styles.body}>Enter License Plate and State (alternative)</Text>
+					<TextInput
+						placeholder="Enter License Plate"
+						onChangeText={(licensePlate) => this.setState({ licensePlate })}
+						style={styles.inputBox}
+					/>
+					<TextInput
+						placeholder="Enter State Abbreviation"
+						onChangeText={(stateAbb) => this.setState({ stateAbb })}
+						style={styles.inputBox}
+					/>
+					<View style={styles.buttonContainer}>
+						<TouchableOpacity onPress={this.props.toggleAddVehicleModal}>
+							<Text style={styles.title}>Cancel</Text>
+						</TouchableOpacity>
+						<TouchableOpacity onPress={this.handleVinSubmit}>
+							<Text style={styles.title}>Submit</Text>
+						</TouchableOpacity>
+					</View>
 				</View>
 			);
 		} else {
@@ -163,9 +180,46 @@ class AddVehicleForm extends Component {
 	}
 }
 
+const styles = StyleSheet.create({
+	formContainer: {
+		flex: 1,
+		alignItems: 'center',
+		justifyContent: 'space-around',
+		backgroundColor: '#eae6e5'
+	},
+	inputBox: {
+		borderColor: '#C9CACA',
+		borderWidth: 1
+	},
+	title: {
+		fontSize: vh(3),
+		color: '#4c5760'
+	},
+	body: {
+		fontSize: vh(2.5),
+		color: '#4c5760'
+	},
+	buttons: {
+		width: 40,
+		height: 20
+	},
+	buttonContainer: {
+		flex: 1,
+		flexDirection: 'row',
+		justifyContent: 'space-around'
+	},
+	submitButton: {
+		color: '#3f7cac'
+	},
+	cancelButton: {
+		color: '#c33149'
+	}
+});
+
 const mapDispatchToProps = (dispatch) => {
 	return {
-		reduxAddNewVehicle: (vehicle) => dispatch(addNewVehicle(vehicle))
+		reduxAddNewVehicle: (vehicle) => dispatch(addNewVehicle(vehicle)),
+		reduxSelectVehicle: (vehicle) => dispatch(selectVehicle(vehicle))
 	};
 };
 

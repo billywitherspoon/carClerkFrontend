@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, TextInput, View, Button, TouchableOpacity, Image } from 'react-native';
+import { Card, ListItem, Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { selectVehicle } from '../store/actions/index.js';
 import { vw, vh, vmin, vmax } from 'react-native-expo-viewport-units';
@@ -10,6 +11,7 @@ class VehicleCard extends React.Component {
 	}
 
 	handleVehiclePress = () => {
+		this.props.navigateToLogsScreen();
 		console.log('vehicle pressed', this.props.vehicle);
 		let selectedVehicle = { ...this.props.vehicle };
 		this.props.reduxSelectVehicle(selectedVehicle);
@@ -19,43 +21,66 @@ class VehicleCard extends React.Component {
 	render() {
 		if (this.props.selectedVehicle && this.props.vehicle.id === this.props.selectedVehicle.id) {
 			return (
-				<TouchableOpacity style={[ styles.selectedVehicleCard, styles.vehicleCard ]}>
-					<Image source={{ uri: `${this.props.vehicle.auto_image}` }} style={{ width: 80, height: 40 }} />
-					<Text style={[ styles.title, styles.selectedVehicleContent ]}>{this.props.vehicle.name}</Text>
-					<Text style={[ styles.body, styles.selectedVehicleContent ]}>{this.props.vehicle.model_year}</Text>
-					<Text style={[ styles.body, styles.selectedVehicleContent ]}>{this.props.vehicle.make}</Text>
-					<Text style={[ styles.body, styles.selectedVehicleContent ]}>{this.props.vehicle.model}</Text>
-					<Text style={[ styles.body, styles.selectedVehicleContent ]}>{this.props.vehicle.trim}</Text>
-					<Text style={[ styles.body, styles.selectedVehicleContent ]} onPress={this.handleVehiclePress}>
-						{this.props.vehicle.mileage ? this.props.vehicle.mileage + ' miles' : null}
-					</Text>
+				<TouchableOpacity style={styles.singleCardContainer} activeOpacity={1}>
+					<Card
+						containerStyle={[ styles.selectedVehicleCard, styles.vehicleCard ]}
+						title={this.props.vehicle.name}
+						image={{ uri: `${this.props.vehicle.auto_image}` }}
+						titleStyle={[ styles.title, styles.selectedVehicleContent ]}
+						imageStyle={styles.cardImage}
+					>
+						<View style={styles.bodyContainer}>
+							<Text style={[ styles.body, styles.selectedVehicleContent ]}>
+								{this.props.vehicle.model_year}
+							</Text>
+							<Text style={[ styles.body, styles.selectedVehicleContent ]}>
+								{this.props.vehicle.make}
+							</Text>
+							<Text style={[ styles.body, styles.selectedVehicleContent ]}>
+								{this.props.vehicle.model}
+							</Text>
+							<Text style={[ styles.body, styles.selectedVehicleContent ]}>
+								{this.props.vehicle.trim}
+							</Text>
+							<Text style={[ styles.body, styles.selectedVehicleContent ]}>
+								{this.props.vehicle.mileage + ' miles'}
+							</Text>
+						</View>
+					</Card>
 				</TouchableOpacity>
 			);
 		} else {
 			return (
 				<TouchableOpacity
-					style={[ styles.nonSelectedVehicleCard, styles.vehicleCard ]}
+					style={styles.singleCardContainer}
 					onPress={this.handleVehiclePress}
+					activeOpacity={1}
 				>
-					<Image source={{ uri: `${this.props.vehicle.auto_image}` }} style={{ width: 80, height: 40 }} />
-					<Text style={[ styles.title, styles.nonSelectedVehicleContent ]} onPress={this.handleVehiclePress}>
-						{this.props.vehicle.name}
-					</Text>
-					<Text style={[ styles.body, styles.nonSelectedVehicleContent ]} onPress={this.handleVehiclePress}>
-						{this.props.vehicle.model_year}
-					</Text>
-					<Text style={[ styles.body, styles.nonSelectedVehicleContent ]} onPress={this.handleVehiclePress}>
-						{this.props.vehicle.make}
-					</Text>
-					<Text style={[ styles.body, styles.nonSelectedVehicleContent ]} onPress={this.handleVehiclePress}>
-						{this.props.vehicle.model}
-					</Text>
-					<Text style={[ styles.body, styles.nonSelectedVehicleContent ]} onPress={this.handleVehiclePress}>
-						{this.props.vehicle.trim}
-					</Text>
-					<Text style={[ styles.body, styles.nonSelectedVehicleContent ]} onPress={this.handleVehiclePress}>
-						{this.props.vehicle.mileage ? this.props.vehicle.mileage + ' miles' : null}
-					</Text>
+					<Card
+						containerStyle={[ styles.nonSelectedVehicleCard, styles.vehicleCard ]}
+						title={this.props.vehicle.name}
+						image={{ uri: `${this.props.vehicle.auto_image}` }}
+						titleStyle={[ styles.title, styles.nonSelectedVehicleContent ]}
+						imageStyle={styles.cardImage}
+					>
+						<View style={styles.bodyContainer}>
+							<Text style={[ styles.body, styles.nonSelectedVehicleContent ]}>
+								{this.props.vehicle.model_year}
+							</Text>
+							<Text style={[ styles.body, styles.nonSelectedVehicleContent ]}>
+								{this.props.vehicle.make}
+							</Text>
+							<Text style={[ styles.body, styles.nonSelectedVehicleContent ]}>
+								{this.props.vehicle.model}
+							</Text>
+							<Text style={[ styles.body, styles.nonSelectedVehicleContent ]}>
+								{this.props.vehicle.trim}
+							</Text>
+							<Text style={[ styles.body, styles.nonSelectedVehicleContent ]}>
+								{this.props.vehicle.mileage + ' miles'}
+							</Text>
+						</View>
+					</Card>
 				</TouchableOpacity>
 			);
 		}
@@ -63,19 +88,24 @@ class VehicleCard extends React.Component {
 }
 
 const styles = StyleSheet.create({
-	vehicleCard: {
+	singleCardContainer: {
+		width: vw(90),
+		flex: 1
+	},
+	bodyContainer: {
 		flex: 1,
 		flexDirection: 'column',
 		justifyContent: 'center',
 		alignItems: 'center',
+		alignContent: 'center'
+	},
+	vehicleCard: {
+		alignSelf: 'stretch',
 		borderColor: '#C9CACA',
 		borderWidth: 1,
-		padding: 5,
-		margin: 10,
-		width: vw(60),
-		height: vw(60),
-		borderRadius: vw(30)
+		borderRadius: 30
 	},
+	cardImage: {},
 	selectedVehicleCard: {
 		backgroundColor: '#6e7e81'
 	},

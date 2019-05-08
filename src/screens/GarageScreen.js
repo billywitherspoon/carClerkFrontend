@@ -30,7 +30,7 @@ class GarageScreen extends React.Component {
 	}
 
 	componentDidMount = () => {
-		fetch(`http://10.137.1.80:5513/api/v1/users/1`)
+		fetch(`http://10.137.7.171:5513/api/v1/users/1`)
 			.then((response) => response.json())
 			.then((json) => {
 				console.log('initial fetch successful');
@@ -75,8 +75,12 @@ class GarageScreen extends React.Component {
 		console.log('about to render vehicles');
 		let vehicles = this.props.vehicles.slice().reverse();
 		return vehicles.map((v) => {
-			return <VehicleCard vehicle={v} key={Math.random()} />;
+			return <VehicleCard vehicle={v} key={Math.random()} navigateToLogsScreen={this.navigateToLogsScreen} />;
 		});
+	};
+
+	navigateToLogsScreen = () => {
+		this.props.navigation.navigate('Logs');
 	};
 
 	render() {
@@ -95,7 +99,7 @@ class GarageScreen extends React.Component {
 							style={styles.addVehicleTouchable}
 							onPress={() => this.toggleAddVehicleModal()}
 						>
-							<Text style={styles.addVehicleText}>Add A Vehicle to Your Garage</Text>
+							<Text style={styles.addVehicleText}>Add a Car to Your Garage</Text>
 						</TouchableOpacity>
 					</ScrollView>
 					<AddVehicleModal
@@ -125,18 +129,22 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		borderColor: '#C9CACA',
 		borderWidth: 1,
-		padding: 5,
-		margin: 10,
-		width: vw(60),
-		height: vw(60),
-		borderRadius: vw(30),
+		paddingTop: 15,
+		paddingLeft: 20,
+		paddingRight: 20,
+		paddingBottom: 15,
+		margin: 15,
+		width: vw(40),
+		height: vw(20),
+		borderRadius: 30,
 		backgroundColor: '#93a8ac',
 		alignContent: 'center'
 	},
 	addVehicleText: {
 		fontSize: vh(2.5),
 		color: '#4c5760',
-		textAlign: 'center'
+		textAlign: 'center',
+		fontWeight: 'bold'
 	}
 });
 
