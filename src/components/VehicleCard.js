@@ -108,13 +108,15 @@ const styles = StyleSheet.create({
 	},
 	cardImage: {},
 	selectedVehicleCard: {
-		backgroundColor: '#6e7e81'
+		// backgroundColor: '#6e7e81'
+		backgroundColor: '#93a8ac'
 	},
 	nonSelectedVehicleCard: {
 		backgroundColor: '#93a8ac'
 	},
 	selectedVehicleContent: {
-		color: '#bdc1c5'
+		// color: '#bdc1c5'
+		color: '#4c5760'
 	},
 	nonSelectedVehicleContent: {
 		color: '#4c5760'

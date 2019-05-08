@@ -28,7 +28,7 @@ class AddVehicleForm extends Component {
 	handleVinSubmit = () => {
 		if (this.state.vehicleName) {
 			if (this.state.vinText) {
-				let vin = this.state.vinText.toLowerCase();
+				let vin = this.state.vinText.toLowerCase().replace(/\W/g, '');
 				if (vin.length > 9 && vin.length < 18) {
 					console.log('valid vin');
 					if (parseInt(this.state.mileage) > 0) {
@@ -41,8 +41,8 @@ class AddVehicleForm extends Component {
 					alert('invalid vin');
 				}
 			} else if (this.state.licensePlate && this.state.stateAbb) {
-				let plate = this.state.licensePlate.toLowerCase();
-				let stateAbb = this.state.stateAbb.toLowerCase();
+				let plate = this.state.licensePlate.toLowerCase().replace(/\W/g, '');
+				let stateAbb = this.state.stateAbb.toLowerCase().replace(/\W/g, '');
 				if (stateAbb.length > 1 && stateAbb.length < 3) {
 					this.toggleContent();
 					this.fetchPlateState(plate, stateAbb);
@@ -195,9 +195,12 @@ const styles = StyleSheet.create({
 	inputBox: {
 		borderColor: '#C9CACA',
 		borderWidth: 1,
-		padding: 10,
 		borderRadius: 10,
-		width: vw(75)
+		width: vw(75),
+		color: '#4c5760',
+		fontSize: 15,
+		height: 35,
+		paddingLeft: 15
 	},
 	title: {
 		fontSize: vh(3)

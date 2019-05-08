@@ -8,9 +8,9 @@ class VehicleScreen extends React.Component {
 	static navigationOptions = {
 		title: 'Car Clerk',
 		headerStyle: {
-			backgroundColor: '#2d3142'
+			backgroundColor: '#bdc1c5'
 		},
-		headerTintColor: '#C9CACA',
+		headerTintColor: '#4c5760',
 		headerTitleStyle: {
 			fontWeight: 'bold',
 			flex: 1,
@@ -26,8 +26,8 @@ class VehicleScreen extends React.Component {
 		this.state = { columns: 2 };
 	}
 
-	renderSpecTitle = (item) => {
-		switch (item) {
+	renderSpecTitle = (title) => {
+		switch (title) {
 			case 'displacement_ci':
 				return 'Engine Displacement (CI)';
 			case 'displacement_l':
@@ -46,8 +46,27 @@ class VehicleScreen extends React.Component {
 				return 'VIN';
 			case 'tpms':
 				return 'TPMS';
+			case 'transmission_style':
+				return 'Transmission';
+			case 'plate':
+				return 'License Plate';
+			case 'plate_state':
+				return 'License Plate State';
 			default:
-				return this.titleize(item);
+				return this.titleize(title);
+		}
+	};
+
+	renderSpecInfo = (title, info) => {
+		switch (title) {
+			case 'vin':
+				return info.toUpperCase();
+			case 'plate':
+				return info.toUpperCase();
+			case 'plate_state':
+				return info.toUpperCase();
+			default:
+				return this.titleize(info);
 		}
 	};
 
@@ -72,7 +91,9 @@ class VehicleScreen extends React.Component {
 							return (
 								<View style={styles.specItem}>
 									<Text style={styles.specHeading}>{this.renderSpecTitle(item)}</Text>
-									<Text style={styles.specBody}>{this.titleize(displayVehicle[item])}</Text>
+									<Text style={styles.specBody}>
+										{this.renderSpecInfo(item, displayVehicle[item])}
+									</Text>
 									<Text />
 								</View>
 							);

@@ -87,18 +87,15 @@ class GarageScreen extends React.Component {
 		if (this.state.displayContent) {
 			return (
 				<View style={styles.screenContainer}>
+					<TouchableOpacity style={styles.addVehicleTouchable} onPress={() => this.toggleAddVehicleModal()}>
+						<Text style={styles.addVehicleText}>Add a Car to Your Garage</Text>
+					</TouchableOpacity>
 					<ScrollView
 						contentContainerStyle={{
 							width: vw(100)
 						}}
 					>
 						{this.renderVehicleCards()}
-						<TouchableOpacity
-							style={styles.addVehicleTouchable}
-							onPress={() => this.toggleAddVehicleModal()}
-						>
-							<Text style={styles.addVehicleText}>Add a Car to Your Garage</Text>
-						</TouchableOpacity>
 					</ScrollView>
 					<AddVehicleModal
 						display={this.state.displayAddVehicleModal}
@@ -115,9 +112,11 @@ class GarageScreen extends React.Component {
 //update
 
 const styles = StyleSheet.create({
-	screenContainer: {},
+	screenContainer: {
+		flex: 1
+	},
 	addVehicleTouchable: {
-		flex: 1,
+		display: 'flex',
 		flexDirection: 'column',
 		justifyContent: 'center',
 		alignItems: 'center',
@@ -131,14 +130,13 @@ const styles = StyleSheet.create({
 		marginLeft: vw(20),
 		marginTop: 15,
 		marginBottom: 15,
-		height: vh(15),
 		borderRadius: 30,
-		backgroundColor: '#4c5760',
+		backgroundColor: '#93a8ac',
 		alignContent: 'center'
 	},
 	addVehicleText: {
 		fontSize: vh(2.5),
-		color: '#bdc1c5',
+		color: '#4c5760',
 		textAlign: 'center',
 		fontWeight: 'bold'
 	}

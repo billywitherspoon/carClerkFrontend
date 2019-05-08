@@ -13,7 +13,8 @@ const GarageStack = createStackNavigator({
 
 GarageStack.navigationOptions = {
 	tabBarOptions: {
-		activeTintColor: '#6e7e81',
+		activeTintColor: '#31383E',
+		inactiveTintColor: '#6e7e81',
 		style: {
 			backgroundColor: '#bdc1c5'
 		}
@@ -28,7 +29,8 @@ const LogsStack = createStackNavigator({
 
 LogsStack.navigationOptions = {
 	tabBarOptions: {
-		activeTintColor: '#6e7e81',
+		activeTintColor: '#31383E',
+		inactiveTintColor: '#6e7e81',
 		style: {
 			backgroundColor: '#bdc1c5'
 		}
@@ -45,7 +47,8 @@ const VehicleStack = createStackNavigator({
 
 VehicleStack.navigationOptions = {
 	tabBarOptions: {
-		activeTintColor: '#6e7e81',
+		activeTintColor: '#31383E',
+		inactiveTintColor: '#6e7e81',
 		style: {
 			backgroundColor: '#bdc1c5'
 		}

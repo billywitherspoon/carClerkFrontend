@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import UpdateMileageForm from '../components/UpdateMileageForm';
 import LogModal from '../modals/LogModal';
@@ -13,9 +13,9 @@ class LogsScreen extends React.Component {
 	static navigationOptions = {
 		title: 'Car Clerk',
 		headerStyle: {
-			backgroundColor: '#2d3142'
+			backgroundColor: '#bdc1c5'
 		},
-		headerTintColor: '#C9CACA',
+		headerTintColor: '#4c5760',
 		headerTitleStyle: {
 			fontWeight: 'bold',
 			flex: 1,
@@ -104,11 +104,11 @@ class LogsScreen extends React.Component {
 			return (
 				<Swipeout
 					autoClose={true}
-					backgroundColor={log.complete ? '#3e885b' : '#ffffff'}
+					style={styles.swipeout}
 					left={[
 						{
 							text: 'Completed',
-							backgroundColor: '#3e885b',
+							backgroundColor: '#35605A',
 							onPress: () => {
 								console.log('completed button pressed log:', log);
 								this.updateLogAsCompleted(log);
@@ -118,7 +118,7 @@ class LogsScreen extends React.Component {
 					right={[
 						{
 							text: 'Edit',
-							backgroundColor: '#3f7cac',
+							backgroundColor: '#4C5760',
 							onPress: () => {
 								console.log('edit button pressed log:', log);
 								this.props.reduxSetActiveLog(log);
@@ -127,7 +127,7 @@ class LogsScreen extends React.Component {
 						},
 						{
 							text: 'Delete',
-							backgroundColor: '#c33149',
+							backgroundColor: '#c14953',
 							onPress: () => {
 								console.log('delete button pressed log:', log);
 								this.deleteLog(log);
@@ -137,9 +137,17 @@ class LogsScreen extends React.Component {
 					key={Math.random()}
 				>
 					<View style={styles.logItem}>
-						<Text>Title: {log.title}</Text>
-						<Text>Mileage: {log.mileage}</Text>
-						{log.difficulty ? <Text>Difficulty: {log.difficulty}</Text> : null}
+						<Text style={styles.logTitle}>{log.title}</Text>
+						<View style={styles.detailsContainer}>
+							<View style={styles.flexColumnCenter}>
+								<Text style={styles.title}>Mileage</Text>
+								<Text style={styles.logBody}>{log.mileage}</Text>
+							</View>
+							<View style={styles.flexColumnCenter}>
+								{log.difficulty ? <Text style={styles.title}>Difficulty</Text> : null}
+								{log.difficulty ? <Text style={styles.logBody}>{log.difficulty}</Text> : null}
+							</View>
+						</View>
 					</View>
 				</Swipeout>
 			);
@@ -150,8 +158,10 @@ class LogsScreen extends React.Component {
 		if (this.props.selectedVehicle) {
 			return (
 				<View style={styles.logScreenContainer}>
-					<Button onPress={() => this.toggleLogModal()} title="Add a New Log" color="#3e885b" />
 					<UpdateMileageForm />
+					<TouchableOpacity style={styles.addLogTouchable} onPress={() => this.toggleLogModal()}>
+						<Text style={styles.addLogTouchableText}>Add a Log</Text>
+					</TouchableOpacity>
 					<ScrollView style={styles.logContainer}>{this.renderLogs()}</ScrollView>
 					<LogModal display={this.state.displayLogModal} toggleLogModal={this.toggleLogModal} />
 				</View>
@@ -169,20 +179,83 @@ const styles = StyleSheet.create({
 		justifyContent: 'flex-start',
 		alignItems: 'center'
 	},
+	swipeout: {
+		marginTop: 10,
+		marginBottom: 10,
+		backgroundColor: 'transparent'
+	},
 	logItem: {
-		borderColor: 'black',
-		borderWidth: 0.5,
-		borderRadius: 0.5
+		backgroundColor: '#93a8ac',
+		flex: 1,
+		flexWrap: 'wrap',
+		flexDirection: 'column',
+		justifyContent: 'space-around',
+		alignItems: 'center',
+		alignContent: 'center',
+		padding: 10
 	},
 	logContainer: {
 		flex: 1
 	},
 	logScreenContainer: {
 		flex: 1
+	},
+	detailsContainer: {
+		display: 'flex',
+		flexDirection: 'row',
+		justifyContent: 'space-around',
+		alignItems: 'center',
+		alignSelf: 'stretch'
+	},
+	flexColumnCenter: {
+		display: 'flex',
+		flexDirection: 'column',
+		justifyContent: 'space-around',
+		alignItems: 'center'
+	},
+	addLogTouchable: {
+		display: 'flex',
+		flexDirection: 'column',
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderColor: '#C9CACA',
+		borderWidth: 1,
+		paddingTop: 5,
+		paddingLeft: 20,
+		paddingRight: 20,
+		paddingBottom: 5,
+		marginRight: vw(20),
+		marginLeft: vw(20),
+		marginTop: 10,
+		marginBottom: 10,
+		borderRadius: 30,
+		backgroundColor: '#93a8ac',
+		alignContent: 'center'
+	},
+	addLogTouchableText: {
+		fontSize: vh(2.5),
+		color: '#4c5760',
+		textAlign: 'center',
+		fontWeight: 'bold'
+	},
+	title: {
+		color: '#4c5760',
+		fontSize: vh(2),
+		fontWeight: 'bold'
+	},
+	logTitle: {
+		fontSize: vh(2.5),
+		fontWeight: 'bold',
+		textAlign: 'center',
+		color: '#4c5760',
+		marginBottom: 10
+	},
+	logBody: {
+		fontSize: vh(2),
+		textAlign: 'left',
+		color: '#4c5760'
 	}
 });
-
-//update
 
 const mapStateToProps = (state) => {
 	return {
