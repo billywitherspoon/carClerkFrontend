@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, TextInput, View, Button, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Button, TouchableOpacity, Image } from 'react-native';
 import { connect } from 'react-redux';
 import { selectVehicle } from '../store/actions/index.js';
 import { vw, vh, vmin, vmax } from 'react-native-expo-viewport-units';
@@ -20,6 +20,7 @@ class VehicleCard extends React.Component {
 		if (this.props.selectedVehicle && this.props.vehicle.id === this.props.selectedVehicle.id) {
 			return (
 				<TouchableOpacity style={[ styles.selectedVehicleCard, styles.vehicleCard ]}>
+					<Image source={{ uri: `${this.props.vehicle.auto_image}` }} style={{ width: 80, height: 40 }} />
 					<Text style={[ styles.title, styles.selectedVehicleContent ]}>{this.props.vehicle.name}</Text>
 					<Text style={[ styles.body, styles.selectedVehicleContent ]}>{this.props.vehicle.model_year}</Text>
 					<Text style={[ styles.body, styles.selectedVehicleContent ]}>{this.props.vehicle.make}</Text>
@@ -36,6 +37,7 @@ class VehicleCard extends React.Component {
 					style={[ styles.nonSelectedVehicleCard, styles.vehicleCard ]}
 					onPress={this.handleVehiclePress}
 				>
+					<Image source={{ uri: `${this.props.vehicle.auto_image}` }} style={{ width: 80, height: 40 }} />
 					<Text style={[ styles.title, styles.nonSelectedVehicleContent ]} onPress={this.handleVehiclePress}>
 						{this.props.vehicle.name}
 					</Text>
