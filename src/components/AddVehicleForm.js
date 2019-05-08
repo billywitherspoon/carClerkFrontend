@@ -7,7 +7,14 @@ import { vw, vh, vmin, vmax } from 'react-native-expo-viewport-units';
 class AddVehicleForm extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { vinText: '', vehicleName: '', licensePlate: '', stateAbb: '', showContent: true };
+		this.state = {
+			vinText: '',
+			vehicleName: '',
+			licensePlate: '',
+			stateAbb: '',
+			mileage: '',
+			showContent: true
+		};
 	}
 
 	toggleContent = () => {
@@ -24,8 +31,12 @@ class AddVehicleForm extends Component {
 				let vin = this.state.vinText.toLowerCase();
 				if (vin.length > 9 && vin.length < 18) {
 					console.log('valid vin');
-					this.toggleContent();
-					this.fetchVin(vin);
+					if (parseInt(this.state.mileage) > 0) {
+						this.toggleContent();
+						this.fetchVin(vin);
+					} else {
+						alert('Please Enter A Valid Mileage');
+					}
 				} else {
 					alert('invalid vin');
 				}
@@ -35,7 +46,7 @@ class AddVehicleForm extends Component {
 				if (stateAbb.length > 1 && stateAbb.length < 3) {
 					this.fetchPlateState(plate, stateAbb);
 				} else {
-					alert('please enter a valid state');
+					alert('Please Enter A Valid State');
 				}
 			}
 		} else {
@@ -54,7 +65,8 @@ class AddVehicleForm extends Component {
 				plate: `${plate}`,
 				plate_state: `${stateAbb}`,
 				user_id: 1,
-				name: `${this.state.vehicleName}`
+				name: `${this.state.vehicleName}`,
+				mileage: `${this.state.mileage}`
 			})
 		})
 			.then((response) => response.json())
@@ -88,7 +100,8 @@ class AddVehicleForm extends Component {
 			body: JSON.stringify({
 				vin: `${vin}`,
 				user_id: 1,
-				name: `${this.state.vehicleName}`
+				name: `${this.state.vehicleName}`,
+				mileage: `${this.state.mileage}`
 			})
 		})
 			.then((response) => response.json())
@@ -130,6 +143,11 @@ class AddVehicleForm extends Component {
 					<TextInput
 						placeholder="Enter State Abbreviation"
 						onChangeText={(stateAbb) => this.setState({ stateAbb })}
+					/>
+					<TextInput
+						placeholder="Enter Vehicle Mileage"
+						onChangeText={(mileage) => this.setState({ mileage })}
+						keyboardType="number-pad"
 					/>
 					<Button onPress={this.props.toggleAddVehicleModal} title="Cancel" color="#c33149" />
 				</View>
