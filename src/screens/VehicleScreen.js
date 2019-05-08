@@ -26,15 +26,41 @@ class VehicleScreen extends React.Component {
 		this.state = { columns: 2 };
 	}
 
+	renderSpecTitle = (item) => {
+		switch (item) {
+			case 'displacement_ci':
+				return 'Engine Displacement (CI)';
+			case 'displacement_l':
+				return 'Engine Displacement (L)';
+			case 'manufacturer_name':
+				return 'Manufacturer';
+			case 'fuel_type_primary':
+				return 'Fuel Type';
+			case 'engine_number_of_cylinders':
+				return 'Engine Cylinders';
+			case 'brake_system_type':
+				return 'Brake System';
+			case 'valve_train_design':
+				return 'Engine Valve Train';
+			case 'vin':
+				return 'VIN';
+			case 'tpms':
+				return 'TPMS';
+			default:
+				return this.titleize(item);
+		}
+	};
+
 	renderVehicleInfo = () => {
 		if (this.props.selectedVehicle) {
 			let vehicle = { ...this.props.selectedVehicle };
 			delete vehicle.logs;
 			delete vehicle.notes;
 			delete vehicle.id;
-			let vehicleName = vehicle.name;
 			delete vehicle.name;
 			delete vehicle.auto_image;
+			vehicle.displacement_ci = Number.parseInt(vehicle.displacement_ci);
+			vehicle.displacement_l = Number.parseFloat(vehicle.displacement_l).toFixed(1);
 			let displayVehicle = this.removeNulls(vehicle);
 			return (
 				<React.Fragment>
@@ -45,7 +71,7 @@ class VehicleScreen extends React.Component {
 						renderItem={({ item }) => {
 							return (
 								<View style={styles.specItem}>
-									<Text style={styles.specHeading}>{this.titleize(item)}</Text>
+									<Text style={styles.specHeading}>{this.renderSpecTitle(item)}</Text>
 									<Text style={styles.specBody}>{this.titleize(displayVehicle[item])}</Text>
 									<Text />
 								</View>
@@ -104,9 +130,10 @@ const styles = StyleSheet.create({
 		width: vw(90)
 	},
 	specItem: {
-		borderColor: '#2d3142',
-		backgroundColor: '#f0f0f0',
+		backgroundColor: '#93a8ac',
+		borderColor: '#C9CACA',
 		borderWidth: 1,
+		borderRadius: 30,
 		width: 100,
 		height: 100,
 		flex: 1,
@@ -115,19 +142,20 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-around',
 		alignItems: 'center',
 		alignContent: 'center',
-		padding: 3,
+		padding: 10,
 		margin: 5,
-		borderRadius: 30,
 		shadowColor: '#000000'
 	},
 	specHeading: {
-		fontSize: 15,
+		fontSize: vh(2),
 		fontWeight: 'bold',
-		textAlign: 'center'
+		textAlign: 'center',
+		color: '#4c5760'
 	},
 	specBody: {
-		fontSize: 13,
-		textAlign: 'center'
+		fontSize: vh(1.75),
+		textAlign: 'center',
+		color: '#4c5760'
 	}
 });
 

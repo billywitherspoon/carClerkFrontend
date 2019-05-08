@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, Button, CheckBox } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { setVehicles, selectVehicle, updateActiveLog } from '../store/actions/index.js';
 import { vw, vh, vmin, vmax } from 'react-native-expo-viewport-units';
@@ -114,23 +114,31 @@ class AddLogForm extends React.Component {
 	render() {
 		if (this.state.showContent) {
 			return (
-				<View>
-					<Text>Enter Log Information</Text>
-					<Button onPress={this.handleLogSubmit} title="Submit Log" color="#3f7cac" />
-					<Button onPress={this.props.toggleLogModal} title="Cancel" color="#c33149" />
+				<View style={styles.formContainer}>
 					<TextInput
-						style={styles.logInputBox}
+						style={styles.inputBox}
 						placeholder="Title"
 						value={this.props.activeLog.title}
 						onChangeText={(title) => this.props.reduxUpdateActiveLog({ title: title })}
 					/>
 					<TextInput
 						keyboardType="number-pad"
-						style={styles.logInputBox}
+						style={styles.inputBox}
 						placeholder="Mileage"
 						value={this.mileageValue()}
 						onChangeText={(mileage) => this.props.reduxUpdateActiveLog({ mileage: mileage })}
 					/>
+					<View style={styles.buttonContainer}>
+						<TouchableOpacity
+							onPress={this.props.toggleLogModal}
+							style={[ styles.button, styles.cancelButton ]}
+						>
+							<Text style={[ styles.title, styles.darkText ]}>Cancel</Text>
+						</TouchableOpacity>
+						<TouchableOpacity onPress={this.handleLogSubmit} style={[ styles.button, styles.submitButton ]}>
+							<Text style={[ styles.title, styles.lightText ]}>Submit</Text>
+						</TouchableOpacity>
+					</View>
 				</View>
 			);
 		} else {
@@ -151,17 +159,54 @@ class AddLogForm extends React.Component {
 // />;
 
 const styles = StyleSheet.create({
-	flexCenter: {
+	formContainer: {
 		flex: 1,
-		flexDirection: 'column',
-		justifyContent: 'flex-start',
 		alignItems: 'center',
-		color: 'black'
+		flexDirection: 'column',
+		justifyContent: 'space-around'
 	},
-	logInputBox: {
-		borderWidth: 2,
-		borderRadius: 1,
-		borderColor: 'black'
+	inputBox: {
+		borderColor: '#C9CACA',
+		borderWidth: 1,
+		padding: 10,
+		borderRadius: 10,
+		width: vw(75)
+	},
+	title: {
+		fontSize: vh(3)
+	},
+	body: {
+		fontSize: vh(2.25),
+		fontWeight: 'bold'
+	},
+	lightText: {
+		color: '#bdc1c5'
+	},
+	darkText: {
+		color: '#4c5760'
+	},
+	button: {
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center',
+		borderColor: 'transparent',
+		borderWidth: 1,
+		padding: 10,
+		borderRadius: 10,
+		marginLeft: 50,
+		marginRight: 50
+	},
+	buttonContainer: {
+		display: 'flex',
+		flexDirection: 'row',
+		justifyContent: 'space-around',
+		alignSelf: 'stretch'
+	},
+	submitButton: {
+		backgroundColor: '#4c5760'
+	},
+	cancelButton: {
+		backgroundColor: '#bdc1c5'
 	}
 });
 

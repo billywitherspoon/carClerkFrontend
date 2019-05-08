@@ -102,7 +102,9 @@ const styles = StyleSheet.create({
 		alignSelf: 'stretch',
 		borderColor: '#C9CACA',
 		borderWidth: 1,
-		borderRadius: 30
+		borderRadius: 30,
+		marginLeft: 40,
+		marginRight: 40
 	},
 	cardImage: {},
 	selectedVehicleCard: {
