@@ -13,15 +13,10 @@ const logModal = (props) => {
 };
 
 // const styles = StyleSheet.create({
-// 	image: {
-// 		marginTop: 20,
-// 		marginLeft: 90,
-// 		height: 200,
-// 		width: 200
-// 	},
-// 	text: {
-// 		fontSize: 20,
-// 		marginLeft: 150
+// 	modalContainer: {
+// 		flex: 1,
+// 		alignSelf: 'stretch',
+// 		backgroundColor: 'blue'
 // 	}
 // });
 

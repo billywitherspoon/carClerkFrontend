@@ -133,39 +133,44 @@ class AddVehicleForm extends Component {
 			return (
 				<View style={styles.formContainer}>
 					<TextInput
-						placeholder="Enter a nickname for this vehicle"
+						placeholder="Vehicle Nickname"
 						onChangeText={(vehicleName) => this.setState({ vehicleName })}
 						style={styles.inputBox}
 					/>
 					<TextInput
-						placeholder="Enter Vehicle Mileage"
+						placeholder="Mileage"
 						onChangeText={(mileage) => this.setState({ mileage })}
 						keyboardType="number-pad"
 						style={styles.inputBox}
 					/>
-					<Text style={styles.body}>Enter VIN (preferred)</Text>
+					<Text style={[ styles.body, styles.darkText ]}>Option 1: VIN (Preferred)</Text>
 					<TextInput
-						placeholder="Enter VIN"
+						placeholder="VIN"
 						onChangeText={(vinText) => this.setState({ vinText })}
 						style={styles.inputBox}
 					/>
-					<Text style={styles.body}>Enter License Plate and State (alternative)</Text>
+					<Text style={[ styles.body, styles.darkText ]}>
+						Option 2: License Plate and State (Alternative)
+					</Text>
 					<TextInput
-						placeholder="Enter License Plate"
+						placeholder="License Plate"
 						onChangeText={(licensePlate) => this.setState({ licensePlate })}
 						style={styles.inputBox}
 					/>
 					<TextInput
-						placeholder="Enter State Abbreviation"
+						placeholder="State Abbreviation"
 						onChangeText={(stateAbb) => this.setState({ stateAbb })}
 						style={styles.inputBox}
 					/>
 					<View style={styles.buttonContainer}>
-						<TouchableOpacity onPress={this.props.toggleAddVehicleModal}>
-							<Text style={styles.title}>Cancel</Text>
+						<TouchableOpacity
+							onPress={this.props.toggleAddVehicleModal}
+							style={[ styles.button, styles.cancelButton ]}
+						>
+							<Text style={[ styles.title, styles.darkText ]}>Cancel</Text>
 						</TouchableOpacity>
-						<TouchableOpacity onPress={this.handleVinSubmit}>
-							<Text style={styles.title}>Submit</Text>
+						<TouchableOpacity onPress={this.handleVinSubmit} style={[ styles.button, styles.submitButton ]}>
+							<Text style={[ styles.title, styles.lightText ]}>Submit</Text>
 						</TouchableOpacity>
 					</View>
 				</View>
@@ -184,35 +189,51 @@ const styles = StyleSheet.create({
 	formContainer: {
 		flex: 1,
 		alignItems: 'center',
-		justifyContent: 'space-around',
-		backgroundColor: '#eae6e5'
+		flexDirection: 'column',
+		justifyContent: 'space-around'
 	},
 	inputBox: {
 		borderColor: '#C9CACA',
-		borderWidth: 1
+		borderWidth: 1,
+		padding: 10,
+		borderRadius: 10,
+		width: vw(75)
 	},
 	title: {
-		fontSize: vh(3),
-		color: '#4c5760'
+		fontSize: vh(3)
 	},
 	body: {
-		fontSize: vh(2.5),
+		fontSize: vh(2.25),
+		fontWeight: 'bold'
+	},
+	lightText: {
+		color: '#bdc1c5'
+	},
+	darkText: {
 		color: '#4c5760'
 	},
-	buttons: {
-		width: 40,
-		height: 20
+	button: {
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center',
+		borderColor: 'transparent',
+		borderWidth: 1,
+		padding: 10,
+		borderRadius: 10,
+		marginLeft: 50,
+		marginRight: 50
 	},
 	buttonContainer: {
-		flex: 1,
+		display: 'flex',
 		flexDirection: 'row',
-		justifyContent: 'space-around'
+		justifyContent: 'space-around',
+		alignSelf: 'stretch'
 	},
 	submitButton: {
-		color: '#3f7cac'
+		backgroundColor: '#4c5760'
 	},
 	cancelButton: {
-		color: '#c33149'
+		backgroundColor: '#bdc1c5'
 	}
 });
 

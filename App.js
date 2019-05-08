@@ -55,8 +55,8 @@ class App extends React.Component {
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1,
-		backgroundColor: '#ffffff'
+		backgroundColor: '#eae6e5',
+		flex: 1
 	}
 });
 

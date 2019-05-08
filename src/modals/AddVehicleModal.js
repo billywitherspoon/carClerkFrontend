@@ -11,7 +11,8 @@ const addVehicleModal = (props) => (
 
 // const styles = StyleSheet.create({
 // 	modalContainer: {
-// 		backgroundColor: 'red'
+// 		flex: 1,
+// 		alignSelf: 'stretch'
 // 	}
 // });
 

@@ -89,7 +89,6 @@ class VehicleCard extends React.Component {
 
 const styles = StyleSheet.create({
 	singleCardContainer: {
-		width: vw(90),
 		flex: 1
 	},
 	bodyContainer: {

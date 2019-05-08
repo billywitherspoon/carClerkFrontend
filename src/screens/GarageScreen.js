@@ -89,8 +89,6 @@ class GarageScreen extends React.Component {
 				<View style={styles.screenContainer}>
 					<ScrollView
 						contentContainerStyle={{
-							flexGrow: 1,
-							alignItems: 'center',
 							width: vw(100)
 						}}
 					>
@@ -117,11 +115,7 @@ class GarageScreen extends React.Component {
 //update
 
 const styles = StyleSheet.create({
-	screenContainer: {
-		flex: 1,
-		backgroundColor: '#eae6e5',
-		alignItems: 'center'
-	},
+	screenContainer: {},
 	addVehicleTouchable: {
 		flex: 1,
 		flexDirection: 'column',
@@ -129,20 +123,22 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		borderColor: '#C9CACA',
 		borderWidth: 1,
-		paddingTop: 15,
+		paddingTop: 5,
 		paddingLeft: 20,
 		paddingRight: 20,
-		paddingBottom: 15,
-		margin: 15,
-		width: vw(40),
-		height: vw(20),
+		paddingBottom: 5,
+		marginRight: vw(20),
+		marginLeft: vw(20),
+		marginTop: 15,
+		marginBottom: 15,
+		height: vh(15),
 		borderRadius: 30,
-		backgroundColor: '#93a8ac',
+		backgroundColor: '#4c5760',
 		alignContent: 'center'
 	},
 	addVehicleText: {
 		fontSize: vh(2.5),
-		color: '#4c5760',
+		color: '#bdc1c5',
 		textAlign: 'center',
 		fontWeight: 'bold'
 	}
