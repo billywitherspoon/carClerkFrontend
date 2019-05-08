@@ -125,12 +125,6 @@ class AddLogForm extends React.Component {
 						onChangeText={(title) => this.props.reduxUpdateActiveLog({ title: title })}
 					/>
 					<TextInput
-						style={styles.logInputBox}
-						placeholder="Description"
-						value={this.props.activeLog.description}
-						onChangeText={(description) => this.props.reduxUpdateActiveLog({ description: description })}
-					/>
-					<TextInput
 						keyboardType="number-pad"
 						style={styles.logInputBox}
 						placeholder="Mileage"
@@ -148,6 +142,13 @@ class AddLogForm extends React.Component {
 		}
 	}
 }
+
+// <TextInput
+// 	style={styles.logInputBox}
+// 	placeholder="Description"
+// 	value={this.props.activeLog.description}
+// 	onChangeText={(description) => this.props.reduxUpdateActiveLog({ description: description })}
+// />;
 
 const styles = StyleSheet.create({
 	flexCenter: {

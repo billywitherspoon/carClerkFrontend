@@ -44,6 +44,7 @@ class AddVehicleForm extends Component {
 				let plate = this.state.licensePlate.toLowerCase();
 				let stateAbb = this.state.stateAbb.toLowerCase();
 				if (stateAbb.length > 1 && stateAbb.length < 3) {
+					this.toggleContent();
 					this.fetchPlateState(plate, stateAbb);
 				} else {
 					alert('Please Enter A Valid State');
@@ -155,7 +156,7 @@ class AddVehicleForm extends Component {
 		} else {
 			return (
 				<View>
-					<Text>Looking for submitted Vin...</Text>
+					<Text>Searching for vehicle info...</Text>
 				</View>
 			);
 		}

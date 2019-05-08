@@ -55,6 +55,7 @@ class LogsScreen extends React.Component {
 			}
 		});
 		this.updateVehicleStates(updatedVehicle);
+		this.updateLogFetch(logCopy);
 	};
 
 	deleteLog = (log) => {
@@ -70,6 +71,19 @@ class LogsScreen extends React.Component {
 	deleteLogFetch = (log) => {
 		fetch(`http://10.137.1.80:5513/api/v1/logs/${log.id}`, {
 			method: 'DELETE'
+		});
+	};
+
+	updateLogFetch = (logCopy) => {
+		fetch(`http://10.137.1.80:5513/api/v1/logs/${logCopy.id}`, {
+			method: 'PATCH',
+			headers: {
+				'Content-Type': 'application/json',
+				Accept: 'application/json'
+			},
+			body: JSON.stringify({
+				complete: logCopy.complete
+			})
 		});
 	};
 
@@ -124,8 +138,8 @@ class LogsScreen extends React.Component {
 				>
 					<View style={styles.logItem}>
 						<Text>Title: {log.title}</Text>
-						<Text>Description: {log.description}</Text>
 						<Text>Mileage: {log.mileage}</Text>
+						{log.difficulty ? <Text>Difficulty: {log.difficulty}</Text> : null}
 					</View>
 				</Swipeout>
 			);
