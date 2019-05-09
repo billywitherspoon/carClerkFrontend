@@ -89,7 +89,8 @@ class VehicleCard extends React.Component {
 
 const styles = StyleSheet.create({
 	singleCardContainer: {
-		flex: 1
+		flex: 1,
+		marginTop: -5
 	},
 	bodyContainer: {
 		flex: 1,

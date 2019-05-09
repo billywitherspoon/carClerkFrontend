@@ -3,6 +3,69 @@ import { StyleSheet, Text, TextInput, View, Button, TouchableOpacity } from 'rea
 import { connect } from 'react-redux';
 import { addNewVehicle, selectVehicle } from '../store/actions/index.js';
 import { vw, vh, vmin, vmax } from 'react-native-expo-viewport-units';
+import { DotIndicator } from 'react-native-indicators';
+
+const stateArray = [
+	'AL',
+	'AK',
+	'AS',
+	'AZ',
+	'AR',
+	'CA',
+	'CO',
+	'CT',
+	'DE',
+	'DC',
+	'FM',
+	'FL',
+	'GA',
+	'GU',
+	'HI',
+	'ID',
+	'IL',
+	'IN',
+	'IA',
+	'KS',
+	'KY',
+	'LA',
+	'ME',
+	'MH',
+	'MD',
+	'MA',
+	'MI',
+	'MN',
+	'MS',
+	'MO',
+	'MT',
+	'NE',
+	'NV',
+	'NH',
+	'NJ',
+	'NM',
+	'NY',
+	'NC',
+	'ND',
+	'MP',
+	'OH',
+	'OK',
+	'OR',
+	'PW',
+	'PA',
+	'PR',
+	'RI',
+	'SC',
+	'SD',
+	'TN',
+	'TX',
+	'UT',
+	'VT',
+	'VI',
+	'VA',
+	'WA',
+	'WV',
+	'WI',
+	'WY'
+];
 
 class AddVehicleForm extends Component {
 	constructor(props) {
@@ -40,8 +103,9 @@ class AddVehicleForm extends Component {
 					}
 				} else if (this.state.licensePlate && this.state.stateAbb) {
 					let plate = this.state.licensePlate.toLowerCase().replace(/\W/g, '');
-					let stateAbb = this.state.stateAbb.toLowerCase().replace(/\W/g, '');
-					if (stateAbb.length > 1 && stateAbb.length < 3) {
+					let stateAbb = this.state.stateAbb.toUpperCase().replace(/\W/g, '');
+
+					if (stateArray.includes(stateAbb)) {
 						this.toggleContent();
 						this.fetchPlateState(plate, stateAbb, mileageInput);
 					} else {
@@ -135,7 +199,7 @@ class AddVehicleForm extends Component {
 		if (this.state.showContent) {
 			return (
 				<View style={styles.formContainer}>
-					<Text style={[ styles.body, styles.darkText ]}>Required</Text>
+					<Text style={[ styles.bodyText, styles.darkText ]}>Required</Text>
 					<TextInput
 						placeholderTextColor="#929496"
 						placeholder="Nickname"
@@ -149,16 +213,14 @@ class AddVehicleForm extends Component {
 						keyboardType="number-pad"
 						style={styles.inputBox}
 					/>
-					<Text style={[ styles.body, styles.darkText ]}>Option 1: VIN (Preferred)</Text>
+					<Text style={[ styles.bodyText, styles.darkText ]}>Option 1: VIN</Text>
 					<TextInput
 						placeholderTextColor="#929496"
 						placeholder="VIN"
 						onChangeText={(vinText) => this.setState({ vinText })}
 						style={styles.inputBox}
 					/>
-					<Text style={[ styles.body, styles.darkText ]}>
-						Option 2: License Plate and State (Alternative)
-					</Text>
+					<Text style={[ styles.bodyText, styles.darkText ]}>Option 2: License Plate and State</Text>
 					<TextInput
 						placeholderTextColor="#929496"
 						placeholder="License Plate"
@@ -176,18 +238,19 @@ class AddVehicleForm extends Component {
 							onPress={this.props.toggleAddVehicleModal}
 							style={[ styles.button, styles.cancelButton ]}
 						>
-							<Text style={[ styles.title, styles.redText ]}>Cancel</Text>
+							<Text style={[ styles.buttonText, styles.redText ]}>Cancel</Text>
 						</TouchableOpacity>
 						<TouchableOpacity onPress={this.handleVinSubmit} style={[ styles.button, styles.submitButton ]}>
-							<Text style={[ styles.title, styles.darkText ]}>Submit</Text>
+							<Text style={[ styles.buttonText, styles.darkText ]}>Submit</Text>
 						</TouchableOpacity>
 					</View>
 				</View>
 			);
 		} else {
 			return (
-				<View>
-					<Text>Searching for vehicle info...</Text>
+				<View style={styles.loadAnimationContainer}>
+					<DotIndicator color="#1c3144" />
+					<Text style={styles.bodyText}>Searching for Vehicle Info</Text>
 				</View>
 			);
 		}
@@ -202,6 +265,17 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-around',
 		backgroundColor: '#e5e8ec'
 	},
+	loadAnimationContainer: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center'
+	},
+	bodyText: {
+		fontSize: vh(2.5),
+		color: '#1c3144',
+		textAlign: 'center',
+		fontWeight: 'bold'
+	},
 	inputBox: {
 		borderColor: '#929497',
 		borderWidth: 1,
@@ -211,13 +285,6 @@ const styles = StyleSheet.create({
 		fontSize: 15,
 		height: 35,
 		paddingLeft: 15
-	},
-	title: {
-		fontSize: vh(2.5)
-	},
-	body: {
-		fontSize: vh(2.25),
-		fontWeight: 'bold'
 	},
 	lightText: {
 		color: '#e5e8ec'
@@ -230,13 +297,22 @@ const styles = StyleSheet.create({
 	},
 	button: {
 		display: 'flex',
-		alignItems: 'center',
+		flexDirection: 'column',
 		justifyContent: 'center',
-		borderWidth: 1,
-		padding: 10,
-		borderRadius: 10,
-		marginLeft: 50,
-		marginRight: 50
+		alignItems: 'center',
+		borderColor: '#1c3144',
+		borderWidth: 1.5,
+		paddingTop: 5,
+		paddingLeft: 20,
+		paddingRight: 20,
+		paddingBottom: 5,
+		marginRight: vw(20),
+		marginLeft: vw(20),
+		marginTop: 20,
+		marginBottom: 10,
+		borderRadius: 30,
+		backgroundColor: '#e5e8ec',
+		alignContent: 'center'
 	},
 	buttonContainer: {
 		display: 'flex',
@@ -251,6 +327,11 @@ const styles = StyleSheet.create({
 	cancelButton: {
 		backgroundColor: '#e5e8ec',
 		borderColor: '#d00000'
+	},
+	buttonText: {
+		fontSize: vh(2.5),
+		textAlign: 'center',
+		fontWeight: 'bold'
 	}
 });
 

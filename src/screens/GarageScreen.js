@@ -115,14 +115,15 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 		borderColor: '#1c3144',
-		borderWidth: 1,
+		borderWidth: 1.5,
 		paddingTop: 5,
 		paddingLeft: 20,
 		paddingRight: 20,
+		paddingBottom: 5,
 		marginRight: vw(20),
 		marginLeft: vw(20),
-		marginTop: 15,
-		marginBottom: 15,
+		marginTop: 20,
+		marginBottom: 10,
 		borderRadius: 30,
 		backgroundColor: '#e5e8ec',
 		alignContent: 'center'
@@ -130,7 +131,8 @@ const styles = StyleSheet.create({
 	addVehicleText: {
 		fontSize: vh(2.5),
 		color: '#1c3144',
-		textAlign: 'center'
+		textAlign: 'center',
+		fontWeight: 'bold'
 	}
 });
 const mapStateToProps = (state) => {

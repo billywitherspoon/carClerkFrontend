@@ -104,7 +104,7 @@ class VehicleScreen extends React.Component {
 				</React.Fragment>
 			);
 		} else {
-			return <Text>Select a vehicle</Text>;
+			return <Text style={styles.bodyText}>Please add a vehicle</Text>;
 		}
 	};
 
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
 		width: vw(90)
 	},
 	specItem: {
-		backgroundColor: '#3f88c5',
+		backgroundColor: '#1c3144',
 		borderColor: 'transparent',
 		borderWidth: 1,
 		borderRadius: 30,
@@ -164,8 +164,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		alignContent: 'center',
 		padding: 10,
-		margin: 5,
-		shadowColor: '#000000'
+		margin: 5
 	},
 	specHeading: {
 		fontSize: vh(2),
@@ -177,6 +176,10 @@ const styles = StyleSheet.create({
 		fontSize: vh(2),
 		textAlign: 'center',
 		color: '#e5e8ec'
+	},
+	bodyText: {
+		fontSize: vh(2.5),
+		color: '#1c3144'
 	}
 });
 
