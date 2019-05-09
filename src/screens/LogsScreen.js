@@ -13,9 +13,9 @@ class LogsScreen extends React.Component {
 	static navigationOptions = {
 		title: 'Car Clerk',
 		headerStyle: {
-			backgroundColor: '#bdc1c5'
+			backgroundColor: '#1c3144'
 		},
-		headerTintColor: '#4c5760',
+		headerTintColor: '#e5e8ec',
 		headerTitleStyle: {
 			fontWeight: 'bold',
 			flex: 1,
@@ -69,13 +69,13 @@ class LogsScreen extends React.Component {
 	};
 
 	deleteLogFetch = (log) => {
-		fetch(`http://10.137.7.171:5513/api/v1/logs/${log.id}`, {
+		fetch(`http://10.137.7.125:5513/api/v1/logs/${log.id}`, {
 			method: 'DELETE'
 		});
 	};
 
 	updateLogFetch = (logCopy) => {
-		fetch(`http://10.137.7.171:5513/api/v1/logs/${logCopy.id}`, {
+		fetch(`http://10.137.7.125:5513/api/v1/logs/${logCopy.id}`, {
 			method: 'PATCH',
 			headers: {
 				'Content-Type': 'application/json',
@@ -99,6 +99,27 @@ class LogsScreen extends React.Component {
 		this.props.reduxSetVehicles(updatedVehicles);
 	};
 
+	renderDifficulty = (log) => {
+		if (log.difficulty) {
+			return (
+				<View style={styles.flexColumnCenter}>
+					<Text style={styles.title}>Difficulty</Text>
+					<Text style={styles.logBody}>{log.difficulty}</Text>
+				</View>
+			);
+		} else {
+			return null;
+		}
+	};
+
+	renderCheckmark = (log) => {
+		if (log.complete) {
+			return <Text>✔</Text>;
+		} else {
+			return null;
+		}
+	};
+
 	renderLogs = () => {
 		return this.props.selectedVehicle.logs.map((log) => {
 			return (
@@ -118,7 +139,7 @@ class LogsScreen extends React.Component {
 					right={[
 						{
 							text: 'Edit',
-							backgroundColor: '#4C5760',
+							backgroundColor: '#ffba08',
 							onPress: () => {
 								console.log('edit button pressed log:', log);
 								this.props.reduxSetActiveLog(log);
@@ -127,7 +148,7 @@ class LogsScreen extends React.Component {
 						},
 						{
 							text: 'Delete',
-							backgroundColor: '#c14953',
+							backgroundColor: '#d00000',
 							onPress: () => {
 								console.log('delete button pressed log:', log);
 								this.deleteLog(log);
@@ -143,10 +164,7 @@ class LogsScreen extends React.Component {
 								<Text style={styles.title}>Mileage</Text>
 								<Text style={styles.logBody}>{log.mileage}</Text>
 							</View>
-							<View style={styles.flexColumnCenter}>
-								{log.difficulty ? <Text style={styles.title}>Difficulty</Text> : null}
-								{log.difficulty ? <Text style={styles.logBody}>{log.difficulty}</Text> : null}
-							</View>
+							{this.renderDifficulty(log)}
 						</View>
 					</View>
 				</Swipeout>
@@ -158,12 +176,20 @@ class LogsScreen extends React.Component {
 		if (this.props.selectedVehicle) {
 			return (
 				<View style={styles.logScreenContainer}>
-					<UpdateMileageForm />
-					<TouchableOpacity style={styles.addLogTouchable} onPress={() => this.toggleLogModal()}>
-						<Text style={styles.addLogTouchableText}>Add a Log</Text>
-					</TouchableOpacity>
-					<ScrollView style={styles.logContainer}>{this.renderLogs()}</ScrollView>
-					<LogModal display={this.state.displayLogModal} toggleLogModal={this.toggleLogModal} />
+					<View style={styles.logScreenSubContainer}>
+						<UpdateMileageForm />
+						<TouchableOpacity style={styles.addLogTouchable} onPress={() => this.toggleLogModal()}>
+							<Text style={styles.addLogTouchableText}>Add a Log</Text>
+						</TouchableOpacity>
+						<ScrollView
+							contentContainerStyle={{
+								width: vw(100)
+							}}
+						>
+							{this.renderLogs()}
+						</ScrollView>
+						<LogModal display={this.state.displayLogModal} toggleLogModal={this.toggleLogModal} />
+					</View>
 				</View>
 			);
 		} else {
@@ -173,19 +199,13 @@ class LogsScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-	flexCenter: {
-		flex: 1,
-		flexDirection: 'column',
-		justifyContent: 'flex-start',
-		alignItems: 'center'
-	},
 	swipeout: {
 		marginTop: 10,
 		marginBottom: 10,
 		backgroundColor: 'transparent'
 	},
 	logItem: {
-		backgroundColor: '#93a8ac',
+		backgroundColor: '#3f88c5',
 		flex: 1,
 		flexWrap: 'wrap',
 		flexDirection: 'column',
@@ -194,11 +214,17 @@ const styles = StyleSheet.create({
 		alignContent: 'center',
 		padding: 10
 	},
-	logContainer: {
-		flex: 1
-	},
 	logScreenContainer: {
-		flex: 1
+		flex: 1,
+		backgroundColor: '#e5e8ec',
+		flexDirection: 'column',
+		justifyContent: 'flex-start'
+	},
+	logScreenSubContainer: {
+		flex: 1,
+		backgroundColor: '#e5e8ec',
+		flexDirection: 'column',
+		justifyContent: 'flex-start'
 	},
 	detailsContainer: {
 		display: 'flex',
@@ -218,7 +244,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'column',
 		justifyContent: 'center',
 		alignItems: 'center',
-		borderColor: '#C9CACA',
+		borderColor: 'transparent',
 		borderWidth: 1,
 		paddingTop: 5,
 		paddingLeft: 20,
@@ -229,31 +255,31 @@ const styles = StyleSheet.create({
 		marginTop: 10,
 		marginBottom: 10,
 		borderRadius: 30,
-		backgroundColor: '#93a8ac',
+		backgroundColor: '#3f88c5',
 		alignContent: 'center'
 	},
 	addLogTouchableText: {
 		fontSize: vh(2.5),
-		color: '#4c5760',
+		color: '#e5e8ec',
 		textAlign: 'center',
-		fontWeight: 'bold'
-	},
-	title: {
-		color: '#4c5760',
-		fontSize: vh(2),
 		fontWeight: 'bold'
 	},
 	logTitle: {
 		fontSize: vh(2.5),
 		fontWeight: 'bold',
 		textAlign: 'center',
-		color: '#4c5760',
+		color: '#e5e8ec',
 		marginBottom: 10
+	},
+	title: {
+		color: '#e5e8ec',
+		fontSize: vh(2),
+		fontWeight: 'bold'
 	},
 	logBody: {
 		fontSize: vh(2),
 		textAlign: 'left',
-		color: '#4c5760'
+		color: '#e5e8ec'
 	}
 });
 

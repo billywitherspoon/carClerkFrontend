@@ -11,9 +11,9 @@ class GarageScreen extends React.Component {
 	static navigationOptions = {
 		title: 'Car Clerk',
 		headerStyle: {
-			backgroundColor: '#bdc1c5'
+			backgroundColor: '#1c3144'
 		},
-		headerTintColor: '#4c5760',
+		headerTintColor: '#e5e8ec',
 		headerTitleStyle: {
 			fontWeight: 'bold',
 			flex: 1,
@@ -30,7 +30,7 @@ class GarageScreen extends React.Component {
 	}
 
 	componentDidMount = () => {
-		fetch(`http://10.137.7.171:5513/api/v1/users/1`)
+		fetch(`http://10.137.7.125:5513/api/v1/users/1`)
 			.then((response) => response.json())
 			.then((json) => {
 				console.log('initial fetch successful');
@@ -54,13 +54,6 @@ class GarageScreen extends React.Component {
 				console.log(error);
 			});
 	};
-
-	// removeUserFromVehicleJson = (json) => {
-	// 	return json.map((v) => {
-	// 		delete v.user;
-	// 		return v;
-	// 	});
-	// };
 
 	toggleAddVehicleModal = () => {
 		this.setState((prevState) => {
@@ -113,38 +106,33 @@ class GarageScreen extends React.Component {
 
 const styles = StyleSheet.create({
 	screenContainer: {
-		flex: 1
+		flex: 1,
+		backgroundColor: '#e5e8ec'
 	},
 	addVehicleTouchable: {
 		display: 'flex',
 		flexDirection: 'column',
 		justifyContent: 'center',
 		alignItems: 'center',
-		borderColor: '#C9CACA',
+		borderColor: '#1c3144',
 		borderWidth: 1,
 		paddingTop: 5,
 		paddingLeft: 20,
 		paddingRight: 20,
-		paddingBottom: 5,
 		marginRight: vw(20),
 		marginLeft: vw(20),
 		marginTop: 15,
 		marginBottom: 15,
 		borderRadius: 30,
-		backgroundColor: '#93a8ac',
+		backgroundColor: '#e5e8ec',
 		alignContent: 'center'
 	},
 	addVehicleText: {
 		fontSize: vh(2.5),
-		color: '#4c5760',
-		textAlign: 'center',
-		fontWeight: 'bold'
+		color: '#1c3144',
+		textAlign: 'center'
 	}
 });
-
-// vehiclesContainer: {
-// 	paddingBottom: '5'
-// }
 const mapStateToProps = (state) => {
 	return {
 		vehicles: state.index.vehicles,

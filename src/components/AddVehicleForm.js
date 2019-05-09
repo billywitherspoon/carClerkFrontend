@@ -26,37 +26,40 @@ class AddVehicleForm extends Component {
 	};
 
 	handleVinSubmit = () => {
+		let mileageInput = this.state.mileage.replace(/\D/g, '');
 		if (this.state.vehicleName) {
-			if (this.state.vinText) {
-				let vin = this.state.vinText.toLowerCase().replace(/\W/g, '');
-				if (vin.length > 9 && vin.length < 18) {
-					console.log('valid vin');
-					if (parseInt(this.state.mileage) > 0) {
+			if (parseInt(mileageInput) > 0 && parseInt(mileageInput) < 1000000) {
+				if (this.state.vinText) {
+					let vin = this.state.vinText.toLowerCase().replace(/\W/g, '');
+					if (vin.length > 9 && vin.length < 18) {
+						console.log('valid vin');
 						this.toggleContent();
-						this.fetchVin(vin);
+						this.fetchVin(vin, mileageInput);
 					} else {
-						alert('Please Enter A Valid Mileage');
+						alert('Please enter a valid VIN');
+					}
+				} else if (this.state.licensePlate && this.state.stateAbb) {
+					let plate = this.state.licensePlate.toLowerCase().replace(/\W/g, '');
+					let stateAbb = this.state.stateAbb.toLowerCase().replace(/\W/g, '');
+					if (stateAbb.length > 1 && stateAbb.length < 3) {
+						this.toggleContent();
+						this.fetchPlateState(plate, stateAbb, mileageInput);
+					} else {
+						alert('Please enter a valid State');
 					}
 				} else {
-					alert('invalid vin');
+					alert('Please enter a VIN or License Plate and State');
 				}
-			} else if (this.state.licensePlate && this.state.stateAbb) {
-				let plate = this.state.licensePlate.toLowerCase().replace(/\W/g, '');
-				let stateAbb = this.state.stateAbb.toLowerCase().replace(/\W/g, '');
-				if (stateAbb.length > 1 && stateAbb.length < 3) {
-					this.toggleContent();
-					this.fetchPlateState(plate, stateAbb);
-				} else {
-					alert('Please Enter A Valid State');
-				}
+			} else {
+				alert('Please enter a Mileage between 1 and 999,999');
 			}
 		} else {
-			alert('Please enter a nickname for this vehicle');
+			alert('Please enter a Nickname for this vehicle');
 		}
 	};
 
-	fetchPlateState(plate, stateAbb) {
-		fetch('http://10.137.7.171:5513/api/v1/vehicles', {
+	fetchPlateState(plate, stateAbb, mileageInput) {
+		fetch('http://10.137.7.125:5513/api/v1/vehicles', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -67,7 +70,7 @@ class AddVehicleForm extends Component {
 				plate_state: `${stateAbb}`,
 				user_id: 1,
 				name: `${this.state.vehicleName}`,
-				mileage: `${this.state.mileage}`
+				mileage: `${mileageInput}`
 			})
 		})
 			.then((response) => response.json())
@@ -92,8 +95,8 @@ class AddVehicleForm extends Component {
 			});
 	}
 
-	fetchVin = (vin) => {
-		fetch('http://10.137.7.171:5513/api/v1/vehicles', {
+	fetchVin = (vin, mileageInput) => {
+		fetch('http://10.137.7.125:5513/api/v1/vehicles', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -103,7 +106,7 @@ class AddVehicleForm extends Component {
 				vin: `${vin}`,
 				user_id: 1,
 				name: `${this.state.vehicleName}`,
-				mileage: `${this.state.mileage}`
+				mileage: `${mileageInput}`
 			})
 		})
 			.then((response) => response.json())
@@ -132,12 +135,15 @@ class AddVehicleForm extends Component {
 		if (this.state.showContent) {
 			return (
 				<View style={styles.formContainer}>
+					<Text style={[ styles.body, styles.darkText ]}>Required</Text>
 					<TextInput
-						placeholder="Vehicle Nickname"
+						placeholderTextColor="#929496"
+						placeholder="Nickname"
 						onChangeText={(vehicleName) => this.setState({ vehicleName })}
 						style={styles.inputBox}
 					/>
 					<TextInput
+						placeholderTextColor="#929496"
 						placeholder="Mileage"
 						onChangeText={(mileage) => this.setState({ mileage })}
 						keyboardType="number-pad"
@@ -145,6 +151,7 @@ class AddVehicleForm extends Component {
 					/>
 					<Text style={[ styles.body, styles.darkText ]}>Option 1: VIN (Preferred)</Text>
 					<TextInput
+						placeholderTextColor="#929496"
 						placeholder="VIN"
 						onChangeText={(vinText) => this.setState({ vinText })}
 						style={styles.inputBox}
@@ -153,11 +160,13 @@ class AddVehicleForm extends Component {
 						Option 2: License Plate and State (Alternative)
 					</Text>
 					<TextInput
+						placeholderTextColor="#929496"
 						placeholder="License Plate"
 						onChangeText={(licensePlate) => this.setState({ licensePlate })}
 						style={styles.inputBox}
 					/>
 					<TextInput
+						placeholderTextColor="#929496"
 						placeholder="State Abbreviation"
 						onChangeText={(stateAbb) => this.setState({ stateAbb })}
 						style={styles.inputBox}
@@ -167,10 +176,10 @@ class AddVehicleForm extends Component {
 							onPress={this.props.toggleAddVehicleModal}
 							style={[ styles.button, styles.cancelButton ]}
 						>
-							<Text style={[ styles.title, styles.darkText ]}>Cancel</Text>
+							<Text style={[ styles.title, styles.redText ]}>Cancel</Text>
 						</TouchableOpacity>
 						<TouchableOpacity onPress={this.handleVinSubmit} style={[ styles.button, styles.submitButton ]}>
-							<Text style={[ styles.title, styles.lightText ]}>Submit</Text>
+							<Text style={[ styles.title, styles.darkText ]}>Submit</Text>
 						</TouchableOpacity>
 					</View>
 				</View>
@@ -190,36 +199,39 @@ const styles = StyleSheet.create({
 		flex: 1,
 		alignItems: 'center',
 		flexDirection: 'column',
-		justifyContent: 'space-around'
+		justifyContent: 'space-around',
+		backgroundColor: '#e5e8ec'
 	},
 	inputBox: {
-		borderColor: '#C9CACA',
+		borderColor: '#929497',
 		borderWidth: 1,
 		borderRadius: 10,
 		width: vw(75),
-		color: '#4c5760',
+		color: '#1c3144',
 		fontSize: 15,
 		height: 35,
 		paddingLeft: 15
 	},
 	title: {
-		fontSize: vh(3)
+		fontSize: vh(2.5)
 	},
 	body: {
 		fontSize: vh(2.25),
 		fontWeight: 'bold'
 	},
 	lightText: {
-		color: '#bdc1c5'
+		color: '#e5e8ec'
 	},
 	darkText: {
-		color: '#4c5760'
+		color: '#1c3144'
+	},
+	redText: {
+		color: '#d00000'
 	},
 	button: {
 		display: 'flex',
 		alignItems: 'center',
 		justifyContent: 'center',
-		borderColor: 'transparent',
 		borderWidth: 1,
 		padding: 10,
 		borderRadius: 10,
@@ -233,10 +245,12 @@ const styles = StyleSheet.create({
 		alignSelf: 'stretch'
 	},
 	submitButton: {
-		backgroundColor: '#4c5760'
+		backgroundColor: '#e5e8ec',
+		borderColor: '#1c3144'
 	},
 	cancelButton: {
-		backgroundColor: '#bdc1c5'
+		backgroundColor: '#e5e8ec',
+		borderColor: '#d00000'
 	}
 });
 

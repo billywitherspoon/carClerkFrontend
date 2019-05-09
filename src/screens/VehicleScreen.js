@@ -8,9 +8,9 @@ class VehicleScreen extends React.Component {
 	static navigationOptions = {
 		title: 'Car Clerk',
 		headerStyle: {
-			backgroundColor: '#bdc1c5'
+			backgroundColor: '#1c3144'
 		},
-		headerTintColor: '#4c5760',
+		headerTintColor: '#e5e8ec',
 		headerTitleStyle: {
 			fontWeight: 'bold',
 			flex: 1,
@@ -94,7 +94,6 @@ class VehicleScreen extends React.Component {
 									<Text style={styles.specBody}>
 										{this.renderSpecInfo(item, displayVehicle[item])}
 									</Text>
-									<Text />
 								</View>
 							);
 						}}
@@ -135,24 +134,25 @@ class VehicleScreen extends React.Component {
 	};
 
 	render() {
-		return <View style={styles.flexCenter}>{this.renderVehicleInfo()}</View>;
+		return <View style={styles.vehicleScreenContainer}>{this.renderVehicleInfo()}</View>;
 	}
 }
 
 const styles = StyleSheet.create({
-	flexCenter: {
+	vehicleScreenContainer: {
 		flex: 1,
 		flexDirection: 'column',
 		justifyContent: 'flex-start',
-		alignItems: 'center'
+		alignItems: 'center',
+		backgroundColor: '#e5e8ec'
 	},
 	listContainer: {
 		flex: 1,
 		width: vw(90)
 	},
 	specItem: {
-		backgroundColor: '#93a8ac',
-		borderColor: '#C9CACA',
+		backgroundColor: '#3f88c5',
+		borderColor: 'transparent',
 		borderWidth: 1,
 		borderRadius: 30,
 		width: 100,
@@ -171,12 +171,12 @@ const styles = StyleSheet.create({
 		fontSize: vh(2),
 		fontWeight: 'bold',
 		textAlign: 'center',
-		color: '#4c5760'
+		color: '#e5e8ec'
 	},
 	specBody: {
-		fontSize: vh(1.75),
+		fontSize: vh(2),
 		textAlign: 'center',
-		color: '#4c5760'
+		color: '#e5e8ec'
 	}
 });
 

@@ -13,79 +13,79 @@ class VehicleCard extends React.Component {
 	handleVehiclePress = () => {
 		this.props.navigateToLogsScreen();
 		console.log('vehicle pressed', this.props.vehicle);
-		let selectedVehicle = { ...this.props.vehicle };
-		this.props.reduxSelectVehicle(selectedVehicle);
-		console.log('selected vehicle probably set');
+		if (this.props.vehicle.id !== this.props.selectedVehicle.id) {
+			let selectedVehicle = { ...this.props.vehicle };
+			this.props.reduxSelectVehicle(selectedVehicle);
+			console.log('selected vehicle set');
+		}
 	};
 
 	render() {
-		if (this.props.selectedVehicle && this.props.vehicle.id === this.props.selectedVehicle.id) {
-			return (
-				<TouchableOpacity style={styles.singleCardContainer} activeOpacity={1}>
-					<Card
-						containerStyle={[ styles.selectedVehicleCard, styles.vehicleCard ]}
-						title={this.props.vehicle.name}
-						image={{ uri: `${this.props.vehicle.auto_image}` }}
-						titleStyle={[ styles.title, styles.selectedVehicleContent ]}
-						imageStyle={styles.cardImage}
-					>
-						<View style={styles.bodyContainer}>
-							<Text style={[ styles.body, styles.selectedVehicleContent ]}>
-								{this.props.vehicle.model_year}
-							</Text>
-							<Text style={[ styles.body, styles.selectedVehicleContent ]}>
-								{this.props.vehicle.make}
-							</Text>
-							<Text style={[ styles.body, styles.selectedVehicleContent ]}>
-								{this.props.vehicle.model}
-							</Text>
-							<Text style={[ styles.body, styles.selectedVehicleContent ]}>
-								{this.props.vehicle.trim}
-							</Text>
-							<Text style={[ styles.body, styles.selectedVehicleContent ]}>
-								{this.props.vehicle.mileage + ' miles'}
-							</Text>
-						</View>
-					</Card>
-				</TouchableOpacity>
-			);
-		} else {
-			return (
-				<TouchableOpacity
-					style={styles.singleCardContainer}
-					onPress={this.handleVehiclePress}
-					activeOpacity={1}
+		return (
+			<TouchableOpacity style={styles.singleCardContainer} onPress={this.handleVehiclePress} activeOpacity={1}>
+				<Card
+					containerStyle={[ styles.selectedVehicleCard, styles.vehicleCard ]}
+					title={this.props.vehicle.name}
+					image={{ uri: `${this.props.vehicle.auto_image}` }}
+					titleStyle={[ styles.title, styles.selectedVehicleContent ]}
+					imageStyle={styles.cardImage}
 				>
-					<Card
-						containerStyle={[ styles.nonSelectedVehicleCard, styles.vehicleCard ]}
-						title={this.props.vehicle.name}
-						image={{ uri: `${this.props.vehicle.auto_image}` }}
-						titleStyle={[ styles.title, styles.nonSelectedVehicleContent ]}
-						imageStyle={styles.cardImage}
-					>
-						<View style={styles.bodyContainer}>
-							<Text style={[ styles.body, styles.nonSelectedVehicleContent ]}>
-								{this.props.vehicle.model_year}
-							</Text>
-							<Text style={[ styles.body, styles.nonSelectedVehicleContent ]}>
-								{this.props.vehicle.make}
-							</Text>
-							<Text style={[ styles.body, styles.nonSelectedVehicleContent ]}>
-								{this.props.vehicle.model}
-							</Text>
-							<Text style={[ styles.body, styles.nonSelectedVehicleContent ]}>
-								{this.props.vehicle.trim}
-							</Text>
-							<Text style={[ styles.body, styles.nonSelectedVehicleContent ]}>
-								{this.props.vehicle.mileage + ' miles'}
-							</Text>
-						</View>
-					</Card>
-				</TouchableOpacity>
-			);
-		}
+					<View style={styles.bodyContainer}>
+						<Text style={[ styles.body, styles.selectedVehicleContent ]}>
+							{this.props.vehicle.model_year}
+						</Text>
+						<Text style={[ styles.body, styles.selectedVehicleContent ]}>{this.props.vehicle.make}</Text>
+						<Text style={[ styles.body, styles.selectedVehicleContent ]}>{this.props.vehicle.model}</Text>
+						<Text style={[ styles.body, styles.selectedVehicleContent ]}>{this.props.vehicle.trim}</Text>
+						<Text style={[ styles.body, styles.selectedVehicleContent ]}>
+							{this.props.vehicle.mileage + ' miles'}
+						</Text>
+					</View>
+				</Card>
+			</TouchableOpacity>
+		);
 	}
 }
+
+// if (this.props.selectedVehicle && this.props.vehicle.id === this.props.selectedVehicle.id) {
+
+// 		} else {
+// 			return (
+// 				<TouchableOpacity
+// 					style={styles.singleCardContainer}
+// 					onPress={this.handleVehiclePress}
+// 					activeOpacity={1}
+// 				>
+// 					<Card
+// 						containerStyle={[ styles.nonSelectedVehicleCard, styles.vehicleCard ]}
+// 						title={this.props.vehicle.name}
+// 						image={{ uri: `${this.props.vehicle.auto_image}` }}
+// 						titleStyle={[ styles.title, styles.nonSelectedVehicleContent ]}
+// 						imageStyle={styles.cardImage}
+// 					>
+// 						<View style={styles.bodyContainer}>
+// 							<Text style={[ styles.body, styles.nonSelectedVehicleContent ]}>
+// 								{this.props.vehicle.model_year}
+// 							</Text>
+// 							<Text style={[ styles.body, styles.nonSelectedVehicleContent ]}>
+// 								{this.props.vehicle.make}
+// 							</Text>
+// 							<Text style={[ styles.body, styles.nonSelectedVehicleContent ]}>
+// 								{this.props.vehicle.model}
+// 							</Text>
+// 							<Text style={[ styles.body, styles.nonSelectedVehicleContent ]}>
+// 								{this.props.vehicle.trim}
+// 							</Text>
+// 							<Text style={[ styles.body, styles.nonSelectedVehicleContent ]}>
+// 								{this.props.vehicle.mileage + ' miles'}
+// 							</Text>
+// 						</View>
+// 					</Card>
+// 				</TouchableOpacity>
+// 			);
+// 		}
+// 	}
+// }
 
 const styles = StyleSheet.create({
 	singleCardContainer: {
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
 	},
 	vehicleCard: {
 		alignSelf: 'stretch',
-		borderColor: '#C9CACA',
+		borderColor: 'transparent',
 		borderWidth: 1,
 		borderRadius: 30,
 		marginLeft: 40,
@@ -109,17 +109,17 @@ const styles = StyleSheet.create({
 	cardImage: {},
 	selectedVehicleCard: {
 		// backgroundColor: '#6e7e81'
-		backgroundColor: '#93a8ac'
+		backgroundColor: '#1c3144'
 	},
 	nonSelectedVehicleCard: {
-		backgroundColor: '#93a8ac'
+		backgroundColor: '#3f88c5'
 	},
 	selectedVehicleContent: {
-		// color: '#bdc1c5'
-		color: '#4c5760'
+		// color: '#1c3144'
+		color: '#e5e8ec'
 	},
 	nonSelectedVehicleContent: {
-		color: '#4c5760'
+		color: '#e5e8ec'
 	},
 	title: {
 		fontSize: vh(3),

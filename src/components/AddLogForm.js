@@ -8,9 +8,6 @@ class AddLogForm extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			// titleInput: null,
-			// descriptionInput: null,
-			// mileageInput: null,
 			showContent: true
 		};
 	}
@@ -24,20 +21,25 @@ class AddLogForm extends React.Component {
 	};
 
 	handleLogSubmit = () => {
-		if (parseInt(this.props.activeLog.mileage) > 0 && this.props.activeLog.title) {
-			if (this.props.activeLog.id) {
-				this.updateLog();
+		mileageInput = this.props.activeLog.mileage.replace(/\D/g, '');
+		if (parseInt(mileageInput) > 0 && parseInt(mileageInput) < 1000000) {
+			if (this.props.activeLog.title) {
+				if (this.props.activeLog.id) {
+					this.updateLog(mileageInput);
+				} else {
+					this.postNewLog(mileageInput);
+				}
+				this.toggleContent();
 			} else {
-				this.postNewLog();
+				alert('Please enter a Title for this log');
 			}
-			this.toggleContent();
 		} else {
-			alert('Please fill in all fields.  Mileage must be greater than 0.');
+			alert('Please enter a Mileage between 1 and 999,999');
 		}
 	};
 
-	updateLog = () => {
-		fetch(`http://10.137.7.171:5513/api/v1/logs/${this.props.activeLog.id}`, {
+	updateLog = (mileageInput) => {
+		fetch(`http://10.137.7.125:5513/api/v1/logs/${this.props.activeLog.id}`, {
 			method: 'PATCH',
 			headers: {
 				'Content-Type': 'application/json',
@@ -46,7 +48,7 @@ class AddLogForm extends React.Component {
 			body: JSON.stringify({
 				title: this.props.activeLog.title,
 				description: this.props.activeLog.description,
-				mileage: this.props.activeLog.mileage,
+				mileage: mileageInput,
 				vehicle_id: this.props.selectedVehicle.id
 			})
 		})
@@ -62,8 +64,8 @@ class AddLogForm extends React.Component {
 			});
 	};
 
-	postNewLog = () => {
-		fetch('http://10.137.7.171:5513/api/v1/logs', {
+	postNewLog = (mileageInput) => {
+		fetch('http://10.137.7.125:5513/api/v1/logs', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -72,7 +74,7 @@ class AddLogForm extends React.Component {
 			body: JSON.stringify({
 				title: this.props.activeLog.title,
 				description: this.props.activeLog.description,
-				mileage: this.props.activeLog.mileage,
+				mileage: mileageInput,
 				vehicle_id: this.props.selectedVehicle.id
 				// complete: this.state.complete
 			})
@@ -180,10 +182,10 @@ const styles = StyleSheet.create({
 		fontWeight: 'bold'
 	},
 	lightText: {
-		color: '#bdc1c5'
+		color: '#e5e8ec'
 	},
 	darkText: {
-		color: '#4c5760'
+		color: '#e5e8ec'
 	},
 	button: {
 		display: 'flex',
@@ -203,10 +205,10 @@ const styles = StyleSheet.create({
 		alignSelf: 'stretch'
 	},
 	submitButton: {
-		backgroundColor: '#4c5760'
+		backgroundColor: '#1c3144'
 	},
 	cancelButton: {
-		backgroundColor: '#bdc1c5'
+		backgroundColor: '#d00000'
 	}
 });
 
