@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TextInput, View, Button, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Button, TouchableOpacity, Picker } from 'react-native';
 import { connect } from 'react-redux';
 import { addNewVehicle, selectVehicle } from '../store/actions/index.js';
 import { vw, vh, vmin, vmax } from 'react-native-expo-viewport-units';
@@ -123,7 +123,7 @@ class AddVehicleForm extends Component {
 	};
 
 	fetchPlateState(plate, stateAbb, mileageInput) {
-		fetch('http://10.137.7.125:5513/api/v1/vehicles', {
+		fetch('http://192.168.1.92:5513/api/v1/vehicles', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -160,7 +160,7 @@ class AddVehicleForm extends Component {
 	}
 
 	fetchVin = (vin, mileageInput) => {
-		fetch('http://10.137.7.125:5513/api/v1/vehicles', {
+		fetch('http://192.168.1.92:5513/api/v1/vehicles', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -195,6 +195,12 @@ class AddVehicleForm extends Component {
 			});
 	};
 
+	renderStatePickerItems = () => {
+		return stateArray.map((state) => {
+			return <Picker.Item label={state} value={state} key={Math.random()} />;
+		});
+	};
+
 	render() {
 		if (this.state.showContent) {
 			return (
@@ -227,12 +233,18 @@ class AddVehicleForm extends Component {
 						onChangeText={(licensePlate) => this.setState({ licensePlate })}
 						style={styles.inputBox}
 					/>
-					<TextInput
-						placeholderTextColor="#929496"
-						placeholder="State Abbreviation"
-						onChangeText={(stateAbb) => this.setState({ stateAbb })}
-						style={styles.inputBox}
-					/>
+					<View style={styles.stateRow}>
+						<Text style={[ styles.bodyText, styles.darkText ]}>State</Text>
+						<Picker
+							selectedValue={this.state.stateAbb}
+							style={styles.statePicker}
+							onValueChange={(stateAbb) => this.setState({ stateAbb })}
+							itemStyle={styles.pickerItem}
+							prompt="Select a State"
+						>
+							{this.renderStatePickerItems()}
+						</Picker>
+					</View>
 					<View style={styles.buttonContainer}>
 						<TouchableOpacity
 							onPress={this.props.toggleAddVehicleModal}
@@ -256,6 +268,12 @@ class AddVehicleForm extends Component {
 		}
 	}
 }
+// <TextInput
+// 	placeholderTextColor="#929496"
+// 	placeholder="State Abbreviation"
+// 	onChangeText={(stateAbb) => this.setState({ stateAbb })}
+// 	style={styles.inputBox}
+// />;
 
 const styles = StyleSheet.create({
 	formContainer: {
@@ -285,6 +303,20 @@ const styles = StyleSheet.create({
 		fontSize: 15,
 		height: 35,
 		paddingLeft: 15
+	},
+	pickerItem: {
+		fontSize: 30,
+		color: '#1c3144',
+		textAlign: 'center',
+		fontWeight: 'bold'
+	},
+	statePicker: {
+		borderColor: '#929497',
+		borderWidth: 1,
+		borderRadius: 10,
+		width: vw(25),
+		color: '#1c3144',
+		height: 35
 	},
 	lightText: {
 		color: '#e5e8ec'
@@ -332,6 +364,12 @@ const styles = StyleSheet.create({
 		fontSize: vh(2.5),
 		textAlign: 'center',
 		fontWeight: 'bold'
+	},
+	stateRow: {
+		display: 'flex',
+		justifyContent: 'space-around',
+		flexDirection: 'row',
+		width: vw(75)
 	}
 });
 

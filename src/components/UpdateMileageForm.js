@@ -18,7 +18,7 @@ class UpdateMileageForm extends React.Component {
 		mileageInput = this.state.mileageInput.replace(/\D/g, '');
 		if (parseInt(mileageInput) > 0 && parseInt(mileageInput) < 1000000) {
 			this.toggleUpdateMileageContent();
-			fetch(`http://10.137.7.125:5513/api/v1/vehicles/${this.props.selectedVehicle.id}`, {
+			fetch(`http://192.168.1.92:5513/api/v1/vehicles/${this.props.selectedVehicle.id}`, {
 				method: 'PATCH',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
@@ -77,10 +77,12 @@ class UpdateMileageForm extends React.Component {
 				</React.Fragment>
 			);
 		} else {
-			<View style={styles.loadAnimationContainer}>
-				<DotIndicator color="#1c3144" />
-				<Text style={styles.bodyText}>Updating Mileage</Text>
-			</View>;
+			return (
+				<React.Fragment>
+					<DotIndicator color="#1c3144" />
+					<Text style={styles.bodyText}>Updating Mileage</Text>
+				</React.Fragment>
+			);
 		}
 	};
 
@@ -92,11 +94,6 @@ class UpdateMileageForm extends React.Component {
 const styles = StyleSheet.create({
 	formContainer: {
 		display: 'flex',
-		alignItems: 'center'
-	},
-	loadAnimationContainer: {
-		flex: 1,
-		justifyContent: 'center',
 		alignItems: 'center'
 	},
 	inputBox: {

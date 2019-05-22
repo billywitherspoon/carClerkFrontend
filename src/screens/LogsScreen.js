@@ -69,13 +69,13 @@ class LogsScreen extends React.Component {
 	};
 
 	deleteLogFetch = (log) => {
-		fetch(`http://10.137.7.125:5513/api/v1/logs/${log.id}`, {
+		fetch(`http://192.168.1.92:5513/api/v1/logs/${log.id}`, {
 			method: 'DELETE'
 		});
 	};
 
 	updateLogFetch = (logCopy) => {
-		fetch(`http://10.137.7.125:5513/api/v1/logs/${logCopy.id}`, {
+		fetch(`http://192.168.1.92:5513/api/v1/logs/${logCopy.id}`, {
 			method: 'PATCH',
 			headers: {
 				'Content-Type': 'application/json',

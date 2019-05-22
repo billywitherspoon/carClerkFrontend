@@ -40,7 +40,7 @@ class AddLogForm extends React.Component {
 	};
 
 	updateLog = (mileageInput) => {
-		fetch(`http://10.137.7.125:5513/api/v1/logs/${this.props.activeLog.id}`, {
+		fetch(`http://192.168.1.92:5513/api/v1/logs/${this.props.activeLog.id}`, {
 			method: 'PATCH',
 			headers: {
 				'Content-Type': 'application/json',
@@ -66,7 +66,7 @@ class AddLogForm extends React.Component {
 	};
 
 	postNewLog = (mileageInput) => {
-		fetch('http://10.137.7.125:5513/api/v1/logs', {
+		fetch('http://192.168.1.92:5513/api/v1/logs', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
