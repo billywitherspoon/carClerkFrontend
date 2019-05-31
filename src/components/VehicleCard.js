@@ -1,15 +1,18 @@
 import React from 'react';
-import { StyleSheet, Text, TextInput, View, Button, TouchableOpacity, Image } from 'react-native';
-import { Card, ListItem, Icon } from 'react-native-elements';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { Card } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { selectVehicle } from '../store/actions/index.js';
-import { vw, vh, vmin, vmax } from 'react-native-expo-viewport-units';
+import { vw, vh } from 'react-native-expo-viewport-units';
 
 class VehicleCard extends React.Component {
 	constructor(props) {
 		super(props);
 	}
 
+	//handles press of a new selected vehicle
+	//uses redux to update selected vehicle to the vehicle card pressed
+	//uses react navigator to switch to the logs screen
 	handleVehiclePress = () => {
 		this.props.navigateToLogsScreen();
 		console.log('vehicle pressed', this.props.vehicle);
@@ -46,46 +49,6 @@ class VehicleCard extends React.Component {
 		);
 	}
 }
-
-// if (this.props.selectedVehicle && this.props.vehicle.id === this.props.selectedVehicle.id) {
-
-// 		} else {
-// 			return (
-// 				<TouchableOpacity
-// 					style={styles.singleCardContainer}
-// 					onPress={this.handleVehiclePress}
-// 					activeOpacity={1}
-// 				>
-// 					<Card
-// 						containerStyle={[ styles.nonSelectedVehicleCard, styles.vehicleCard ]}
-// 						title={this.props.vehicle.name}
-// 						image={{ uri: `${this.props.vehicle.auto_image}` }}
-// 						titleStyle={[ styles.title, styles.nonSelectedVehicleContent ]}
-// 						imageStyle={styles.cardImage}
-// 					>
-// 						<View style={styles.bodyContainer}>
-// 							<Text style={[ styles.body, styles.nonSelectedVehicleContent ]}>
-// 								{this.props.vehicle.model_year}
-// 							</Text>
-// 							<Text style={[ styles.body, styles.nonSelectedVehicleContent ]}>
-// 								{this.props.vehicle.make}
-// 							</Text>
-// 							<Text style={[ styles.body, styles.nonSelectedVehicleContent ]}>
-// 								{this.props.vehicle.model}
-// 							</Text>
-// 							<Text style={[ styles.body, styles.nonSelectedVehicleContent ]}>
-// 								{this.props.vehicle.trim}
-// 							</Text>
-// 							<Text style={[ styles.body, styles.nonSelectedVehicleContent ]}>
-// 								{this.props.vehicle.mileage + ' miles'}
-// 							</Text>
-// 						</View>
-// 					</Card>
-// 				</TouchableOpacity>
-// 			);
-// 		}
-// 	}
-// }
 
 const styles = StyleSheet.create({
 	singleCardContainer: {

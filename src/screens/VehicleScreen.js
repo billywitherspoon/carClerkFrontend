@@ -1,8 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 import { connect } from 'react-redux';
-import { vw, vh, vmin, vmax } from 'react-native-expo-viewport-units';
-// import { setUserInfo, setVehicles, addNewVehicle } from '../store/actions/index.js';
+import { vw, vh } from 'react-native-expo-viewport-units';
 
 class VehicleScreen extends React.Component {
 	static navigationOptions = {
@@ -26,6 +25,7 @@ class VehicleScreen extends React.Component {
 		this.state = { columns: 2 };
 	}
 
+	//custom title for a single spec
 	renderSpecTitle = (title) => {
 		switch (title) {
 			case 'displacement_ci':
@@ -57,6 +57,7 @@ class VehicleScreen extends React.Component {
 		}
 	};
 
+	//custom info for a single spec
 	renderSpecInfo = (title, info) => {
 		switch (title) {
 			case 'vin':
@@ -108,6 +109,7 @@ class VehicleScreen extends React.Component {
 		}
 	};
 
+	//custom titleize function
 	titleize = (sentence) => {
 		if (!Number.isInteger(sentence)) {
 			let titleizeWord = (string) => {
@@ -124,6 +126,7 @@ class VehicleScreen extends React.Component {
 		}
 	};
 
+	//removes any null specs for a vehicle
 	removeNulls = (vehicle) => {
 		for (const key in vehicle) {
 			if (vehicle[key] === null) {
@@ -183,8 +186,6 @@ const styles = StyleSheet.create({
 	}
 });
 
-//update
-
 const mapStateToProps = (state) => {
 	return {
 		vehicles: state.index.vehicles,
@@ -192,11 +193,5 @@ const mapStateToProps = (state) => {
 		selectedVehicle: state.index.selectedVehicle
 	};
 };
-
-// const mapDispatchToProps = (dispatch) => {
-// 	return {
-// 		reduxSetVehicles: (vehicles) => dispatch(setVehicles(vehicles))
-// 	};
-// };
 
 export default connect(mapStateToProps)(VehicleScreen);

@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { setVehicles, selectVehicle, updateActiveLog } from '../store/actions/index.js';
-import { vw, vh, vmin, vmax } from 'react-native-expo-viewport-units';
+import { vw, vh } from 'react-native-expo-viewport-units';
 import { DotIndicator } from 'react-native-indicators';
 
 class AddLogForm extends React.Component {
@@ -13,6 +13,8 @@ class AddLogForm extends React.Component {
 		};
 	}
 
+	//wen called shows the content of the form
+	//used to hide the content after submit button is pressed
 	toggleContent = () => {
 		this.setState((prevState) => {
 			return {
@@ -21,6 +23,8 @@ class AddLogForm extends React.Component {
 		});
 	};
 
+	//handles submit press of a log
+	//checks for valid submission data
 	handleLogSubmit = () => {
 		if (this.props.activeLog.title) {
 			mileageInput = this.props.activeLog.mileage.toString().replace(/\D/g, '');
@@ -39,8 +43,9 @@ class AddLogForm extends React.Component {
 		}
 	};
 
+	//updates the log by fetching to the backend with the log data
 	updateLog = (mileageInput) => {
-		fetch(`http://192.168.1.92:5513/api/v1/logs/${this.props.activeLog.id}`, {
+		fetch(`http://10.0.1.12:5513/api/v1/logs/${this.props.activeLog.id}`, {
 			method: 'PATCH',
 			headers: {
 				'Content-Type': 'application/json',
@@ -65,8 +70,9 @@ class AddLogForm extends React.Component {
 			});
 	};
 
+	//sends a fetch call to the backend to create a new log
 	postNewLog = (mileageInput) => {
-		fetch('http://192.168.1.92:5513/api/v1/logs', {
+		fetch('http://10.0.1.12:5513/api/v1/logs', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -92,6 +98,7 @@ class AddLogForm extends React.Component {
 			});
 	};
 
+	//uses redux to update the selected vehicle and the vehicles array
 	updateVehicleStates = (vehicle) => {
 		console.log('updating vehicle states');
 		this.props.reduxSelectVehicle(vehicle);
@@ -105,6 +112,7 @@ class AddLogForm extends React.Component {
 		this.props.reduxSetVehicles(updatedVehicles);
 	};
 
+	//converts the mileage to a string
 	mileageValue = () => {
 		if (this.props.activeLog.mileage) {
 			return this.props.activeLog.mileage.toString();
@@ -157,13 +165,6 @@ class AddLogForm extends React.Component {
 		}
 	}
 }
-
-// <TextInput
-// 	style={styles.logInputBox}
-// 	placeholder="Description"
-// 	value={this.props.activeLog.description}
-// 	onChangeText={(description) => this.props.reduxUpdateActiveLog({ description: description })}
-// />;
 
 const styles = StyleSheet.create({
 	formContainer: {

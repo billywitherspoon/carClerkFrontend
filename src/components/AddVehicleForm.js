@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TextInput, View, Button, TouchableOpacity, Picker } from 'react-native';
+import { StyleSheet, Text, TextInput, View, TouchableOpacity, Picker } from 'react-native';
 import { connect } from 'react-redux';
 import { addNewVehicle, selectVehicle } from '../store/actions/index.js';
-import { vw, vh, vmin, vmax } from 'react-native-expo-viewport-units';
+import { vw, vh } from 'react-native-expo-viewport-units';
 import { DotIndicator } from 'react-native-indicators';
 
+//create an array of states
 const stateArray = [
 	'AL',
 	'AK',
@@ -80,6 +81,8 @@ class AddVehicleForm extends Component {
 		};
 	}
 
+	//toggles whether or not to show content
+	//used to hide content when form is submitted
 	toggleContent = () => {
 		this.setState((prevState) => {
 			return {
@@ -88,6 +91,7 @@ class AddVehicleForm extends Component {
 		});
 	};
 
+	//handles press of the vin submit
 	handleVinSubmit = () => {
 		let mileageInput = this.state.mileage.replace(/\D/g, '');
 		if (this.state.vehicleName) {
@@ -122,8 +126,9 @@ class AddVehicleForm extends Component {
 		}
 	};
 
+	//fetches to the backend using a license plate to create a new vehicle
 	fetchPlateState(plate, stateAbb, mileageInput) {
-		fetch('http://192.168.1.92:5513/api/v1/vehicles', {
+		fetch('http://10.0.1.12:5513/api/v1/vehicles', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -159,8 +164,9 @@ class AddVehicleForm extends Component {
 			});
 	}
 
+	//fetches to the backend using a VIN to create a new vehicle
 	fetchVin = (vin, mileageInput) => {
-		fetch('http://192.168.1.92:5513/api/v1/vehicles', {
+		fetch('http://10.0.1.12:5513/api/v1/vehicles', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -195,6 +201,7 @@ class AddVehicleForm extends Component {
 			});
 	};
 
+	//state drop down for licence plate option
 	renderStatePickerItems = () => {
 		return stateArray.map((state) => {
 			return <Picker.Item label={state} value={state} key={Math.random()} />;
@@ -268,12 +275,6 @@ class AddVehicleForm extends Component {
 		}
 	}
 }
-// <TextInput
-// 	placeholderTextColor="#929496"
-// 	placeholder="State Abbreviation"
-// 	onChangeText={(stateAbb) => this.setState({ stateAbb })}
-// 	style={styles.inputBox}
-// />;
 
 const styles = StyleSheet.create({
 	formContainer: {

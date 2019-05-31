@@ -14,11 +14,12 @@ class UpdateMileageForm extends React.Component {
 		};
 	}
 
+	//handles submit of the new mileage
 	handleMileageUpdate = () => {
 		mileageInput = this.state.mileageInput.replace(/\D/g, '');
 		if (parseInt(mileageInput) > 0 && parseInt(mileageInput) < 1000000) {
 			this.toggleUpdateMileageContent();
-			fetch(`http://192.168.1.92:5513/api/v1/vehicles/${this.props.selectedVehicle.id}`, {
+			fetch(`http://10.0.1.12:5513/api/v1/vehicles/${this.props.selectedVehicle.id}`, {
 				method: 'PATCH',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
@@ -34,6 +35,7 @@ class UpdateMileageForm extends React.Component {
 		}
 	};
 
+	//updates vehicle states using redux including currently selected vehicle and vehicle array
 	updateVehicleStates = (vehicle) => {
 		console.log('updating vehicle states');
 		this.props.reduxSelectVehicle(vehicle);
@@ -52,6 +54,7 @@ class UpdateMileageForm extends React.Component {
 		this.toggleUpdateMileageContent();
 	};
 
+	//hides/shows mileage content form
 	toggleUpdateMileageContent = () => {
 		this.setState((prevState) => {
 			return {

@@ -1,11 +1,10 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import AddVehicleModal from '../modals/AddVehicleModal';
 import { connect } from 'react-redux';
 import { setVehicles, selectVehicle } from '../store/actions/index.js';
 import VehicleCard from '../components/VehicleCard';
-import { vw, vh, vmin, vmax } from 'react-native-expo-viewport-units';
-// import { ScrollView } from 'react-native-gesture-handler';
+import { vw, vh } from 'react-native-expo-viewport-units';
 
 class GarageScreen extends React.Component {
 	static navigationOptions = {
@@ -29,18 +28,15 @@ class GarageScreen extends React.Component {
 		this.state = { displayAddVehicleModal: false, displayContent: false };
 	}
 
+	//when the garage screen loads, fetch all user vehicles from the backend, then set the vehicles using redux
 	componentDidMount = () => {
-		fetch(`http://192.168.1.92:5513/api/v1/users/1`)
+		fetch(`http://10.0.1.12:5513/api/v1/users/1`)
 			.then((response) => response.json())
 			.then((json) => {
 				console.log('initial fetch successful');
-
-				//remove user info (replace function below with set user info)
+				//removes user info
 				delete json.user;
-
-				// let vehicles = this.removeUserFromVehicleJson(json.vehicles);
 				console.log('about to call reduxSetVehicles');
-
 				this.props.reduxSetVehicles(json.vehicles);
 				this.props.reduxSelectVehicle(json.vehicles[json.vehicles.length - 1]);
 				this.setState({
@@ -101,8 +97,6 @@ class GarageScreen extends React.Component {
 		}
 	}
 }
-
-//update
 
 const styles = StyleSheet.create({
 	screenContainer: {

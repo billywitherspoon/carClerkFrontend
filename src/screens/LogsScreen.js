@@ -5,9 +5,7 @@ import UpdateMileageForm from '../components/UpdateMileageForm';
 import LogModal from '../modals/LogModal';
 import Swipeout from 'react-native-swipeout';
 import { setActiveLog, setVehicles, selectVehicle } from '../store/actions/index.js';
-import { vw, vh, vmin, vmax } from 'react-native-expo-viewport-units';
-
-//buttons for swipe
+import { vw, vh } from 'react-native-expo-viewport-units';
 
 class LogsScreen extends React.Component {
 	static navigationOptions = {
@@ -42,6 +40,7 @@ class LogsScreen extends React.Component {
 		console.log('Log Modal Toggled');
 	};
 
+	//uses redux to update the log as completed in the selected vehicle and the all vehicles array
 	updateLogAsCompleted = (log) => {
 		let logCopy = { ...log };
 		logCopy.complete = !logCopy.complete;
@@ -58,6 +57,7 @@ class LogsScreen extends React.Component {
 		this.updateLogFetch(logCopy);
 	};
 
+	//uses redux to delete the log in the selected vehicle and the all vehicles array
 	deleteLog = (log) => {
 		console.log('deleting log:', log);
 		let updatedVehicle = { ...this.props.selectedVehicle };
@@ -68,14 +68,16 @@ class LogsScreen extends React.Component {
 		this.deleteLogFetch(log);
 	};
 
+	//deletes the log in the backend
 	deleteLogFetch = (log) => {
-		fetch(`http://192.168.1.92:5513/api/v1/logs/${log.id}`, {
+		fetch(`http://10.0.1.12:5513/api/v1/logs/${log.id}`, {
 			method: 'DELETE'
 		});
 	};
 
+	//updates the log in the backend
 	updateLogFetch = (logCopy) => {
-		fetch(`http://192.168.1.92:5513/api/v1/logs/${logCopy.id}`, {
+		fetch(`http://10.0.1.12:5513/api/v1/logs/${logCopy.id}`, {
 			method: 'PATCH',
 			headers: {
 				'Content-Type': 'application/json',
@@ -87,6 +89,7 @@ class LogsScreen extends React.Component {
 		});
 	};
 
+	//takes an updatedVehicle from the backend, updates the state of the selected vehicle and the all vehicles array
 	updateVehicleStates = (updatedVehicle) => {
 		this.props.reduxSelectVehicle(updatedVehicle);
 		let updatedVehicles = this.props.vehicles.map((v) => {
@@ -99,6 +102,7 @@ class LogsScreen extends React.Component {
 		this.props.reduxSetVehicles(updatedVehicles);
 	};
 
+	//returns the difficulty for a log if it exists
 	renderDifficulty = (log) => {
 		if (log.difficulty) {
 			return (
@@ -112,6 +116,7 @@ class LogsScreen extends React.Component {
 		}
 	};
 
+	//renders a checkmark if the log is completed
 	renderCheckMark = (log) => {
 		if (log.complete) {
 			return <Text style={styles.logBody}>✓</Text>;
@@ -120,6 +125,7 @@ class LogsScreen extends React.Component {
 		}
 	};
 
+	//takes in an argument of what to display on a swipe button, returns buttom
 	renderSwipeButtonText = (text) => {
 		<View style={styles.swipeButton}>
 			<Text style={styles.buttonText}>{text}</Text>
@@ -187,7 +193,7 @@ class LogsScreen extends React.Component {
 							</View>
 							{this.renderDifficulty(log)}
 							<View style={styles.flexColumnCenter}>
-								<Text style={styles.title}>Completed?</Text>
+								<Text style={styles.title}>Completed</Text>
 								{this.renderCheckMark(log)}
 							</View>
 						</View>
